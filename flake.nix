@@ -30,7 +30,7 @@
         ];
       };
 
-      packages = {
+      packages = rec {
         frontend = pkgs.buildNpmPackage {
           pname = "parkpappa-frontend";
           inherit version;
@@ -51,6 +51,15 @@
             cp -r build/* $out
             runHook postInstall
           '';
+        };
+
+        frontend-docker = pkgs.dockerTools.streamLayeredImage rec {
+          name = "parkpappa-frontend";
+          tag = version;
+          config.Cmd = ["${pkgs.nodejs_22}/bin/node" frontend];
+          config.exposedPorts = {
+            "3000/tcp" = {};
+          };
         };
       };
     });
