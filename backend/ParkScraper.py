@@ -4,7 +4,7 @@ import json
 from pyproj import Proj, transform
 import CoordinatesConverter
 app = Flask(__name__)
-@app.route('/', methods=['GET'])
+@app.route('/api/parks', methods=['GET'])
 def scrape_data():
     url = "https://kartor.vasteras.se/arcgis/rest/services/ext/tk_lekplatser_dyn/FeatureServer/0/query?f=json&returnGeometry=true&spatialRel=esriSpatialRelIntersects&geometry={%22xmin%22:97161.8,%22ymin%22:6596631.56,%22xmax%22:203248.2,%22ymax%22:6635410.44,%22spatialReference%22:{%22wkid%22:3010}&geometryType=esriGeometryEnvelope&inSR=3010&outFields=*&returnIdsOnly=false&returnCountOnly=false&geometryPrecision=2&outSR=3010"
     try:
@@ -16,35 +16,36 @@ def scrape_data():
 
         # Define separate dictionaries for Equipment and Types of Play
         equipment_mapping = {
-            "Water Availability": "VATTEN",
-            "Climbing Frame": "KLATTERLEK",
-            "Car Play": "FORDONSLEK",
             "BBQ Area": "GRILL",
-            "Swing Set": "GUNGLEK",
+            "Climbing Frame": "KLATTERLEK",
             "Running Track": "FARTLEK",
             "Sand Play Area": "SANDLEK",
+            "Swing Set": "GUNGLEK",
+            "Water Availability": "VATTEN",
+            "Rain Shelter": "REGNSKYDD",
+            "Sledding Hill": "PULKABACKE",
+            "Wind Shelter": "VINDSKYDD",
+
         }
 
+        # Play types mapping (sorted alphabetically)
         play_types_mapping = {
+            "Balancing Play": "BALANSLEK",
+            "Car Play": "FORDONSLEK",
+            "Hopscotch Area": "HOPPLEK",
             "Rocking Play": "VAGGLEK",
-            "Water Play": "VATTENLEK",
-            "Wind Shelter": "VINDSKYDD",
-            "Spinning Play": "SNURRLEK",
-            "Sledding Hill": "PULKABACKE",
-            "Toddler Play": "PYSSELEK",
-            "Rain Shelter": "REGNSKYDD",
             "Role Play": "ROLLEK",
             "Slide Play": "RUTSCHLEK",
-            "Hopscotch Area": "HOPPLEK",
+            "Sound Play": "LJUDLE",
+            "Spinning Play": "SNURRLEK",
+            "Toddler Play": "PYSSELEK",
+            "Water Play": "VATTENLEK",
             "Play Circuit": "LEKSLINGA",
-            "Balancing Play": "BALANSLEK",
-            "Sound Play": "LJUDLE"
-
         }
 
         organized_data = []
 
-        for feature in features:
+        for idx, feature in enumerate(features):
             attributes = feature.get('attributes', {})
             geometry = feature.get('geometry', {})
             
@@ -68,6 +69,7 @@ def scrape_data():
                 Xcord = 0
             # Append the data
             organized_data.append({
+                "Id": idx,
                 "Name": attributes.get("NAMN", "N/A"),
                 "Coordinates": {
                     "x": Xcord,
@@ -78,7 +80,6 @@ def scrape_data():
             })
 
         # Sort the data alphabetically by "Name"
-        organized_data = sorted(organized_data, key=lambda x: x['Name'])
 
         # Save the organized data to a file
         with open("ParkCache.json", "w", encoding="utf8") as f:
