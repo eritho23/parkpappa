@@ -19,14 +19,15 @@
     in {
       devShells.default = pkgs.mkShell {
         packages = with pkgs; [
-          nodejs_22
-          nodePackages.npm
-          ripgrep
+          alejandra
+          bat
           fzf
           mdcat
-          bat
-          alejandra
           nil
+          nodejs_22
+          nodePackages.npm
+          python3
+          ripgrep
         ];
       };
 
@@ -60,6 +61,11 @@
           config.exposedPorts = {
             "3000/tcp" = {};
           };
+        };
+
+        backend = pkgs.python3Packages.buildPythonPackage {
+            name = "parkpappa-backend";
+            src = ./backend/.;
         };
       };
     });
