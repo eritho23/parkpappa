@@ -36,12 +36,12 @@
           inherit version;
           src = ./frontend/.;
 
-          npmDepsHash = "sha256-+i2Vn39KXAijnWPCaaICv0czYKexGxYKG+DmMeKRvpE=";
+          npmDepsHash = "sha256-H/OhyZ+VlZQk3/SKnJ7Fz+PZ8YOoNxqbI5INO8NmVaY=";
           # npmDepsHash = pkgs.lib.fakeHash;
 
           buildPhase = ''
             runHook preBuild
-            npm run build --offline
+            npm --loglevel=verbose run build --offline
             runHook postBuild
           '';
 
