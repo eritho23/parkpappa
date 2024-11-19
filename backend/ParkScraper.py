@@ -45,7 +45,7 @@ def scrape_data():
 
         organized_data = []
 
-        for feature in features:
+        for idx, feature in enumerate(features):
             attributes = feature.get('attributes', {})
             geometry = feature.get('geometry', {})
             
@@ -69,6 +69,7 @@ def scrape_data():
                 Xcord = 0
             # Append the data
             organized_data.append({
+                "Id": idx,
                 "Name": attributes.get("NAMN", "N/A"),
                 "Coordinates": {
                     "x": Xcord,
@@ -79,7 +80,6 @@ def scrape_data():
             })
 
         # Sort the data alphabetically by "Name"
-        organized_data = sorted(organized_data, key=lambda x: x['Name'])
 
         # Save the organized data to a file
         with open("ParkCache.json", "w", encoding="utf8") as f:
