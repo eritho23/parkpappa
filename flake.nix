@@ -29,5 +29,29 @@
           nil
         ];
       };
+
+      packages = {
+        frontend = pkgs.buildNpmPackage {
+          pname = "parkpappa-frontend";
+          inherit version;
+          src = ./frontend/.;
+
+          npmDepsHash = "sha256-+i2Vn39KXAijnWPCaaICv0czYKexGxYKG+DmMeKRvpE=";
+          # npmDepsHash = pkgs.lib.fakeHash;
+
+          buildPhase = ''
+            runHook preBuild
+            npm run build --offline
+            runHook postBuild
+          '';
+
+          installPhase = ''
+            runHook preInstall
+            mkdir -p $out
+            cp -r build/* $out
+            runHook postInstall
+          '';
+        };
+      };
     });
 }
