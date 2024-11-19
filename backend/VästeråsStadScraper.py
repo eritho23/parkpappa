@@ -1,8 +1,8 @@
 from flask import Flask, jsonify
 import requests
 import json
-
-
+from pyproj import Proj, transform
+import CoordinatesConverter
 app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def scrape_data():
@@ -13,29 +13,76 @@ def scrape_data():
 
         # Organize the data into a more readable format
         features = raw_data.get('features', [])
+
+        # Define separate dictionaries for Equipment and Types of Play
+        equipment_mapping = {
+            "Water Availability": "VATTEN",
+            "Climbing Frame": "KLATTERLEK",
+            "Car Play": "FORDONSLEK",
+            "BBQ Area": "GRILL",
+            "Swing Set": "GUNGLEK",
+            "Running Track": "FARTLEK",
+            "Sand Play Area": "SANDLEK",
+        }
+
+        play_types_mapping = {
+            "Rocking Play": "VAGGLEK",
+            "Water Play": "VATTENLEK",
+            "Wind Shelter": "VINDSKYDD",
+            "Spinning Play": "SNURRLEK",
+            "Sledding Hill": "PULKABACKE",
+            "Toddler Play": "PYSSELEK",
+            "Rain Shelter": "REGNSKYDD",
+            "Role Play": "ROLLEK",
+            "Slide Play": "RUTSCHLEK",
+            "Hopscotch Area": "HOPPLEK",
+            "Play Circuit": "LEKSLINGA",
+            "Balancing Play": "BALANSLEK",
+            "Sound Play": "LJUDLE"
+
+        }
+
         organized_data = []
+
         for feature in features:
             attributes = feature.get('attributes', {})
             geometry = feature.get('geometry', {})
-            organized_data.append(
+            
+            # Separate Equipment and Types of Play
+            equipment = {
+                title: (True if attributes.get(key, "NEJ") == "JA" else False)
+                for title, key in equipment_mapping.items()
+            }
+            
+            play_types = {
+                title: (True if attributes.get(key, "NEJ") == "JA" else False)
+                for title, key in play_types_mapping.items()
+            }
+            try:
+                CordsWGS = CoordinatesConverter.ConvertToWGS(geometry.get("x"), geometry.get("y"))
+                Ycord = CordsWGS[0]
+                Xcord = CordsWGS[1]
+            except:
+                print("ERROR: CANT GET CORDS")
+                Ycord = 0
+                Xcord = 0
+            # Append the data
+            organized_data.append({
                 "Name": attributes.get("NAMN", "N/A"),
-                "Equipment": [
-                    "Bollek": attributes.get("BOLLEK", "null"),
-                    "Fartlek": attributes.get("FARTLEK", "null"),
-                    "Grill": attributes.get("GRILL", "null")},
-                    "Gunglek": attributes.get("GUNGLEK", "null"),
-                    "Hopplek": attributes.get("HOPPLEK", "null")
-
-                    
-                ],
                 "Coordinates": {
-                    "x": geometry.get("x", "N/A"),
-                    "y": geometry.get("y", "N/A")
-                }
+                    "x": Xcord,
+                    "y": Ycord
+                },
+                "Equipment": equipment,
+                "Types of Play": play_types
             })
-            # Save the organized data to a file
-            with open("ParkCache.json", "w" , encoding="utf8") as f:
-                json.dump(organized_data, f, indent=4, ensure_ascii=False)  # Pretty print the JSON
+
+        # Sort the data alphabetically by "Name"
+        organized_data = sorted(organized_data, key=lambda x: x['Name'])
+
+        # Save the organized data to a file
+        with open("ParkCache.json", "w", encoding="utf8") as f:
+            json.dump(organized_data, f, indent=4, ensure_ascii=False)  # Pretty print the JSON
 
         return jsonify(raw_data['features'])          # Return data as a JSON response for Flask
     except:
