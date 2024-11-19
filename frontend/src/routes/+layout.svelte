@@ -11,7 +11,7 @@ const nonActiveClass = "text-text hover:text-primary";
 <div class="relative px-8">
   <Navbar class="px-2 sm:px-4 py-2.5 fixed w-full z-20 top-0 start-0 border-b bg-background-foreground">
     <NavBrand href="/">
-      <span class="self-center whitespace-nowrap text-xl font-semibold text-primary dark:text-white">Parkpappa</span>
+      <span class="self-center whitespace-nowrap text-xl text-primary dark:text-white font-primary font-normal">Parkpappa</span>
     </NavBrand>
     <NavHamburger />
     <NavUl {activeUrl} {activeClass} {nonActiveClass}>

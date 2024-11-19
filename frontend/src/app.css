@@ -4,11 +4,13 @@
 
 @layer base{
     html{
-        @apply bg-background text-text
+        @apply bg-background text-text font-primary font-extralight
         
     }
 
-    /* @font-face{
-        font-family: ;
-    } */
+    @font-face{
+        font-family: "Lexend";
+        font-weight: 500;
+        src: url("fonts/Lexend/Lexend-VariableFont_wght.ttf"), format(".ttf");
+    }
 }

@@ -26,8 +26,16 @@ export default {
         gold: {
           DEFAULT: "F2C00E"
         }
+      },
+      fontWeight: {
+        normal: "400",
+        medium: "500",
+        semibold: "600"
       }
     },
+    fontFamily: {
+      "primary": ["Lexend"]
+    }
   },
   plugins: [flowbitePlugin],
 } as Config;
