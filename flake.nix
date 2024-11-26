@@ -94,6 +94,10 @@
         echo Checking formatting on frontend
         ${pkgs.nodePackages.prettier}/bin/prettier --check ${pkgs.lib.cleanSource ./frontend}
 
+        echo Checking Svelte using npm run check
+        cd frontend
+        ${pkgs.nodePackages.npm}/bin/npm run check
+
       '';
       apps.actions-frontend-script = utils.lib.mkApp {drv = actions-frontend-script;};
 
