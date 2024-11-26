@@ -16,27 +16,43 @@
     utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
       version = "0.0.0-dev";
-    in {
+      python3WithPkgs = pkgs.python312.withPackages (po: with po; [flask requests pyproj]);
+    in  rec {
       devShells.default = pkgs.mkShell {
         packages = with pkgs; [
-          nodejs_22
-          nodePackages.npm
-          ripgrep
+          act
+          alejandra
+          bat
           fzf
           mdcat
-          bat
-          alejandra
           nil
+          nodejs_22
+          nodePackages.npm
+          python3WithPkgs
+          ripgrep
         ];
       };
 
       packages = rec {
+        frontend-src = pkgs.stdenvNoCC.mkDerivation {
+          pname = "parkpappa-src-for-ci";
+          inherit version;
+          src = pkgs.lib.cleanSource ./frontend;
+
+          installPhase = ''
+            runHook preInstall
+            mkdir -p $out 
+            cp -r ./* $out
+            runHook postInstall
+          '';
+        };
+
         frontend = pkgs.buildNpmPackage {
           pname = "parkpappa-frontend";
           inherit version;
-          src = ./frontend/.;
+          src = pkgs.lib.cleanSource ./frontend/.;
 
-          npmDepsHash = "sha256-H/OhyZ+VlZQk3/SKnJ7Fz+PZ8YOoNxqbI5INO8NmVaY=";
+          npmDepsHash = "sha256-VmxsbRaSpAkU50uSiNSt6PX6HI32jmZOtPkpClLDCg0=";
           # npmDepsHash = pkgs.lib.fakeHash;
 
           buildPhase = ''
@@ -61,6 +77,25 @@
             "3000/tcp" = {};
           };
         };
+
+        backend = pkgs.stdenv.mkDerivation {
+            name = "parkpappa-backend";
+            inherit version;
+            src = pkgs.lib.cleanSource ./backend/.;
+
+            installPhase = ''
+              mkdir -p $out 
+              cp *.py $out
+            '';
+        };
       };
+      actions-frontend-script = pkgs.writeShellScriptBin "actions-frontend-checks" ''
+        set -eu
+        echo Checking formatting on frontend
+        ${pkgs.nodePackages.prettier}/bin/prettier --check ${pkgs.lib.cleanSource ./frontend}
+
+      '';
+      apps.actions-frontend-script = utils.lib.mkApp {drv = actions-frontend-script;};
+
     });
 }
