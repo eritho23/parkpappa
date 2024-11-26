@@ -16,9 +16,11 @@
     utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
       version = "0.0.0-dev";
+      python3WithPkgs = pkgs.python312.withPackages (po: with po; [flask requests pyproj]);
     in {
       devShells.default = pkgs.mkShell {
         packages = with pkgs; [
+          act
           alejandra
           bat
           fzf
@@ -26,7 +28,7 @@
           nil
           nodejs_22
           nodePackages.npm
-          python3
+          python3WithPkgs
           ripgrep
         ];
       };
@@ -35,7 +37,7 @@
         frontend = pkgs.buildNpmPackage {
           pname = "parkpappa-frontend";
           inherit version;
-          src = ./frontend/.;
+          src = pkgs.lib.cleanSource ./frontend/.;
 
           npmDepsHash = "sha256-H/OhyZ+VlZQk3/SKnJ7Fz+PZ8YOoNxqbI5INO8NmVaY=";
           # npmDepsHash = pkgs.lib.fakeHash;
@@ -63,9 +65,15 @@
           };
         };
 
-        backend = pkgs.python3Packages.buildPythonPackage {
+        backend = pkgs.stdenv.mkDerivation {
             name = "parkpappa-backend";
-            src = ./backend/.;
+            inherit version;
+            src = pkgs.lib.cleanSource ./backend/.;
+
+            installPhase = ''
+              mkdir -p $out 
+              cp *.py $out
+            '';
         };
       };
     });
