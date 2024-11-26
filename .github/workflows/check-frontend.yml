@@ -1,0 +1,17 @@
+name: Frontend CI checks
+on: 
+    push:
+        branches: 
+            - main
+
+jobs:
+    check-formatting:
+        runs-on: ubuntu-latest
+    
+        steps:
+            - name: checkout repo
+              uses: actions/checkout@v4
+            
+            - name: install nix
+              uses: DeterminateSystems/nix-installer-action@main
+            - run: nix run .#actions-frontend-script
