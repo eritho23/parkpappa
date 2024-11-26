@@ -7,6 +7,8 @@
         @apply bg-background text-text font-primary font-extralight;
     }
 
+    
+
     @font-face {
         font-family: 'Lexend';
         font-weight: 500;
