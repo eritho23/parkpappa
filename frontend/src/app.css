@@ -7,7 +7,9 @@
         @apply bg-background text-text font-primary font-extralight;
     }
 
-    
+    body {
+        @apply h-screen;
+    }
 
     @font-face {
         font-family: 'Lexend';
