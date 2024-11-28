@@ -4,7 +4,6 @@ import json
 import threading
 import time
 import schedule
-from pyproj import Proj, transform
 import CoordinatesConverter
 
 app = Flask(__name__)
@@ -93,7 +92,7 @@ def load_parks():
             return json.load(f)
     except FileNotFoundError:
         print(f"{CACHE_FILE} not found. Scraping data...")
-        scrape_data()  # Create a new cache if the file is missing
+        scrape_data()  
         with open(CACHE_FILE, "r", encoding="utf8") as f:
             return json.load(f)
 
@@ -108,7 +107,7 @@ def get_park_by_id(id):
     for park in parks:
         if park.get("Id") == id:
             return jsonify(park)
-    return jsonify({"error": "Park not found"}), 404
+    return jsonify({"error": "Park not found, Make sure you input a valid ID"}), 404
 
 @app.route('/', methods=['GET'])
 def intro_screen():
@@ -124,7 +123,5 @@ def schedule_scrape():
 if __name__ == '__main__':
     if not load_parks():
         scrape_data()
-
     threading.Thread(target=schedule_scrape, daemon=True).start()
-
     app.run()
