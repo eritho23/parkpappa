@@ -10,8 +10,8 @@ const nonActiveClass = "text-text hover:text-primary";
 
 
 
-<div class="h-full">
-<Navbar class="px-2 sm:px-4 py-2.5 w-full z-20 top-0 start-0 border-b bg-background-foreground">
+<div class="min-h-screen flex flex-col overflow-hidden">
+<Navbar class="px-2 sm:px-4 py-2.5 w-full z-30 top-0 start-0 border-b bg-background-foreground">
   <NavBrand href="/">
     <span class="self-center whitespace-nowrap text-xl text-primary dark:text-white font-primary font-normal">Parkpappa</span>
   </NavBrand>
@@ -38,8 +38,9 @@ const nonActiveClass = "text-text hover:text-primary";
   </NavUl>
   
 </Navbar>
-
-  <slot></slot>
+  <main class="flex-grow flex flex-col">
+    <slot></slot>
+  </main>
 </div>
 
 
