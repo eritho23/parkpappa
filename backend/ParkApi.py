@@ -124,4 +124,4 @@ if __name__ == '__main__':
     if not load_parks():
         scrape_data()
     threading.Thread(target=schedule_scrape, daemon=True).start()
-    app.run()
+    #app.run() # Commented out as Gunicorn will handle the app execution
