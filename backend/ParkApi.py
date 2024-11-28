@@ -4,7 +4,7 @@ import json
 import threading
 import time
 import schedule
-import CoordinatesConverter
+from . import CoordinatesConverter
 
 app = Flask(__name__)
 
