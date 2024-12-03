@@ -10,7 +10,7 @@ on:
             - main
 
 jobs:
-    check-formatting-and-code:
+    check-formatting:
         runs-on: ubuntu-latest
     
         steps:
@@ -19,5 +19,16 @@ jobs:
             
             - name: install nix
               uses: DeterminateSystems/nix-installer-action@main
-            - run: nix run .#actions-frontend-script
+            - run: nix run .#actions-frontend-formatting
+
+    check-code:
+        runs-on: ubuntu-latest
+    
+        steps:
+            - name: checkout repo
+              uses: actions/checkout@v4
+            
+            - name: install nix
+              uses: DeterminateSystems/nix-installer-action@main
+            - run: nix run .#actions-frontend-check
     
