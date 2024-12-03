@@ -62,4 +62,4 @@
   </script>
   
   
-  <div class="w-full h-full flex-grow" use:mapAction></div>
+  <div class="w-full h-full flex-grow z-0" use:mapAction></div>

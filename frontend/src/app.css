@@ -5,12 +5,12 @@
 @layer base {
     html,
     body {
-        @apply bg-background text-text font-primary font-extralight h-full;
+        @apply bg-background text-text font-primary font-extralight h-full overflow-y-clip;
     }
 
     @font-face {
         font-family: 'Lexend';
         font-weight: 500;
-        src: url('fonts/Lexend/Lexend-VariableFont_wght.ttf'), format('.ttf');
+        src: url('/fonts/Lexend/Lexend-VariableFont_wght.ttf'), format('.ttf');
     }
 }
