@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-    html {
-        @apply bg-background text-text font-primary font-extralight;
+    html, body {
+        @apply bg-background text-text font-primary font-extralight h-full;
     }
 
     @font-face {
