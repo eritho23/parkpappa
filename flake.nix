@@ -99,6 +99,8 @@
         set -eu
         echo Checking Svelte using npm run check
         cd frontend
+
+        ${pkgs.nodePackages.npm}/bin/npm install
         ${pkgs.nodePackages.npm}/bin/npm run check
 
       '';
