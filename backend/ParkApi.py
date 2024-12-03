@@ -19,29 +19,29 @@ def scrape_data():
         features = raw_data.get('features', [])
 
         equipment_mapping = {
-            "BBQ Area": "GRILL",
-            "Climbing Frame": "KLATTERLEK",
-            "Running Track": "FARTLEK",
-            "Sand Play Area": "SANDLEK",
-            "Swing Set": "GUNGLEK",
-            "Water Availability": "VATTEN",
-            "Rain Shelter": "REGNSKYDD",
-            "Sledding Hill": "PULKABACKE",
-            "Wind Shelter": "VINDSKYDD",
+            "BBQArea": "GRILL",
+            "ClimbingFrame": "KLATTERLEK",
+            "RunningTrack": "FARTLEK",
+            "SandPlayArea": "SANDLEK",
+            "SwingSet": "GUNGLEK",
+            "WaterAvailability": "VATTEN",
+            "RainShelter": "REGNSKYDD",
+            "SleddingHill": "PULKABACKE",
+            "WindShelter": "VINDSKYDD",
         }
 
         play_types_mapping = {
-            "Balancing Play": "BALANSLEK",
-            "Car Play": "FORDONSLEK",
-            "Hopscotch Area": "HOPPLEK",
+            "BalancingPlay": "BALANSLEK",
+            "CarPlay": "FORDONSLEK",
+            "HopscotchArea": "HOPPLEK",
             "Rocking Play": "VAGGLEK",
-            "Role Play": "ROLLEK",
-            "Slide Play": "RUTSCHLEK",
-            "Sound Play": "LJUDLE",
-            "Spinning Play": "SNURRLEK",
-            "Toddler Play": "PYSSELEK",
-            "Water Play": "VATTENLEK",
-            "Play Circuit": "LEKSLINGA",
+            "RolePlay": "ROLLEK",
+            "SlidePlay": "RUTSCHLEK",
+            "SoundPlay": "LJUDLE",
+            "SpinningPlay": "SNURRLEK",
+            "ToddlerPlay": "PYSSELEK",
+            "WaterPlay": "VATTENLEK",
+            "PlayCircuit": "LEKSLINGA",
         }
 
         organized_data = []
@@ -77,7 +77,7 @@ def scrape_data():
                     "y": Ycord
                 },
                 "Equipment": equipment,
-                "Types of Play": play_types
+                "TypesOfPlay": play_types
             })
 
         with open(CACHE_FILE, "w", encoding="utf8") as f:
@@ -119,6 +119,7 @@ def schedule_scrape():
     while True:
         schedule.run_pending()
         time.sleep(1)
+
 
 if __name__ == '__main__':
     if not load_parks():
