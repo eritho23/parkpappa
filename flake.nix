@@ -28,6 +28,7 @@
           nil
           nodejs_22
           nodePackages.npm
+          nodePackages.prettier
           python3WithPkgs
           ripgrep
         ];
