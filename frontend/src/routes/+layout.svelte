@@ -20,15 +20,11 @@ const nonActiveClass = "text-text hover:text-primary";
     <NavLi href="/">Hem</NavLi>
     <NavLi href="/map">Karta</NavLi>
     <NavLi href="/reviews">Recensioner</NavLi>
-    <NavLi class="block md:hidden" href="/settings">Inställningar</NavLi>
-    <NavLi class="block md:hidden" href="/about">Om oss</NavLi>
-    <NavLi class="block md:hidden" href="/contact">Kontakta oss</NavLi>
-
     <NavLi class="cursor-pointer hidden md:block">
       More
       <Menu size=24 class="hidden md:inline"></Menu>
     </NavLi>
-    <Dropdown class="w-44 z-20">
+    <Dropdown class="w-40 z-20" containerClass="absolute">
       <DropdownItem href="/settings">Inställningar</DropdownItem>
       <DropdownItem href="/contact">Om oss</DropdownItem>
       <DropdownItem href="/about">Kontakta oss</DropdownItem>

@@ -5,7 +5,7 @@
 @layer base {
     html,
     body {
-        @apply bg-background text-text font-primary font-extralight h-full;
+        @apply bg-background text-text font-primary font-extralight h-full overflow-y-clip;
     }
 
     @font-face {
