@@ -89,13 +89,22 @@
             '';
         };
       };
-      actions-frontend-script = pkgs.writeShellScriptBin "actions-frontend-checks" ''
+      actions-frontend-formatting = pkgs.writeShellScriptBin "actions-frontend-formatting" ''
         set -eu
         echo Checking formatting on frontend
         ${pkgs.nodePackages.prettier}/bin/prettier --check ${pkgs.lib.cleanSource ./frontend}
+      '';
+      apps.actions-frontend-formatting = utils.lib.mkApp {drv = actions-frontend-formatting;};
+      actions-frontend-check = pkgs.writeShellScriptBin "actions-frontend-check" ''
+        set -eu
+        echo Checking Svelte using npm run check
+        cd frontend
+
+        ${pkgs.nodePackages.npm}/bin/npm install
+        ${pkgs.nodePackages.npm}/bin/npm run check
 
       '';
-      apps.actions-frontend-script = utils.lib.mkApp {drv = actions-frontend-script;};
+      apps.actions-frontend-check = utils.lib.mkApp {drv = actions-frontend-check;};
 
     });
 }
