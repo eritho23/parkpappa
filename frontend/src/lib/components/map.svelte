@@ -7,6 +7,7 @@
     import 'leaflet/dist/leaflet.css';
     let map: L.Map;  
     let markerLayers: L.LayerGroup;
+    export let data;
 
     const markerIcon = L.icon({
       iconUrl: "/marker/map-pin.svg",
@@ -52,6 +53,13 @@
     $: if (map && markerLayers) {
 		try {
 				const marker = createMarker(L.latLng(59.6330795581567, 16.5470303778179));
+        console.log(data.parks, data.parks[0])
+        for(let i = 0; i < data.parks.length; i++) {
+          const currentPark = data.parks[i];
+          console.log(currentPark)
+          console.log(currentPark.Coordinates.x, currentPark.Coordinates.y)
+          createMarker(L.latLng(currentPark.Coordinates.x, currentPark.Coordinates.y));
+        }
 				markerLayers.addLayer(marker);
 		} catch (error) {
 			console.error(error);
