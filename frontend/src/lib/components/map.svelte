@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { json } from '@sveltejs/kit';
     import type { LatLng } from 'leaflet';
    import * as L from 'leaflet';
     // If you're playing with this in the Svelte REPL, import the CSS using the
