@@ -4,8 +4,10 @@ import json
 import threading
 import time
 import schedule
-from . import CoordinatesConverter
+#from . import CoordinatesConverter
+import CoordinatesConverter
 from flask_cors import CORS
+import random
 
 app = Flask(__name__)
 CORS(app)  # This allows all origins to access your API
@@ -111,6 +113,19 @@ def get_park_by_id(id):
             return jsonify(park)
     return jsonify({"error": "Park not found, Make sure you input a valid ID"}), 404
 
+@app.route('/api/parks/random', methods=['GET'])
+@app.route('/api/parks/random/<int:amount>', methods=['GET'])
+def get_random_parks(amount=3):  # Default amount set to 3
+    parks = load_parks()
+    if amount > len(parks):
+        return jsonify({"error": "Requested amount exceeds available parks"}), 400
+    
+    random_indices = random.sample(range(len(parks)), amount)  # Get unique random indices
+    random_parks = [parks[i] for i in random_indices]          # Fetch parks based on random indices
+    
+    return jsonify(random_parks)
+
+
 @app.route('/', methods=['GET'])
 def intro_screen():
     return "Yoooo use the URL /api/parks"
@@ -127,4 +142,4 @@ if __name__ == '__main__':
     if not load_parks():
         scrape_data()
     threading.Thread(target=schedule_scrape, daemon=True).start()
-    #app.run() # Commented out as Gunicorn will handle the app execution
+    app.run() # Commented out as Gunicorn will handle the app execution
