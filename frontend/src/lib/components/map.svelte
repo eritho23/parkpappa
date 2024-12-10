@@ -12,8 +12,18 @@
     const markerIcon = L.icon({
       iconUrl: "/marker/map-pin.svg",
       iconSize: [24, 24],
+    });
+    const markerIconNoId = L.icon({
+      iconUrl: "/marker/map-pin-noid.svg",
+      iconSize: [24, 24],
+    });
 
-    })
+    function getParkFromId(id:number) {
+      console.log(id)
+      let park = data.parks.find((park) => park.Id === id);
+      console.log(park);
+      return park
+    }
 
     function createMap(container: HTMLDivElement) {
       let m = L.map(container).setView([59.609796, 16.546400], 14);
@@ -30,10 +40,21 @@
       return m;
     }
 
-    function createMarker(loc: LatLng) {
-		let marker = L.marker(loc, {icon: markerIcon})
-		.addTo(map)
-		.bindPopup('popup text')
+    function createMarker(loc: LatLng, id?:number) {
+      let marker: L.Marker
+      if (id !== undefined) {
+        marker = L.marker(loc, {icon: markerIcon, id: id})
+		    .addTo(map)
+        .bindTooltip(getParkFromId(id).Name, {
+          direction: "bottom",
+          offset: L.point(0, 15)
+        })
+      } else {
+        marker = L.marker(loc, {icon: markerIconNoId})
+		    .addTo(map)
+		    .bindPopup('popup text')
+      }
+		
 		return marker;
 	}
 
@@ -52,15 +73,15 @@
 
     $: if (map && markerLayers) {
 		try {
-				const marker = createMarker(L.latLng(59.6330795581567, 16.5470303778179));
+				// const marker = createMarker(L.latLng(59.6330795581567, 16.5470303778179));
         console.log(data.parks, data.parks[0])
         for(let i = 0; i < data.parks.length; i++) {
           const currentPark = data.parks[i];
           console.log(currentPark)
           console.log(currentPark.Coordinates.x, currentPark.Coordinates.y)
-          createMarker(L.latLng(currentPark.Coordinates.x, currentPark.Coordinates.y));
+          const marker = createMarker(L.latLng(currentPark.Coordinates.x, currentPark.Coordinates.y), currentPark.Id).on("click", (e) => {getParkFromId(e.target.options.id)});
+          markerLayers.addLayer(marker);
         }
-				markerLayers.addLayer(marker);
 		} catch (error) {
 			console.error(error);
 		}
