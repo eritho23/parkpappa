@@ -65,7 +65,7 @@
           inherit version;
           src = pkgs.lib.cleanSource ./frontend/.;
 
-          npmDepsHash = "sha256-VmxsbRaSpAkU50uSiNSt6PX6HI32jmZOtPkpClLDCg0=";
+          npmDepsHash = "sha256-ZEIr3Z0Jo2E+S1UQWNTWXWn9HBifWpb+lKRcpVC3m5s=";
           # npmDepsHash = pkgs.lib.fakeHash;
 
           buildPhase = ''
