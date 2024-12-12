@@ -4,7 +4,7 @@
 
 
 <div class="flex flex-col overflow-y-scroll h-screen">
-    <div class="text-center w-full h-full px-auto justify-center bg-white flex flex-col space-y-8 py-12">
+    <div class="text-center w-full h-full px-auto justify-center bg-white border-b border-grey/90 flex flex-col space-y-8 py-12">
         <h1 class="text-4xl font-bold">Parkpappa</h1>
         <p>Hitta dina favoritlekparker i Västerås med en interaktiv karta!</p>
         <div class="flex flex-col lg:flex-row space-x-6 mx-auto">
@@ -26,11 +26,11 @@
             <div class="flex flex-row"><a class="bg-primary/10 hover:underline border-primary border-2 text-black w-fit whitespace-nowrap py-2 px-4 rounded" href="/addtohomescreen"><SquarePlus class="inline" /> Lägg till på hemskärmen</a></div>
         </div>
     </div>
-    <div>
-        <h1>Allt du behöver veta för ett smidigt parkbesök</h1>
+    <div class="w-1/3 mx-auto py-12">
+        <h1 class="font-bold text-xl">Allt du behöver veta för ett smidigt parkbesök</h1>
         <p>Parkpappa är den perfekta sidan för föräldrar med leksugna barn! Vår karta visar inte bara alla lekparker i Västerås, utan ger även möjlighet att filtrera parkerna för minnesvärda och varierade besök.</p>
     </div>
-    <div class="flex lg:flex-row flex-col w-full pt-3 mb-16 space-x-12 justify-center mt-12 px-auto">
+    <div class="flex lg:flex-row flex-col w-2/3 pt-3 mb-16 justify-center mx-auto mt-12">
         <img class="rounded-full size-48 lg:size-72 mx-auto mb-12" src="/img/jocke.jpg" alt="Joakim Flink" />
         <div class="hidden lg:visible border-r-2 border-zinc-800"></div>
         <div class="w-4/5 lg:w-1/3 flex flex-col my-auto mx-auto space-y-4">
