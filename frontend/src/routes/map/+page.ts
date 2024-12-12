@@ -28,7 +28,10 @@ export const load: PageLoad = async ({fetch}) => {
     };
     } catch (err) {
         if (err == "Error: request timed out") {
-            return error(503, "Request timed out, try again later")
+        //  return error(503, "Request timed out, try again later")
+        return {
+            parks: undefined
+        }
         } else {
             return error(500, "Unexpected Error")
         }

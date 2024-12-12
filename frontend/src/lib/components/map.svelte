@@ -2,8 +2,6 @@
     import { json } from '@sveltejs/kit';
     import type { LatLng } from 'leaflet';
    import * as L from 'leaflet';
-    // If you're playing with this in the Svelte REPL, import the CSS using the
-    // syntax in svelte:head instead. For normal development, this is better.
     import 'leaflet/dist/leaflet.css';
     let map: L.Map;  
     let markerLayers: L.LayerGroup;
@@ -71,7 +69,7 @@
       };
     }
 
-    $: if (map && markerLayers) {
+    $: if (map && markerLayers && data.parks) {
 		try {
 				// const marker = createMarker(L.latLng(59.6330795581567, 16.5470303778179));
         console.log(data.parks, data.parks[0])
