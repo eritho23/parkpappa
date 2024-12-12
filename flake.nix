@@ -16,8 +16,20 @@
     utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
       version = "0.0.0-dev";
-      python3WithPkgs = pkgs.python312.withPackages (po: with po; [flask requests pyproj]);
-    in  rec {
+      sweref-lib = pkgs.python312Packages.buildPythonPackage rec {
+        pname = "sweref99";
+        version = "0.2";
+        format = "setuptools";
+
+        pythonImportsCheck = ["sweref99"];
+
+        src = pkgs.fetchPypi {
+          inherit pname version;
+          hash = "sha256-0Ae359fEjpv4cZY2dDCb1kvZr4Dkj2K0bMaNextMtRM=";
+        };
+      };
+      python3WithPkgs = pkgs.python312.withPackages (po: with po; [flask requests pyproj schedule werkzeug python-dotenv gunicorn sweref-lib]);
+    in rec {
       devShells.default = pkgs.mkShell {
         packages = with pkgs; [
           act
@@ -28,6 +40,7 @@
           nil
           nodejs_22
           nodePackages.npm
+          nodePackages.prettier
           python3WithPkgs
           ripgrep
         ];
@@ -41,7 +54,7 @@
 
           installPhase = ''
             runHook preInstall
-            mkdir -p $out 
+            mkdir -p $out
             cp -r ./* $out
             runHook postInstall
           '';
@@ -52,7 +65,7 @@
           inherit version;
           src = pkgs.lib.cleanSource ./frontend/.;
 
-          npmDepsHash = "sha256-VmxsbRaSpAkU50uSiNSt6PX6HI32jmZOtPkpClLDCg0=";
+          npmDepsHash = "sha256-ZEIr3Z0Jo2E+S1UQWNTWXWn9HBifWpb+lKRcpVC3m5s=";
           # npmDepsHash = pkgs.lib.fakeHash;
 
           buildPhase = ''
@@ -79,14 +92,14 @@
         };
 
         backend = pkgs.stdenv.mkDerivation {
-            name = "parkpappa-backend";
-            inherit version;
-            src = pkgs.lib.cleanSource ./backend/.;
+          name = "parkpappa-backend";
+          inherit version;
+          src = pkgs.lib.cleanSource ./backend/.;
 
-            installPhase = ''
-              mkdir -p $out 
-              cp *.py $out
-            '';
+          installPhase = ''
+            mkdir -p $out
+            cp *.py $out
+          '';
         };
       };
       actions-frontend-formatting = pkgs.writeShellScriptBin "actions-frontend-formatting" ''
@@ -105,6 +118,5 @@
 
       '';
       apps.actions-frontend-check = utils.lib.mkApp {drv = actions-frontend-check;};
-
     });
 }
