@@ -5,8 +5,12 @@ import threading
 import time
 import schedule
 from . import CoordinatesConverter
+#import CoordinatesConverter
+from flask_cors import CORS
+import random
 
 app = Flask(__name__)
+CORS(app)  # This allows all origins to access your API
 
 CACHE_FILE = "ParkCache.json"
 
@@ -108,6 +112,19 @@ def get_park_by_id(id):
         if park.get("Id") == id:
             return jsonify(park)
     return jsonify({"error": "Park not found, Make sure you input a valid ID"}), 404
+
+@app.route('/api/parks/random', methods=['GET'])
+@app.route('/api/parks/random/<int:amount>', methods=['GET'])
+def get_random_parks(amount=3):  # Default amount set to 3
+    parks = load_parks()
+    if amount > len(parks):
+        return jsonify({"error": "Requested amount exceeds available parks"}), 400
+    
+    random_indices = random.sample(range(len(parks)), amount)  # Get unique random indices
+    random_parks = [parks[i] for i in random_indices]          # Fetch parks based on random indices
+    
+    return jsonify(random_parks)
+
 
 @app.route('/', methods=['GET'])
 def intro_screen():
