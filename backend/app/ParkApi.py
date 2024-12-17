@@ -38,7 +38,7 @@ def scrape_data():
             "BalancingPlay": "BALANSLEK",
             "CarPlay": "FORDONSLEK",
             "HopscotchArea": "HOPPLEK",
-            "Rocking Play": "VAGGLEK",
+            "RockingPlay": "VAGGLEK",
             "RolePlay": "ROLLEK",
             "SlidePlay": "RUTSCHLEK",
             "SoundPlay": "LJUDLE",
