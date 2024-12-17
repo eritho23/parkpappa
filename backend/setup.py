@@ -14,7 +14,7 @@ setup(
     install_requires=read_requirements('requirements.txt'), 
     entry_points={
         'console_scripts': [
-            'run-parks-api=app:app.run',
+            'run-parks-api=backend.app.ParkApi:app',
         ],
     },
 )
