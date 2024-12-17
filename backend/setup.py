@@ -8,8 +8,7 @@ setup(
     name='parks_api',
     version='1.0.0',
     description='Flask API for finding parks',
-    author='Your Name',
-    author_email='your.email@example.com',
+    author_email='david.lockley@hitachigymnasiet.se',
     packages=find_packages(),
     include_package_data=True,  # To include static files like ParkCache.json
     install_requires=read_requirements('requirements.txt'), 
