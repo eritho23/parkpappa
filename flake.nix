@@ -28,7 +28,8 @@
           hash = "sha256-0Ae359fEjpv4cZY2dDCb1kvZr4Dkj2K0bMaNextMtRM=";
         };
       };
-      python3WithPkgs = pkgs.python312.withPackages (po: with po; [flask requests pyproj schedule werkzeug python-dotenv gunicorn sweref-lib]);
+      backendDeps = with pkgs.python312Packages; [flask requests pyproj schedule werkzeug python-dotenv flask-cors gunicorn sweref-lib];
+      python3WithPkgs = pkgs.python312.withPackages (po: with po; [flask requests pyproj schedule werkzeug python-dotenv flask-cors gunicorn sweref-lib]);
     in rec {
       devShells.default = pkgs.mkShell {
         packages = with pkgs; [
@@ -91,17 +92,34 @@
           };
         };
 
-        backend = pkgs.stdenv.mkDerivation {
+        backend = pkgs.python312Packages.buildPythonPackage {
           name = "parkpappa-backend";
           inherit version;
           src = pkgs.lib.cleanSource ./backend/.;
 
-          installPhase = ''
-            mkdir -p $out
-            cp *.py $out
-          '';
+          dependencies = with pkgs.python312Packages; [
+            flask
+            requests
+            pyproj
+            schedule
+            werkzeug
+            python-dotenv
+            flask-cors
+            gunicorn
+            sweref-lib
+          ];
         };
       };
+
+      # backend-docker = pkgs.dockerTools.streamLayeredImage {
+        # name = "parkpappa-frontend";
+        # tag = version;
+        # config.Cmd = ["${backend}/bin/run-parks-api"];
+        # config.exposedPorts = {
+          # "8000/tcp" = {};
+        # };
+      # };
+
       actions-frontend-formatting = pkgs.writeShellScriptBin "actions-frontend-formatting" ''
         set -eu
         echo Checking formatting on frontend
