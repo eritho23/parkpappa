@@ -4,8 +4,8 @@ import json
 import threading
 import time
 import schedule
-#from . import CoordinatesConverter
-import CoordinatesConverter
+from . import CoordinatesConverter
+#import CoordinatesConverter
 from flask_cors import CORS
 import random
 
@@ -143,4 +143,4 @@ if __name__ == '__main__':
         scrape_data()
     threading.Thread(target=schedule_scrape, daemon=True).start()
     #app.run() # Commented out as Gunicorn will handle the app execution
-    app.run(host='0.0.0.0', port=5000)
+    app.run()
