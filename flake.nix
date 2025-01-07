@@ -98,10 +98,28 @@
           src = pkgs.lib.cleanSource ./backend/.;
 
           dependencies = with pkgs.python312Packages; [
-            flask requests pyproj schedule werkzeug python-dotenv flask-cors gunicorn sweref-lib 
+            flask
+            requests
+            pyproj
+            schedule
+            werkzeug
+            python-dotenv
+            flask-cors
+            gunicorn
+            sweref-lib
           ];
         };
       };
+
+      # backend-docker = pkgs.dockerTools.streamLayeredImage {
+        # name = "parkpappa-frontend";
+        # tag = version;
+        # config.Cmd = ["${backend}/bin/run-parks-api"];
+        # config.exposedPorts = {
+          # "8000/tcp" = {};
+        # };
+      # };
+
       actions-frontend-formatting = pkgs.writeShellScriptBin "actions-frontend-formatting" ''
         set -eu
         echo Checking formatting on frontend
