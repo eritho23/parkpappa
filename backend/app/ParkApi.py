@@ -137,6 +137,13 @@ def schedule_scrape():
         schedule.run_pending()
         time.sleep(1)
 
+def run_gunicorn():
+    import os
+    from gunicorn.app.wsgiapp import run
+    # Default Gunicorn arguments (customize as needed)
+    os.environ.setdefault("GUNICORN_CMD_ARGS", "--workers 3 --bind 0.0.0.0:8000")
+    # Pass your app module to Gunicorn
+    run(["gunicorn", "app.ParkApi:app"])
 
 if __name__ == '__main__':
     if not load_parks():
