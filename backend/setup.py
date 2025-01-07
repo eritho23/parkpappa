@@ -15,9 +15,8 @@ setup(
     include_package_data=True,  # To include static files like ParkCache.json
     install_requires=read_requirements("requirements.txt"),
     entry_points={
-    'console_scripts': [
-        'park-api=app.ParkApi:run_gunicorn',
-    ],
-    }
-
+        "console_scripts": [
+            "park-api=app.ParkApi:run_gunicorn",
+        ],
+    },
 )
