@@ -3,7 +3,6 @@ import requests
 import json
 import threading
 import time
-import schedule
 from . import CoordinatesConverter
 #import CoordinatesConverter
 from flask_cors import CORS
@@ -130,12 +129,6 @@ def get_random_parks(amount=3):  # Default amount set to 3
 def intro_screen():
     return "Yoooo use the URL /api/parks"
 
-def schedule_scrape():
-    schedule.every().day.at("00:00").do(scrape_data)
-
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
 
 def run_gunicorn():
     import os
@@ -148,6 +141,5 @@ def run_gunicorn():
 if __name__ == '__main__':
     if not load_parks():
         scrape_data()
-    threading.Thread(target=schedule_scrape, daemon=True).start()
     #app.run() # Commented out as Gunicorn will handle the app execution
     app.run()
