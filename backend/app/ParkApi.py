@@ -1,10 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 import requests
 import json
 import threading
 import time
-from . import CoordinatesConverter
-#import CoordinatesConverter
+#from . import CoordinatesConverter
+import CoordinatesConverter
 from flask_cors import CORS
 import random
 
@@ -127,7 +127,7 @@ def get_random_parks(amount=3):  # Default amount set to 3
 
 @app.route('/', methods=['GET'])
 def intro_screen():
-    return "Yoooo use the URL /api/parks"
+    return render_template("index.html")
 
 
 def run_gunicorn():
