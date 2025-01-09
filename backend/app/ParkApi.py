@@ -3,8 +3,8 @@ import requests
 import json
 import threading
 import time
-#from . import CoordinatesConverter
-import CoordinatesConverter
+from . import CoordinatesConverter
+#import CoordinatesConverter
 from flask_cors import CORS
 import random
 
@@ -139,6 +139,4 @@ def run_gunicorn():
     run(["gunicorn", "app.ParkApi:app"])
 
 if __name__ == '__main__':
-    if not load_parks():
-        scrape_data()
     app.run()
