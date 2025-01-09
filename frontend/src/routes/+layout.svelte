@@ -8,6 +8,12 @@ const activeClass = "text-primary bold underline stroke-primary";
 const nonActiveClass = "text-text hover:text-primary";
 </script>
 
+<svelte:head>
+  <title>
+    Parkpappa
+  </title>
+</svelte:head>
+
 <div class="min-h-screen flex flex-col overflow-hidden">
 <Navbar class="px-2 sm:px-4 py-2.5 w-full z-30 top-0 start-0 border-b bg-background-foreground hidden md:block">
   <NavBrand href="/">
