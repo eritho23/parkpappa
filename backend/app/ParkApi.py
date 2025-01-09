@@ -1,9 +1,8 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 import requests
 import json
 import threading
 import time
-import schedule
 from . import CoordinatesConverter
 #import CoordinatesConverter
 from flask_cors import CORS
@@ -38,7 +37,7 @@ def scrape_data():
             "BalancingPlay": "BALANSLEK",
             "CarPlay": "FORDONSLEK",
             "HopscotchArea": "HOPPLEK",
-            "Rocking Play": "VAGGLEK",
+            "RockingPlay": "VAGGLEK",
             "RolePlay": "ROLLEK",
             "SlidePlay": "RUTSCHLEK",
             "SoundPlay": "LJUDLE",
@@ -128,18 +127,16 @@ def get_random_parks(amount=3):  # Default amount set to 3
 
 @app.route('/', methods=['GET'])
 def intro_screen():
-    return "Yoooo use the URL /api/parks"
+    return render_template("index.html")
 
-def schedule_scrape():
-    schedule.every().day.at("00:00").do(scrape_data)
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-
+def run_gunicorn():
+    import os
+    from gunicorn.app.wsgiapp import run
+    # Default Gunicorn arguments (customize as needed)
+    os.environ.setdefault("GUNICORN_CMD_ARGS", "--workers 3 --bind 0.0.0.0:8000")
+    # Pass your app module to Gunicorn
+    run(["gunicorn", "app.ParkApi:app"])
 
 if __name__ == '__main__':
-    if not load_parks():
-        scrape_data()
-    threading.Thread(target=schedule_scrape, daemon=True).start()
-    #app.run() # Commented out as Gunicorn will handle the app execution
+    app.run()
