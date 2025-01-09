@@ -141,5 +141,4 @@ def run_gunicorn():
 if __name__ == '__main__':
     if not load_parks():
         scrape_data()
-    #app.run() # Commented out as Gunicorn will handle the app execution
     app.run()

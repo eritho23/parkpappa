@@ -1,4 +1,6 @@
-from app.ParkApi import app, scrape_data  # Import app and scrape_data from ParkApi.py
+from app.ParkApi import app, scrape_data, load_parks  # Import app and scrape_data from ParkApi.py
+
+
 import schedule
 import threading
 import time
@@ -15,4 +17,6 @@ def schedule_scrape():
 threading.Thread(target=schedule_scrape, daemon=True).start()
 
 if __name__ == '__main__':
+    if not load_parks():
+        scrape_data()
     app.run()
