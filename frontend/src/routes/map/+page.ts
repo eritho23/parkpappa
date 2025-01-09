@@ -4,7 +4,9 @@ import type { Park } from '$lib/types';
 
 export const ssr = false;
 
-export const load: PageLoad = async ({ fetch }) => {
+export const load: PageLoad = async ({ fetch, data }) => {
+    console.log(data);
+    const { API_PATH } = data;
     async function raceFetch() {
         const timeoutPromise: Promise<never> = new Promise((_, reject) =>
             setTimeout(() => reject(new Error('request timed out')), 5000)
@@ -12,9 +14,7 @@ export const load: PageLoad = async ({ fetch }) => {
 
         return Promise.race([
             timeoutPromise,
-            fetch('https://parkpappa.onrender.com/api/parks').catch((err) =>
-                console.log(err)
-            ),
+            fetch(API_PATH + '/api/parks').catch((err) => console.log(err)),
         ]) as Promise<Response>;
     }
 

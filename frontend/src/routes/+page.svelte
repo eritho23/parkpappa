@@ -1,10 +1,11 @@
 <script>
-    import StarRating from "$lib/components/starRating.svelte";
+    import ParkInfo from "$lib/components/parkInfo.svelte";
+import StarRating from "$lib/components/starRating.svelte";
 
 </script>
 
 
 
 <div>Hellos</div>
-
-<StarRating rating={10} ></StarRating>
+<ParkInfo></ParkInfo>
+<!-- <StarRating rating={10} ></StarRating> -->
