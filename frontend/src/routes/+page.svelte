@@ -1,6 +1,4 @@
 <script>
-    import ParkInfo from '$lib/components/parkInfo.svelte';
-    import StarRating from '$lib/components/starRating.svelte';
     import {
         Check,
         Map,
