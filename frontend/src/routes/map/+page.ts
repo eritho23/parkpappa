@@ -6,12 +6,12 @@ export const ssr = false;
 export const load: PageLoad = async ({fetch}) => {
 
     async function raceFetch() {
-        const timeoutPromise: Promise<never> = new Promise((_, reject) => setTimeout(() => reject(new Error("request timed out")), 5000));
+        const timeoutPromise: Promise<never> = new Promise((_, reject) => setTimeout(() => reject(new Error("request timed out")), 1000));
 
         return Promise.race([
             timeoutPromise,
             fetch(
-                'https://parkpappa.onrender.com/api/parks'
+                'https://parkpappa-api.cloud.spetsen.net/api/parks'
             ).catch((err) => console.log(err))
         ]) as Promise<Response>
     }

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 import requests
 import json
 import threading
@@ -129,6 +129,26 @@ def get_random_parks(amount=3):  # Default amount set to 3
 def intro_screen():
     return render_template("index.html")
 
+@app.route('/api/parks/search', methods=['POST'])
+def search_parks():
+    search_criteria = request.json
+    if not search_criteria:
+        return jsonify([]), 200
+
+    parks = load_parks()
+    filtered_parks = []
+
+    for park in parks:
+        matches = True
+        for key, value in search_criteria.items():
+            # Check if the key exists in park data and matches the value
+            if not (key in park.get("Equipment", {}) and park["Equipment"][key] == value) and not (key in park.get("TypesOfPlay", {}) and park["TypesOfPlay"][key] == value):
+                matches = False
+                break
+        if matches:
+            filtered_parks.append(park)
+    # Return the filtered parks or an empty list if no matches are found
+    return jsonify(filtered_parks), 200
 
 def run_gunicorn():
     import os

@@ -1,6 +1,4 @@
 from app.ParkApi import app, scrape_data, load_parks  # Import app and scrape_data from ParkApi.py
-
-
 import schedule
 import threading
 import time
