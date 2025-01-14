@@ -166,7 +166,6 @@ def search_parks():
     # Return the filtered parks or an empty list if no matches are found
     return jsonify(filtered_parks), 200
 
-
 def run_gunicorn():
     import os
     from gunicorn.app.wsgiapp import run
