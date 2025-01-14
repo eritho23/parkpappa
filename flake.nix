@@ -69,6 +69,8 @@
           npmDepsHash = "sha256-ZEIr3Z0Jo2E+S1UQWNTWXWn9HBifWpb+lKRcpVC3m5s=";
           # npmDepsHash = pkgs.lib.fakeHash;
 
+          API_PATH = "https://parkpappa-api.cloud.spetsen.net";
+
           buildPhase = ''
             runHook preBuild
             npm --loglevel=verbose run build --offline
