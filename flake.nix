@@ -15,7 +15,7 @@
   }:
     utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
-      version = "0.1.0";
+      version = "0.2.0";
       sweref-lib = pkgs.python312Packages.buildPythonPackage rec {
         pname = "sweref99";
         version = "0.2";
