@@ -5,7 +5,6 @@
 </script>
 
 
-</script>
 <ParkInfo></ParkInfo>
 <div class="flex flex-col overflow-y-scroll h-screen">
     <div class="text-center w-full h-full px-auto justify-center bg-white border-b border-grey/90 flex flex-col space-y-8 py-12">

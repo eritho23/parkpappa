@@ -2,57 +2,97 @@
     import { Instagram } from 'lucide-svelte';
     import StarRating from './starRating.svelte';
     import { Tabs, TabItem } from 'flowbite-svelte';
+    import { onDestroy, onMount } from 'svelte';
     const activeClasses =
-        'text-primary p-4 inline-block border-b-2 border-primary text-center';
+        'text-primary p-2 lg:p-3 inline-block border-b-2 border-primary text-center text-xs lg:text-sm';
     const inactiveClasses =
-        'text-text-light p-4 hover:text-text-dark inline-block border-b-2 border-text-light hover:border-text-dark text-center';
+        'text-text-light p-2 lg:p-3 hover:text-text-dark inline-block border-b-2 border-text-light hover:border-text-dark text-center text-xs lg:text-sm';
+
+    const xlMediaQuery = window.matchMedia('(min-width: 1280px)');
+    const lgMediaQuery = window.matchMedia('(min-width: 1024px)');
+    const mdMediaQuery = window.matchMedia('(min-width: 768px)');
+    onMount(() => {
+        xlMediaQuery.addEventListener('change', screenResize);
+        lgMediaQuery.addEventListener('change', screenResize);
+        mdMediaQuery.addEventListener('change', screenResize);
+        screenResize();
+    });
+    onDestroy(() => {
+        xlMediaQuery.removeEventListener('change', screenResize);
+        lgMediaQuery.removeEventListener('change', screenResize);
+        mdMediaQuery.removeEventListener('change', screenResize);
+    });
+    let totalReviewSize = 16;
+    let topicReviewSize = 24;
+    function screenResize() {
+        if (xlMediaQuery.matches) {
+            totalReviewSize = 24;
+            topicReviewSize = 28;
+        } else if (lgMediaQuery.matches) {
+            totalReviewSize = 16;
+            topicReviewSize = 20;
+
+        } else if (mdMediaQuery.matches) {
+            totalReviewSize = 12;
+            topicReviewSize = 16;
+        } else {
+            totalReviewSize = 14;
+            topicReviewSize = 24;
+        }
+    }
 </script>
 
-<div class="absolute h-full flex flex-col bg-background-foreground w-2/5">
+<div
+    class="absolute h-full flex flex-col bg-background-foreground md:w-2/5 lg:w-[35%]"
+>
     <img
-        class="w-full h-80 object-cover"
+        class="w-full h-52 lg:h-72 object-cover"
         src="./placeholders/playground.jpg"
         alt="Playground"
     />
     <div class="ml-2">
         <div>
-            <h1>Parknamn</h1>
-            <div class="flex">
-                <p>3.9</p>
-                <StarRating rating={7}></StarRating>
+            <h1 class="md:text-xl lg:text-2xl">Parknamn</h1>
+            <div class="flex items-center">
+                <p class="md:text-sm lg:text-lg">3.9</p>
+                <StarRating rating={7} size={topicReviewSize}></StarRating>
             </div>
         </div>
         <Tabs {activeClasses} {inactiveClasses}>
             <TabItem title="Officiell" open>
-                <div class="bg-background-foreground">
-                    <p>Park Pappans Recension</p>
+                <div class="bg-background-foreground -mt-4">
+                    <p class="md:text-sm lg:text-md xl:text-lg">Park Pappans Recension</p>
                     <div class="flex w-full">
                         <div class="flex flex-col w-max">
-                            <div class="flex justify-end">
+                            <div class="flex justify-end -mb-1 lg:mb-0">
                                 <p class="mr-1">Nöje:</p>
-                                <StarRating rating={3}></StarRating>
+                                <StarRating rating={3} size={topicReviewSize}></StarRating>
                             </div>
-                            <div class="flex justify-end">
+                            <div class="flex justify-end -mb-1 lg:mb-0">
                                 <p class="mr-1">Fräschet:</p>
-                                <StarRating rating={3}></StarRating>
+                                <StarRating rating={3} size={topicReviewSize}></StarRating>
                             </div>
-                            <div class="flex justify-end">
+                            <div class="flex justify-end -mb-1 lg:mb-0">
                                 <p class="mr-1">Miljö:</p>
-                                <StarRating rating={3}></StarRating>
+                                <StarRating rating={3} size={topicReviewSize}></StarRating>
                             </div>
                         </div>
                         <div class="justify-end w-full">
                             <div class="flex flex-col">
-                                <h1 class="text-4xl text-center font-thin">3.8</h1>
+                                <h1
+                                    class=" text-3xl md:text-2xl lg:text-4xl xl:text-5xl text-center font-thin"
+                                >
+                                    3.8
+                                </h1>
                                 <StarRating
                                     rating={8}
-                                    size={16}
+                                    size={totalReviewSize}
                                     class="justify-center"
                                 ></StarRating>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-8">
+                    <div class="mb-2">
                         <a
                             class="flex items-center text-blue-500"
                             href="https://www.instagram.com/park_pappa?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
