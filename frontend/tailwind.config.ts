@@ -31,6 +31,7 @@ export default {
                 },
             },
             fontWeight: {
+                thin: '100',
                 normal: '400',
                 medium: '500',
                 semibold: '600',

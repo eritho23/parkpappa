@@ -15,7 +15,7 @@
   }:
     utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
-      version = "0.0.0-dev";
+      version = "0.1.0";
       sweref-lib = pkgs.python312Packages.buildPythonPackage rec {
         pname = "sweref99";
         version = "0.2";
@@ -92,33 +92,31 @@
           };
         };
 
-        backend = pkgs.python312Packages.buildPythonPackage {
+        backend = pkgs.stdenvNoCC.mkDerivation {
           name = "parkpappa-backend";
           inherit version;
           src = pkgs.lib.cleanSource ./backend/.;
 
-          dependencies = with pkgs.python312Packages; [
-            flask
-            requests
-            pyproj
-            schedule
-            werkzeug
-            python-dotenv
-            flask-cors
-            gunicorn
-            sweref-lib
-          ];
+          installPhase = ''
+            mkdir -p $out
+            cp -r * $out
+          '';
+        };
+
+        backend-docker = pkgs.dockerTools.streamLayeredImage {
+          name = "parkpappa-backend";
+          tag = version;
+          contents = [python3WithPkgs backend];
+          # config.Cmd = ["${python3WithPkgs}/bin/gunicorn" "${backend}/wsgi.py"];
+          config.Entrypoint = pkgs.writeShellScript "entrypoint.sh" ''
+            cd ${backend}
+            ${python3WithPkgs}/bin/gunicorn --bind 0.0.0.0:8000 wsgi:app
+          '';
+          config.exposedPorts = {
+            "8000/tcp" = {};
+          };
         };
       };
-
-      # backend-docker = pkgs.dockerTools.streamLayeredImage {
-        # name = "parkpappa-frontend";
-        # tag = version;
-        # config.Cmd = ["${backend}/bin/run-parks-api"];
-        # config.exposedPorts = {
-          # "8000/tcp" = {};
-        # };
-      # };
 
       actions-frontend-formatting = pkgs.writeShellScriptBin "actions-frontend-formatting" ''
         set -eu
