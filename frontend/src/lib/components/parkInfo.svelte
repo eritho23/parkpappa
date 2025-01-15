@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { Instagram } from 'lucide-svelte';
     import StarRating from './starRating.svelte';
     import { Tabs, TabItem } from 'flowbite-svelte';
     import { onDestroy, onMount } from 'svelte';
+    import { slide, fly } from "svelte/transition";
     const activeClasses =
         'text-primary p-2 lg:p-3 inline-block border-b-2 border-primary text-center text-xs lg:text-sm';
     const inactiveClasses =
@@ -44,6 +44,7 @@
 
 <div
     class="absolute h-full flex flex-col bg-background-foreground md:w-2/5 lg:w-[35%]"
+    transition:fly={{opacity: 100, x: -1000, duration: 800}}
 >
     <img
         class="w-full h-52 lg:h-72 object-cover"

@@ -8,8 +8,9 @@
     let markerLayers: L.LayerGroup;
     interface Props {
         parkData: Park[];
+        showInfo: (toggle?: boolean) => void;
     }
-    let { parkData }: Props = $props();
+    let { parkData, showInfo }: Props = $props();
 
     const markerIcon = L.icon({
         iconUrl: '/marker/map-pin.svg',
@@ -24,11 +25,16 @@
         console.log(id);
         let park = parkData.find((park) => park.Id === id);
         console.log(park);
-        return park as Park
+        return park as Park;
     }
 
     function createMap(container: HTMLDivElement) {
-        let m = L.map(container).setView([59.609796, 16.5464], 14);
+        let m = L.map(container)
+            .setView([59.609796, 16.5464], 14)
+            .on('click', () => {
+                console.log('Map Clicked');
+                showInfo(false);
+            });
         L.tileLayer(
             'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
             {
@@ -79,33 +85,34 @@
     }
 
     $effect(() => {
-      if (map && markerLayers && parkData) {
-        try {
-            // const marker = createMarker(L.latLng(59.6330795581567, 16.5470303778179));
-            console.log(parkData, parkData[0]);
-            for (let i = 0; i < parkData.length; i++) {
-                const currentPark = parkData[i];
-                console.log(currentPark);
-                console.log(
-                    currentPark.Coordinates.x,
-                    currentPark.Coordinates.y
-                );
-                const marker = createMarker(
-                    L.latLng(
+        if (map && markerLayers && parkData) {
+            try {
+                // const marker = createMarker(L.latLng(59.6330795581567, 16.5470303778179));
+                console.log(parkData, parkData[0]);
+                for (let i = 0; i < parkData.length; i++) {
+                    const currentPark = parkData[i];
+                    console.log(currentPark);
+                    console.log(
                         currentPark.Coordinates.x,
                         currentPark.Coordinates.y
-                    ),
-                    currentPark.Id
-                ).on('click', (e) => {
-                    getParkFromId(e.target.options.id);
-                });
-                markerLayers.addLayer(marker);
+                    );
+                    const marker = createMarker(
+                        L.latLng(
+                            currentPark.Coordinates.x,
+                            currentPark.Coordinates.y
+                        ),
+                        currentPark.Id
+                    ).on('click', (e) => {
+                        getParkFromId(e.target.options.id);
+                        showInfo();
+                    });
+                    markerLayers.addLayer(marker);
+                }
+            } catch (error) {
+                console.error(error);
             }
-        } catch (error) {
-            console.error(error);
         }
-    }
-    })
+    });
     setTimeout(() => map.invalidateSize(), 0);
 </script>
 
