@@ -150,6 +150,7 @@ def search_parks():
     # Return the filtered parks or an empty list if no matches are found
     return jsonify(filtered_parks), 200
 
+
 def run_gunicorn():
     import os
     from gunicorn.app.wsgiapp import run
@@ -157,6 +158,7 @@ def run_gunicorn():
     os.environ.setdefault("GUNICORN_CMD_ARGS", "--workers 3 --bind 0.0.0.0:8000")
     # Pass your app module to Gunicorn
     run(["gunicorn", "app.ParkApi:app"])
-
+'''
 if __name__ == '__main__':
-    app.run()
+    app.run(host="127.0.0.1", port=5001)  # Localhost, port 5001
+'''
