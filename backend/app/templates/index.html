@@ -62,7 +62,7 @@
     </header>
     <main>
         <h2>Overview</h2>
-        <p>This API provides information about parks, including their names, coordinates, and types of equipment/play. The data is scraped from Västerås Stad's park database.</p>
+        <p>This API provides information about parks, including their names, coordinates, and types of equipment/play. The data is sourced from Västerås Stad's park database.</p>
 
         <h2>Available Endpoints:</h2>
         <ul>
@@ -84,6 +84,12 @@
                     <li><code>/api/parks/random</code> or <code>/api/parks/random/&lt;amount&gt;</code> - <strong>GET</strong> - Retrieves a random selection of parks. Replace <code>&lt;amount&gt;</code> with the number of random parks you want (default is 3).</li>
                 </ul>
             </li>
+            <li>
+                <strong>4. Search parks:</strong>
+                <ul>
+                    <li><code>/api/parks/search</code> - <strong>POST</strong> - Searches for parks based on specified criteria. The search criteria should be provided as a JSON object in the request body, with keys matching park attributes (e.g., equipment or types of play).</li>
+                </ul>
+            </li>
         </ul>
 
         <h2>Example Usage:</h2>
@@ -91,8 +97,17 @@
             <li><code>/api/parks</code> - Get all parks.</li>
             <li><code>/api/parks/5</code> - Get the park with ID 5.</li>
             <li><code>/api/parks/random/2</code> - Get 2 random parks.</li>
+            <li><code>/api/parks/search</code> - Search for parks using a JSON body, e.g., <code>{"Swings": true, "Slides": true}</code>.</li>
         </ul>
-        <p>The data is sourced from Västerås Stad's park database. Please refer to their website for more information: <a href="https://kartor.vasteras.se/" target="_blank">Västerås Stad Park Database</a>.</p>
-    </main>
+        <p>
+            The data is sourced from Västerås Stad's park database. 
+            Please refer to their website for more information: 
+            <a href="{% raw %}https://kartor.vasteras.se/arcgis/rest/services/ext/tk_lekplatser_dyn/FeatureServer/0/query?f=json&returnGeometry=true&spatialRel=esriSpatialRelIntersects&geometry={%22xmin%22:97161.8,%22ymin%22:6596631.56,%22xmax%22:203248.2,%22ymax%22:6635410.44,%22spatialReference%22:{%22wkid%22:3010}&geometryType=esriGeometryEnvelope&inSR=3010&outFields=*&returnIdsOnly=false&returnCountOnly=false&geometryPrecision=2&outSR=3010{% endraw %}"
+               target="_blank">
+               Västerås Stad Park Database
+            </a>.
+        </p>
+        
+        </main>
 </body>
 </html>
