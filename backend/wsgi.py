@@ -17,5 +17,5 @@ threading.Thread(target=schedule_scrape, daemon=True).start()
 if __name__ == '__main__':
     if not load_parks():
         scrape_data()
-    app.run(host="127.0.0.1", port=5001)  # Localhost, port 5001
+    app.run()  
 
