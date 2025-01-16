@@ -15,7 +15,7 @@
 
 {#if fullStars !== undefined && displayHalfStar !== undefined}
     <div class={`${className} flex`}>
-        <div class="flex">
+        <div class="flex items-center">
             <div class=" flex">
                 {#each range(5) as _}
                     <Star strokeWidth={0} fill="#ACACAC" {size} />
