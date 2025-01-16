@@ -26,6 +26,7 @@
     "dependencies": {
         "@types/leaflet": "^1.9.14",
         "leaflet": "^1.9.4",
-        "lucide-svelte": "^0.460.1"
+        "lucide-svelte": "^0.460.1",
+        "pocketbase": "^0.25.0"
     }
 }
