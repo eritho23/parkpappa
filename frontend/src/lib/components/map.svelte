@@ -8,9 +8,9 @@
     let markerLayers: L.LayerGroup;
     interface Props {
         parkData: Park[];
-        showInfo: (toggle?: boolean) => void;
+        selectedPark: Park | undefined;
     }
-    let { parkData, showInfo }: Props = $props();
+    let { parkData, selectedPark=$bindable() }: Props = $props();
 
     const markerIcon = L.icon({
         iconUrl: '/marker/map-pin.svg',
@@ -33,7 +33,7 @@
             .setView([59.609796, 16.5464], 14)
             .on('click', () => {
                 console.log('Map Clicked');
-                showInfo(false);
+                selectedPark = undefined;
             });
         L.tileLayer(
             'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -104,7 +104,7 @@
                         currentPark.Id
                     ).on('click', (e) => {
                         getParkFromId(e.target.options.id);
-                        showInfo();
+                        selectedPark = getParkFromId(e.target.options.id);
                     });
                     markerLayers.addLayer(marker);
                 }

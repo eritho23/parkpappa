@@ -7,24 +7,22 @@
     import { RotateCcw } from 'lucide-svelte';
     interface Props {
         data: DataParks;
+        selectedPark: Park | undefined;
     }
-    let { data }: Props = $props();
-    let selectedPark = $state();
-    let parkInfoVisible = $state(false);
-    function showInfo(toggle: boolean = true) {
-        if (toggle) {
-            parkInfoVisible = !parkInfoVisible;
-        } else {
-            parkInfoVisible = false;
-        }
-        console.log('visible? ', parkInfoVisible);
+    let { data, selectedPark = $bindable()}: Props = $props();
+    $inspect(selectedPark);
+    let parkInfo: Park | undefined = $state(undefined);
+    function showInfo(toggle: boolean = true, park?: Park | undefined) {
+        selectedPark = park;
+        console.log('visible? ', parkInfo);
+
     }
 </script>
 
 <div class="h-full w-full flex-grow flex flex-col">
-    <Map parkData={data.parks} {showInfo}></Map>
-    {#if parkInfoVisible}
-        <ParkInfo></ParkInfo>
+    <Map parkData={data.parks} bind:selectedPark={selectedPark}></Map>
+    {#if selectedPark}
+        <ParkInfo bind:selectedPark={selectedPark}></ParkInfo>
     {/if}
     {#if !data.parks}
         <Alert
