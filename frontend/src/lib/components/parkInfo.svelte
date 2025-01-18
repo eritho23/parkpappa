@@ -31,7 +31,7 @@
     });
     let totalReviewSize = $state(16);
     let topicReviewSize = $state(24);
-    console.log(parkData);
+    $inspect(parkData);
     function screenResize() {
         if (xlMediaQuery.matches) {
             totalReviewSize = 24;
@@ -51,23 +51,23 @@
 </script>
 
 <div
-    class="absolute h-full flex flex-col bg-background-foreground md:w-2/5 lg:w-[35%]"
+    class="absolute h-full flex flex-col bg-background-foreground md:w-2/5 lg:w-[35%] overflow-y-scroll"
     transition:fly={{opacity: 100, x: -1000, duration: 800}}
 >
-<div class="absolute flex right-3 top-2 bg-primary/50 size-8 items-center justify-center rounded-full"><button onclick={() => parkData = undefined}><X color="white"></X></button></div>
+<div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"><button onclick={() => parkData = undefined}><X  class="drop-shadow-lg stroke-text-dark"></X></button></div>
     <img
         class="w-full h-52 lg:h-72 object-cover"
         src="./placeholders/playground.jpg"
         alt="Playground"
     />
-    <div class="ml-2">
+    <div class="ml-2 pb-4">
         <div>
             <h1 class="md:text-xl lg:text-2xl">{parkData?.Name}</h1>
             <div class="flex items-center">
                 <p class="md:text-sm lg:text-lg">3.9</p>
                 <StarRating rating={7} size={topicReviewSize}></StarRating>
             </div>
-            <InfoChips></InfoChips>
+            <InfoChips park={parkData}></InfoChips>
         </div>
         <Tabs {activeClasses} {inactiveClasses}>
             <TabItem title="Officiell" open>
@@ -122,10 +122,13 @@
                             >
                             <p>Upptäck mer av Park_pappa!</p>
                         </a>
+                        <div class="w-full h-12"></div> <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
                     </div>
                 </div>
             </TabItem>
-            <TabItem title="Community"></TabItem>
+            <TabItem title="Community">
+                <div class="w-full h-12"></div> <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
+            </TabItem>
         </Tabs>
     </div>
 </div>

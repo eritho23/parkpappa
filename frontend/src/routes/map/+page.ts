@@ -5,7 +5,6 @@ import type { Park } from '$lib/types';
 export const ssr = false;
 
 export const load: PageLoad = async ({ fetch, data }) => {
-    console.log(data);
     const { API_PATH } = data;
     async function raceFetch() {
         const timeoutPromise: Promise<never> = new Promise((_, reject) =>
