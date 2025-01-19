@@ -51,7 +51,7 @@
 </script>
 
 <div
-    class="absolute h-full flex flex-col bg-background-foreground md:w-2/5 lg:w-[35%] overflow-y-scroll"
+    class="absolute h-full flex flex-col bg-background-foreground md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden"
     transition:fly={{opacity: 100, x: -1000, duration: 800}}
 >
 <div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"><button onclick={() => parkData = undefined}><X  class="drop-shadow-lg stroke-text-dark"></X></button></div>

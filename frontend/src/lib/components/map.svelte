@@ -10,7 +10,7 @@
         parkData: Park[];
         selectedPark: Park | undefined;
     }
-    let { parkData, selectedPark=$bindable() }: Props = $props();
+    let { parkData, selectedPark = $bindable() }: Props = $props();
 
     const markerIcon = L.icon({
         iconUrl: '/marker/map-pin.svg',
@@ -26,6 +26,19 @@
         let park = parkData.find((park) => park.Id === id);
         console.log(park);
         return park as Park;
+    }
+    export function flyToMarker(markerID: number) {
+        console.log('funcion called');
+        map.eachLayer((layer) => {
+            console.log(layer);
+            // @ts-expect-error
+            if (layer.options.id === markerID) {
+                // @ts-expect-error
+                map.flyTo(layer.getLatLng(), 17);
+                selectedPark = getParkFromId(markerID);
+                return;
+            }
+        });
     }
 
     function createMap(container: HTMLDivElement) {
@@ -105,6 +118,7 @@
                     ).on('click', (e) => {
                         getParkFromId(e.target.options.id);
                         selectedPark = getParkFromId(e.target.options.id);
+                        flyToMarker(e.target.options.id);
                     });
                     markerLayers.addLayer(marker);
                 }

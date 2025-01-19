@@ -65,14 +65,9 @@
     }
 
     function getColorFromName(name: string) {
-        console.log(
-            Object.entries(colorMatch).find(([key, _]) => key === name)?.[1]
-        );
         return Object.entries(colorMatch).find(([key, _]) => key === name)?.[1];
     }
 
-    // const classStyle = `px-2 py-1 bg-${getColorFromName(objectToTrueArray(stats)[2])}-400/50 rounded-lg text-sm mt-2 mb-1`;
-    // console.log(classStyle, typeof classStyle)
 </script>
 <p class="text-md text-text-dark mt-1">Lekredskap</p>
 <div class="flex flex-row gap-1 overflow-x-scroll overflow-y-clip mb-2 no-scrollbar">
