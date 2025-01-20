@@ -13,8 +13,8 @@
         class="text-center w-full h-full px-auto justify-center bg-white border-b border-grey/90 flex flex-col space-y-8 py-12"
     >
         <h1 class="text-4xl font-bold">Parkpappa</h1>
-        <p>Hitta dina favoritlekparker i Västerås med en interaktiv karta!</p>
-        <div class="flex flex-col lg:flex-row space-x-6 mx-auto">
+        <p class="lg:p-0 p-4">Hitta dina favoritlekparker i Västerås med en interaktiv karta!</p>
+        <div class="flex flex-col space-y-3 mx-auto">
             <div class="flex flex-row space-x-2">
                 <Check />
                 <span>Enkel användning</span>
@@ -28,24 +28,24 @@
                 <span>Recensioner och rekommendationer</span>
             </div>
         </div>
-        <div class="flex flex-row mx-auto space-x-4">
-            <div class="flex flex-row">
+        <div class="flex flex-col md:flex-row mx-auto">
+            <div class="flex flex-row md:mr-5 mb-5 md:mb-0">
                 <a
-                    class="bg-primary/100 hover:underline text-white w-fit whitespace-nowrap py-2 px-4 rounded"
+                    class="bg-primary/100 hover:underline text-white w-max whitespace-nowrap py-2 px-4 rounded"
                     href="/map"><Map class="inline" /> Till kartan</a
                 >
             </div>
             <div class="flex flex-row">
                 <a
-                    class="bg-primary/10 hover:underline border-primary border-2 text-black w-fit whitespace-nowrap py-2 px-4 rounded"
+                    class="bg-primary/10 hover:underline border-primary border-2 text-black w-max whitespace-nowrap py-2 px-4 rounded"
                     href="/addtohomescreen"
                     ><SquarePlus class="inline" /> Lägg till på hemskärmen</a
                 >
             </div>
         </div>
     </div>
-    <div class="w-1/3 mx-auto py-12">
-        <h1 class="font-bold text-xl">
+    <div class="md:w-1/3 px-4 md:px-0 mx-auto py-12">
+        <h1 class="font-bold text-center text-xl mb-3">
             Allt du behöver veta för ett smidigt parkbesök
         </h1>
         <p>
