@@ -40,4 +40,13 @@
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
     }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .show-scrollbar::-webkit-scrollbar {
+        display: block;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .show-scrollbar {
+        -ms-overflow-style: auto; /* IE and Edge */
+        scrollbar-width: auto; /* Firefox */
+    }
 }

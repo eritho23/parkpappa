@@ -22,9 +22,9 @@
     });
 
     function getParkFromId(id: number) {
-        console.log(id);
+        // console.log(id);
         let park = parkData.find((park) => park.Id === id);
-        console.log(park);
+        // console.log(park);
         return park as Park;
     }
     export function flyToMarker(markerID: number) {
@@ -101,14 +101,14 @@
         if (map && markerLayers && parkData) {
             try {
                 // const marker = createMarker(L.latLng(59.6330795581567, 16.5470303778179));
-                console.log(parkData, parkData[0]);
+                // console.log(parkData, parkData[0]);
                 for (let i = 0; i < parkData.length; i++) {
                     const currentPark = parkData[i];
-                    console.log(currentPark);
-                    console.log(
-                        currentPark.Coordinates.x,
-                        currentPark.Coordinates.y
-                    );
+                    // console.log(currentPark);
+                    // console.log(
+                    //     currentPark.Coordinates.x,
+                    //     currentPark.Coordinates.y
+                    // );
                     const marker = createMarker(
                         L.latLng(
                             currentPark.Coordinates.x,
@@ -118,7 +118,7 @@
                     ).on('click', (e) => {
                         getParkFromId(e.target.options.id);
                         selectedPark = getParkFromId(e.target.options.id);
-                        flyToMarker(e.target.options.id);
+                        //flyToMarker(e.target.options.id);
                     });
                     markerLayers.addLayer(marker);
                 }
