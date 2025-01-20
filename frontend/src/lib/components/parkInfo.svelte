@@ -2,7 +2,14 @@
     import StarRating from './starRating.svelte';
     import { Tabs, TabItem } from 'flowbite-svelte';
     import { onDestroy, onMount } from 'svelte';
-    import { slide, fly } from "svelte/transition";
+    import { fly } from "svelte/transition";
+    import type { Park } from '$lib/types';
+    import { X } from "lucide-svelte";
+    import InfoChips from './infoChips.svelte';
+    interface Props {
+        selectedPark: Park | undefined ;
+    }
+    let { selectedPark: parkData = $bindable()}: Props = $props();
     const activeClasses =
         'text-primary p-2 lg:p-3 inline-block border-b-2 border-primary text-center text-xs lg:text-sm';
     const inactiveClasses =
@@ -22,8 +29,9 @@
         lgMediaQuery.removeEventListener('change', screenResize);
         mdMediaQuery.removeEventListener('change', screenResize);
     });
-    let totalReviewSize = 16;
-    let topicReviewSize = 24;
+    let totalReviewSize = $state(16);
+    let topicReviewSize = $state(24);
+    $inspect(parkData);
     function screenResize() {
         if (xlMediaQuery.matches) {
             totalReviewSize = 24;
@@ -43,21 +51,23 @@
 </script>
 
 <div
-    class="absolute h-full flex flex-col bg-background-foreground md:w-2/5 lg:w-[35%]"
+    class="absolute h-full flex flex-col bg-background-foreground md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden"
     transition:fly={{opacity: 100, x: -1000, duration: 800}}
 >
+<div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"><button onclick={() => parkData = undefined}><X  class="drop-shadow-lg stroke-text-dark"></X></button></div>
     <img
         class="w-full h-52 lg:h-72 object-cover"
         src="./placeholders/playground.jpg"
         alt="Playground"
     />
-    <div class="ml-2">
+    <div class="ml-2 pb-4">
         <div>
-            <h1 class="md:text-xl lg:text-2xl">Parknamn</h1>
+            <h1 class="md:text-xl lg:text-2xl">{parkData?.Name}</h1>
             <div class="flex items-center">
                 <p class="md:text-sm lg:text-lg">3.9</p>
                 <StarRating rating={7} size={topicReviewSize}></StarRating>
             </div>
+            <InfoChips park={parkData}></InfoChips>
         </div>
         <Tabs {activeClasses} {inactiveClasses}>
             <TabItem title="Officiell" open>
@@ -112,10 +122,13 @@
                             >
                             <p>Upptäck mer av Park_pappa!</p>
                         </a>
+                        <div class="w-full h-12"></div> <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
                     </div>
                 </div>
             </TabItem>
-            <TabItem title="Community"></TabItem>
+            <TabItem title="Community">
+                <div class="w-full h-12"></div> <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
+            </TabItem>
         </Tabs>
     </div>
 </div>

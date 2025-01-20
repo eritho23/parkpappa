@@ -1,11 +1,10 @@
 import type { PageLoad } from './$types';
 import { error, json } from '@sveltejs/kit';
-import type { Park } from '$lib/types';
+import type { Park, DataParks } from '$lib/types';
 
 export const ssr = false;
 
 export const load: PageLoad = async ({ fetch, data }) => {
-    console.log(data);
     const { API_PATH } = data;
     async function raceFetch() {
 
@@ -28,7 +27,8 @@ export const load: PageLoad = async ({ fetch, data }) => {
         }
         return {
             parks: (await response?.json()) ?? [],
-        };
+            api: API_PATH
+        } as DataParks;
     } catch (err) {
         if (err == 'Error: request timed out') {
             //  return error(503, "Request timed out, try again later")

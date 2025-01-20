@@ -8,9 +8,9 @@
     let markerLayers: L.LayerGroup;
     interface Props {
         parkData: Park[];
-        showInfo: (toggle?: boolean) => void;
+        selectedPark: Park | undefined;
     }
-    let { parkData, showInfo }: Props = $props();
+    let { parkData, selectedPark = $bindable() }: Props = $props();
 
     const markerIcon = L.icon({
         iconUrl: '/marker/map-pin.svg',
@@ -27,13 +27,26 @@
         console.log(park);
         return park as Park;
     }
+    export function flyToMarker(markerID: number) {
+        console.log('funcion called');
+        map.eachLayer((layer) => {
+            console.log(layer);
+            // @ts-expect-error
+            if (layer.options.id === markerID) {
+                // @ts-expect-error
+                map.flyTo(layer.getLatLng(), 17);
+                selectedPark = getParkFromId(markerID);
+                return;
+            }
+        });
+    }
 
     function createMap(container: HTMLDivElement) {
         let m = L.map(container)
             .setView([59.609796, 16.5464], 14)
             .on('click', () => {
                 console.log('Map Clicked');
-                showInfo(false);
+                selectedPark = undefined;
             });
         L.tileLayer(
             'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -104,7 +117,8 @@
                         currentPark.Id
                     ).on('click', (e) => {
                         getParkFromId(e.target.options.id);
-                        showInfo();
+                        selectedPark = getParkFromId(e.target.options.id);
+                        flyToMarker(e.target.options.id);
                     });
                     markerLayers.addLayer(marker);
                 }

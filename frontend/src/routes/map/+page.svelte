@@ -5,26 +5,27 @@
     import type { Park, DataParks } from '$lib/types.js';
     import { Alert } from 'flowbite-svelte';
     import { RotateCcw } from 'lucide-svelte';
+    import ParkRandomizer from '$lib/components/parkRandomizer.svelte';
     interface Props {
         data: DataParks;
+        selectedPark: Park | undefined;
     }
-    let { data }: Props = $props();
-    let selectedPark = $state();
-    let parkInfoVisible = $state(false);
-    function showInfo(toggle: boolean = true) {
-        if (toggle) {
-            parkInfoVisible = !parkInfoVisible;
-        } else {
-            parkInfoVisible = false;
-        }
-        console.log('visible? ', parkInfoVisible);
+    let { data, selectedPark = $bindable()}: Props = $props();
+    $inspect(selectedPark);
+    let parkInfo: Park | undefined = $state(undefined);
+    function showInfo(toggle: boolean = true, park?: Park | undefined) {
+        selectedPark = park;
+        console.log('visible? ', parkInfo);
+
     }
+    let mapComponentRef: any = $state();
 </script>
 
 <div class="h-full w-full flex-grow flex flex-col">
-    <Map parkData={data.parks} {showInfo}></Map>
-    {#if parkInfoVisible}
-        <ParkInfo></ParkInfo>
+    <Map parkData={data.parks} bind:selectedPark={selectedPark} bind:this={mapComponentRef}></Map>
+    <ParkRandomizer parks={data.parks} api={data.api} flyToMarker={mapComponentRef.flyToMarker} ></ParkRandomizer>
+    {#if selectedPark}
+        <ParkInfo bind:selectedPark={selectedPark}></ParkInfo>
     {/if}
     {#if !data.parks}
         <Alert
