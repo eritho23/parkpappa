@@ -2,14 +2,16 @@
     import StarRating from './starRating.svelte';
     import { Tabs, TabItem } from 'flowbite-svelte';
     import { onDestroy, onMount } from 'svelte';
-    import { fly } from "svelte/transition";
+    import { fly } from 'svelte/transition';
     import type { Park } from '$lib/types';
-    import { X } from "lucide-svelte";
+    import { X } from 'lucide-svelte';
     import InfoChips from './infoChips.svelte';
     interface Props {
-        selectedPark: Park | undefined ;
+        selectedPark: Park | undefined;
+        startScreenSize: string;
     }
-    let { selectedPark: parkData = $bindable()}: Props = $props();
+    let { selectedPark: parkData = $bindable(), startScreenSize }: Props =
+        $props();
     const activeClasses =
         'text-primary p-2 lg:p-3 inline-block border-b-2 border-primary text-center text-xs lg:text-sm';
     const inactiveClasses =
@@ -22,7 +24,7 @@
         xlMediaQuery.addEventListener('change', screenResize);
         lgMediaQuery.addEventListener('change', screenResize);
         mdMediaQuery.addEventListener('change', screenResize);
-        screenResize();
+        screenResize(startScreenSize);
     });
     onDestroy(() => {
         xlMediaQuery.removeEventListener('change', screenResize);
@@ -31,30 +33,75 @@
     });
     let totalReviewSize = $state(16);
     let topicReviewSize = $state(24);
+    let flyDirection = $state([-1000, 0]);
+    // let displayShowBar = $state(false);
     $inspect(parkData);
-    function screenResize() {
-        if (xlMediaQuery.matches) {
-            totalReviewSize = 24;
-            topicReviewSize = 28;
-        } else if (lgMediaQuery.matches) {
-            totalReviewSize = 16;
-            topicReviewSize = 20;
-
-        } else if (mdMediaQuery.matches) {
-            totalReviewSize = 12;
-            topicReviewSize = 16;
+    function screenResize(startSize?: MediaQueryListEvent | String) {
+        console.log(startSize);
+        if (typeof startSize !== 'string') {
+            console.log('not first', typeof startSize);
+            if (xlMediaQuery.matches) {
+                totalReviewSize = 24;
+                topicReviewSize = 28;
+                flyDirection = [-1000, 0];
+                console.log(flyDirection);
+                // displayShowBar = false;
+            } else if (lgMediaQuery.matches) {
+                totalReviewSize = 16;
+                topicReviewSize = 20;
+                flyDirection = [-1000, 0];
+                console.log(flyDirection);
+                // displayShowBar = false;
+            } else if (mdMediaQuery.matches) {
+                totalReviewSize = 12;
+                topicReviewSize = 16;
+                flyDirection = [-1000, 0];
+                console.log(flyDirection);
+                // displayShowBar = false;
+            } else {
+                totalReviewSize = 14;
+                topicReviewSize = 24;
+                flyDirection = [0, 1000];
+                console.log(flyDirection);
+                // displayShowBar = true;
+            }
         } else {
-            totalReviewSize = 14;
-            topicReviewSize = 24;
+            if (startSize === 'sm') {
+                flyDirection = [0, 1000];
+                $inspect(flyDirection);
+            } else {
+                flyDirection = [-1000, 0];
+                $inspect(flyDirection);
+            }
         }
     }
 </script>
 
 <div
-    class="absolute h-full flex flex-col bg-background-foreground md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden"
-    transition:fly={{opacity: 100, x: -1000, duration: 800}}
+    class="absolute top-[16.66666%] md:top-16 h-5/6 md:h-full flex flex-col bg-background-foreground w-full md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden no-scrollbar md:show-scrollbar rounded-xl md:rounded-none"
+    transition:fly={{
+        opacity: 100,
+        x: flyDirection[0],
+        y: flyDirection[1],
+        duration: 800,
+    }}
 >
-<div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"><button onclick={() => parkData = undefined}><X  class="drop-shadow-lg stroke-text-dark"></X></button></div>
+    <!-- {#if displayShowBar}
+        <div
+        class="h-2 w-20 top-1 absolute self-center"
+        >
+            <div
+                class="h-1 w-16 bg-primary/50 rounded-full"
+            ></div>
+        </div>
+    {/if} -->
+    <div
+        class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"
+    >
+        <button onclick={() => (parkData = undefined)}
+            ><X class="drop-shadow-lg stroke-text-dark"></X></button
+        >
+    </div>
     <img
         class="w-full h-52 lg:h-72 object-cover"
         src="./placeholders/playground.jpg"
@@ -72,20 +119,25 @@
         <Tabs {activeClasses} {inactiveClasses}>
             <TabItem title="Officiell" open>
                 <div class="bg-background-foreground -mt-4">
-                    <p class="md:text-sm lg:text-md xl:text-lg">Park Pappans Recension</p>
+                    <p class="md:text-sm lg:text-md xl:text-lg">
+                        Park Pappans Recension
+                    </p>
                     <div class="flex w-full">
                         <div class="flex flex-col w-max">
                             <div class="flex justify-end -mb-1 lg:mb-0">
                                 <p class="mr-1">Nöje:</p>
-                                <StarRating rating={3} size={topicReviewSize}></StarRating>
+                                <StarRating rating={3} size={topicReviewSize}
+                                ></StarRating>
                             </div>
                             <div class="flex justify-end -mb-1 lg:mb-0">
                                 <p class="mr-1">Fräschet:</p>
-                                <StarRating rating={3} size={topicReviewSize}></StarRating>
+                                <StarRating rating={3} size={topicReviewSize}
+                                ></StarRating>
                             </div>
                             <div class="flex justify-end -mb-1 lg:mb-0">
                                 <p class="mr-1">Miljö:</p>
-                                <StarRating rating={3} size={topicReviewSize}></StarRating>
+                                <StarRating rating={3} size={topicReviewSize}
+                                ></StarRating>
                             </div>
                         </div>
                         <div class="justify-end w-full">
@@ -122,12 +174,14 @@
                             >
                             <p>Upptäck mer av Park_pappa!</p>
                         </a>
-                        <div class="w-full h-12"></div> <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
+                        <div class="w-full h-12"></div>
+                        <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
                     </div>
                 </div>
             </TabItem>
             <TabItem title="Community">
-                <div class="w-full h-12"></div> <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
+                <div class="w-full h-12"></div>
+                <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
             </TabItem>
         </Tabs>
     </div>
