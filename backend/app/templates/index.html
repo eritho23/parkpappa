@@ -1,95 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Park API</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-        }
-        main {
-            padding: 20px;
-            max-width: 900px;
-            margin: auto;
-        }
-        h1 {
-            color: #f4f4f9;
-        }
-        h2 {
-            color: #007bff;
-        }
-        p {
-            font-size: 1.1em;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px 0;
-        }
-        .code-block {
-            background-color: #e9ecef;
-            padding: 10px;
-            border-radius: 5px;
-            font-family: monospace;
-        }
-        footer {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+      }
+      header {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+      }
+      main {
+        padding: 20px;
+        max-width: 900px;
+        margin: auto;
+      }
+      h1 {
+        color: #f4f4f9;
+      }
+      h2 {
+        color: #007bff;
+      }
+      p {
+        font-size: 1.1em;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin: 10px 0;
+      }
+      .code-block {
+        background-color: #e9ecef;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: monospace;
+      }
+      footer {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 0;
+        text-align: center;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+      }
     </style>
-</head>
-
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Parkpappa API</h1>
+      <h1>Parkpappa API</h1>
     </header>
     <main>
-        <h2>Overview</h2>
-        <p>This API provides information about parks, including their names, coordinates, types of equipment/play, and embed codes for integration. The data is sourced from Västerås Stad's park database.</p>
+      <h2>Overview</h2>
+      <p>
+        This API provides information about parks, including their names,
+        coordinates, and types of equipment/play. The data is sourced from
+        Västerås Stad's park database.
+      </p>
 
-        <h2>Available Endpoints:</h2>
-        <ul>
+      <h2>Available Endpoints:</h2>
+      <ul>
+        <li>
+          <strong>1. Get all parks:</strong>
+          <ul>
             <li>
-                <strong>1. Get all parks:</strong>
-                <ul>
-                    <li><code>/api/parks</code> - <strong>GET</strong> - Retrieves a list of all parks with their details (name, coordinates, equipment, types of play).</li>
-                </ul>
+              <code>/api/parks</code> - <strong>GET</strong> - Retrieves a list
+              of all parks with their details (name, coordinates, equipment,
+              types of play).
             </li>
+          </ul>
+        </li>
+        <li>
+          <strong>2. Get a park by its ID:</strong>
+          <ul>
             <li>
-                <strong>2. Get a park by its ID:</strong>
-                <ul>
-                    <li><code>/api/parks/&lt;id&gt;</code> - <strong>GET</strong> - Retrieves a specific park by its unique ID. Replace <code>&lt;id&gt;</code> with the park's ID.</li>
-                </ul>
+              <code>/api/parks/&lt;id&gt;</code> - <strong>GET</strong> -
+              Retrieves a specific park by its unique ID. Replace
+              <code>&lt;id&gt;</code> with the park's ID.
             </li>
+          </ul>
+        </li>
+        <li>
+          <strong>3. Get random parks:</strong>
+          <ul>
             <li>
-                <strong>3. Get random parks:</strong>
-                <ul>
-                    <li><code>/api/parks/random</code> or <code>/api/parks/random/&lt;amount&gt;</code> - <strong>GET</strong> - Retrieves a random selection of parks. Replace <code>&lt;amount&gt;</code> with the number of random parks you want (default is 3).</li>
-                </ul>
+              <code>/api/parks/random</code> or
+              <code>/api/parks/random/&lt;amount&gt;</code> -
+              <strong>GET</strong> - Retrieves a random selection of parks.
+              Replace <code>&lt;amount&gt;</code> with the number of random
+              parks you want (default is 3).
             </li>
+          </ul>
+        </li>
+        <li>
+          <strong>4. Search parks:</strong>
+          <ul>
             <li>
-                <strong>4. Search parks:</strong>
-                <ul>
-                    <li><code>/api/parks/search</code> - <strong>POST</strong> - Searches for parks based on specified criteria. The search criteria should be provided as a JSON object in the request body, with keys matching park attributes (e.g., equipment or types of play).</li>
-                </ul>
+              <code>/api/parks/search</code> - <strong>POST</strong> - Searches
+              for parks based on specified criteria. The search criteria should
+              be provided as a JSON object in the request body, with keys
+              matching park attributes (e.g., equipment or types of play).
             </li>
             <li>
                 <strong>5. Get embed code for a park:</strong>

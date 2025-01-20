@@ -1,34 +1,33 @@
 name: Frontend CI checks
-on: 
-    push:
-        branches: 
-            - main
-    pull_request:
-        types:
-            - opened
-        branches:
-            - main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+    branches:
+      - main
 
 jobs:
-    check-formatting:
-        runs-on: ubuntu-latest
-    
-        steps:
-            - name: checkout repo
-              uses: actions/checkout@v4
-            
-            - name: install nix
-              uses: DeterminateSystems/nix-installer-action@main
-            - run: nix run .#actions-frontend-formatting
+  check-formatting:
+    runs-on: ubuntu-latest
 
-    check-code:
-        runs-on: ubuntu-latest
-    
-        steps:
-            - name: checkout repo
-              uses: actions/checkout@v4
-            
-            - name: install nix
-              uses: DeterminateSystems/nix-installer-action@main
-            - run: nix run .#actions-frontend-check
-    
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: install nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - run: nix run .#actions-frontend-formatting
+
+  check-code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: install nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - run: nix run .#actions-frontend-check

@@ -26,7 +26,7 @@ export const load: PageLoad = async ({ fetch, data }) => {
         }
         return {
             parks: (await response?.json()) ?? [],
-            api: API_PATH
+            api: API_PATH,
         } as DataParks;
     } catch (err) {
         if (err == 'Error: request timed out') {
