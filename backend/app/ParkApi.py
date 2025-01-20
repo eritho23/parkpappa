@@ -12,6 +12,7 @@ app = Flask(__name__)
 CORS(app)  # This allows all origins to access your API
 
 CACHE_FILE = "ParkCache.json"
+LINKS_FILE = "ParkLinks.json"  # Add your links.json file path here
 
 def scrape_data():
     url = "https://kartor.vasteras.se/arcgis/rest/services/ext/tk_lekplatser_dyn/FeatureServer/0/query?f=json&returnGeometry=true&spatialRel=esriSpatialRelIntersects&geometry={%22xmin%22:97161.8,%22ymin%22:6596631.56,%22xmax%22:203248.2,%22ymax%22:6635410.44,%22spatialReference%22:{%22wkid%22:3010}&geometryType=esriGeometryEnvelope&inSR=3010&outFields=*&returnIdsOnly=false&returnCountOnly=false&geometryPrecision=2&outSR=3010"
@@ -99,6 +100,13 @@ def load_parks():
         with open(CACHE_FILE, "r", encoding="utf8") as f:
             return json.load(f)
 
+def load_links():
+    try:
+     with open(LINKS_FILE, "r", encoding="utf8") as f:
+            return json.load(f)
+    except:
+        print("Error: loading embed file")
+
 @app.route('/api/parks', methods=['GET'])
 def get_parks():
     parks = load_parks()
@@ -123,6 +131,14 @@ def get_random_parks(amount=3):  # Default amount set to 3
     random_parks = [parks[i] for i in random_indices]          # Fetch parks based on random indices
     
     return jsonify(random_parks)
+
+@app.route('/api/parks/<int:id>/embed', methods=['GET'])
+def get_park_embed(id):
+    links = load_links()
+    embed = next((item for item in links if item["Id"] == id), None)
+    if embed:
+        return(embed["Link"])
+    return jsonify({"error": "Embed not found for this park ID"}), 404
 
 
 @app.route('/', methods=['GET'])
@@ -158,7 +174,3 @@ def run_gunicorn():
     os.environ.setdefault("GUNICORN_CMD_ARGS", "--workers 3 --bind 0.0.0.0:8000")
     # Pass your app module to Gunicorn
     run(["gunicorn", "app.ParkApi:app"])
-'''
-if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=5001)  # Localhost, port 5001
-'''
