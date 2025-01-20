@@ -55,7 +55,7 @@
         </p>
     </div>
     <div
-        class="flex lg:flex-row flex-col w-2/3 pt-3 mb-16 justify-center mx-auto mt-12"
+        class="flex lg:flex-row flex-col px-4 md:px-0 md:w-2/3 pt-3 pb-12 mb-16 justify-center mx-auto mt-12"
     >
         <img
             class="rounded-full size-48 lg:size-72 mx-auto mb-12"
