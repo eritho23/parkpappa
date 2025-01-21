@@ -25,7 +25,8 @@
     function getParkFromId(id: number) {
         // console.log(id);
         let park = parkData.find((park) => park.Id === id);
-        // console.log(park);
+        SetEmbed(park);
+        console.log(park);
         return park as Park;
     }
     export function flyToMarker(markerID: number) {
@@ -48,8 +49,9 @@
                 try {
                     const controller = new AbortController(); // Create a controller for timeout handling
                     const timeoutId = setTimeout(() => controller.abort(), 5000); // 5-second timeout
+
                     const response: Response = await fetch(
-                        api + `/api/parks/${park.Id}/embed`,
+                        `https://parkpappa-api.cloud.spetsen.net/api/parks/${park.Id}/embed`,
                         { signal: controller.signal } // Pass the signal for timeout control
                     );
                     clearTimeout(timeoutId); // Clear the timeout once the request completes
