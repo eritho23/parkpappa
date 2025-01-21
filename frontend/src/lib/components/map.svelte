@@ -24,7 +24,8 @@
     function getParkFromId(id: number) {
         // console.log(id);
         let park = parkData.find((park) => park.Id === id);
-        // console.log(park);
+        SetEmbed(park);
+        console.log(park);
         return park as Park;
     }
     export function flyToMarker(markerID: number) {
@@ -40,7 +41,33 @@
             }
         });
     }
+    async function SetEmbed(park?: Park | undefined) {
+        if (park) {
+            if (!park.Embed) {
+                try {
+                    const controller = new AbortController(); // Create a controller for timeout handling
+                    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5-second timeout
 
+                    const response: Response = await fetch(
+                        `https://parkpappa-api.cloud.spetsen.net/api/parks/${park.Id}/embed`,
+                        { signal: controller.signal } // Pass the signal for timeout control
+                    );
+                    clearTimeout(timeoutId); // Clear the timeout once the request completes
+
+                    if (response.ok) {
+                        const embed = await response.text(); // Get the embed HTML as text
+                        park.Embed = embed; // Attach the embed to the park object
+                    } else {
+                        console.error(`ERROR: Failed to fetch embed for park ${park.Id}, status: ${response.status}`);
+                    }
+                } catch (err) {
+                    console.error('Unexpected error while fetching embed:', err);
+                }
+            }
+        }
+        
+        
+    }
     function createMap(container: HTMLDivElement) {
         let m = L.map(container)
             .setView([59.609796, 16.5464], 14)

@@ -92,7 +92,9 @@
             }
         }
     }
+    
 </script>
+<!-- existing HTML code -->
 
 <div
     class="absolute top-[16.66666%] md:top-16 h-5/6 md:h-full flex flex-col bg-background-foreground w-full md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden no-scrollbar md:show-scrollbar rounded-xl md:rounded-none"
@@ -103,21 +105,10 @@
         duration: 800,
     }}
 >
-    <!-- {#if displayShowBar}
-        <div
-        class="h-2 w-20 top-1 absolute self-center"
-        >
-            <div
-                class="h-1 w-16 bg-primary/50 rounded-full"
-            ></div>
-        </div>
-    {/if} -->
-    <div
-        class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"
-    >
-        <button onclick={() => (parkData = undefined)}
-            ><X class="drop-shadow-lg stroke-text-dark"></X></button
-        >
+    <div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full">
+        <button onclick={() => parkData = undefined}>
+            <X class="drop-shadow-lg stroke-text-dark"></X>
+        </button>
     </div>
     <img
         class="w-full h-52 lg:h-72 object-cover"
@@ -213,6 +204,13 @@
                                 <p class="text-sm">{review.body}</p>
                             </div>
                         {/each}
+                    </div>
+                {/if}
+            </TabItem>
+            <TabItem title="Instagram">
+                {#if parkData?.Embed}
+                    <div class="mt-4">
+                        <iframe srcdoc={parkData.Embed} class="w-full h-96" title="Instagram Embed"></iframe>
                     </div>
                 {/if}
             </TabItem>
