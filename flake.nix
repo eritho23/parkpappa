@@ -15,7 +15,7 @@
   }:
     utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
-      version = "0.1.0";
+      version = if (self ? rev) then self.rev else "dirty";
       sweref-lib = pkgs.python312Packages.buildPythonPackage rec {
         pname = "sweref99";
         version = "0.2";
@@ -68,6 +68,8 @@
 
           npmDepsHash = "sha256-ZEIr3Z0Jo2E+S1UQWNTWXWn9HBifWpb+lKRcpVC3m5s=";
           # npmDepsHash = pkgs.lib.fakeHash;
+
+          API_PATH = "https://parkpappa-api.cloud.spetsen.net";
 
           buildPhase = ''
             runHook preBuild

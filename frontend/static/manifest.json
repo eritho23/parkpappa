@@ -1,7 +1,7 @@
 {
-    "name": "Parkpappa",
+    "name": "Parkpappa Web App",
     "description": "Se alla Västerås lekparker på ett klick!",
-    "short_name": "parkpappa",
+    "short_name": "Parkpappa",
     "display": "standalone",
     "start_url": "/map",
     "background_color": "#ececec",

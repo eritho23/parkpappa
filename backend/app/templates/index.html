@@ -1,87 +1,120 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Park API</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-        }
-        main {
-            padding: 20px;
-            max-width: 900px;
-            margin: auto;
-        }
-        h1 {
-            color: #f4f4f9;
-        }
-        h2 {
-            color: #007bff;
-        }
-        p {
-            font-size: 1.1em;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px 0;
-        }
-        .code-block {
-            background-color: #e9ecef;
-            padding: 10px;
-            border-radius: 5px;
-            font-family: monospace;
-        }
-        footer {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+      }
+      header {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+      }
+      main {
+        padding: 20px;
+        max-width: 900px;
+        margin: auto;
+      }
+      h1 {
+        color: #f4f4f9;
+      }
+      h2 {
+        color: #007bff;
+      }
+      p {
+        font-size: 1.1em;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin: 10px 0;
+      }
+      .code-block {
+        background-color: #e9ecef;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: monospace;
+      }
+      footer {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 0;
+        text-align: center;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Parkpappa API</h1>
+      <h1>Parkpappa API</h1>
     </header>
     <main>
-        <h2>Overview</h2>
-        <p>This API provides information about parks, including their names, coordinates, and types of equipment/play. The data is scraped from Västerås Stad's park database.</p>
+      <h2>Overview</h2>
+      <p>
+        This API provides information about parks, including their names,
+        coordinates, and types of equipment/play. The data is sourced from
+        Västerås Stad's park database.
+      </p>
 
-        <h2>Available Endpoints:</h2>
-        <ul>
+      <h2>Available Endpoints:</h2>
+      <ul>
+        <li>
+          <strong>1. Get all parks:</strong>
+          <ul>
             <li>
-                <strong>1. Get all parks:</strong>
-                <ul>
-                    <li><code>/api/parks</code> - <strong>GET</strong> - Retrieves a list of all parks with their details (name, coordinates, equipment, types of play).</li>
-                </ul>
+              <code>/api/parks</code> - <strong>GET</strong> - Retrieves a list
+              of all parks with their details (name, coordinates, equipment,
+              types of play).
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>2. Get a park by its ID:</strong>
+          <ul>
+            <li>
+              <code>/api/parks/&lt;id&gt;</code> - <strong>GET</strong> -
+              Retrieves a specific park by its unique ID. Replace
+              <code>&lt;id&gt;</code> with the park's ID.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>3. Get random parks:</strong>
+          <ul>
+            <li>
+              <code>/api/parks/random</code> or
+              <code>/api/parks/random/&lt;amount&gt;</code> -
+              <strong>GET</strong> - Retrieves a random selection of parks.
+              Replace <code>&lt;amount&gt;</code> with the number of random
+              parks you want (default is 3).
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>4. Search parks:</strong>
+          <ul>
+            <li>
+              <code>/api/parks/search</code> - <strong>POST</strong> - Searches
+              for parks based on specified criteria. The search criteria should
+              be provided as a JSON object in the request body, with keys
+              matching park attributes (e.g., equipment or types of play).
             </li>
             <li>
-                <strong>2. Get a park by its ID:</strong>
+                <strong>5. Get embed code for a park:</strong>
                 <ul>
-                    <li><code>/api/parks/&lt;id&gt;</code> - <strong>GET</strong> - Retrieves a specific park by its unique ID. Replace <code>&lt;id&gt;</code> with the park's ID.</li>
-                </ul>
-            </li>
-            <li>
-                <strong>3. Get random parks:</strong>
-                <ul>
-                    <li><code>/api/parks/random</code> or <code>/api/parks/random/&lt;amount&gt;</code> - <strong>GET</strong> - Retrieves a random selection of parks. Replace <code>&lt;amount&gt;</code> with the number of random parks you want (default is 3).</li>
+                    <li><code>/api/parks/&lt;id&gt;/embed</code> - <strong>GET</strong> - Retrieves the embed code for a specific park by its unique ID. Replace <code>&lt;id&gt;</code> with the park's ID. The embed code is returned as raw HTML, not as a JSON object.</li>
                 </ul>
             </li>
         </ul>
@@ -91,8 +124,29 @@
             <li><code>/api/parks</code> - Get all parks.</li>
             <li><code>/api/parks/5</code> - Get the park with ID 5.</li>
             <li><code>/api/parks/random/2</code> - Get 2 random parks.</li>
+            <li><code>/api/parks/search</code> - Search for parks using a JSON body, e.g., <code>{"Swings": true, "Slides": true}</code>.</li>
+            <li><code>/api/parks/5/embed</code> - Get the embed code for the park with ID 5.</li>
         </ul>
-        <p>The data is sourced from Västerås Stad's park database. Please refer to their website for more information: <a href="https://kartor.vasteras.se/" target="_blank">Västerås Stad Park Database</a>.</p>
+
+        <h2>Embed Feature:</h2>
+        <p>The embed feature allows you to integrate park information directly into your website or application. To use the embed code:</p>
+        <ol>
+            <li>Make a GET request to <code>/api/parks/&lt;id&gt;/embed</code>, replacing <code>&lt;id&gt;</code> with the park's ID.</li>
+            <li>The response will include an HTML snippet, such as the following:
+                <pre><code>&lt;blockquote class="instagram-media" data-instgrm-captioned data-in...&gt;&lt;/blockquote&gt;</code></pre>
+            </li>
+        </ol>
+        <p>Note: The API directly serves the embed code as raw HTML, so ensure it is properly handled in your application to prevent security issues.</p>
+
+        <p>
+            The data is sourced from Västerås Stad's park database. 
+            Please refer to their website for more information: 
+            <a href="https://kartor.vasteras.se/arcgis/rest/services/ext/tk_lekplatser_dyn/FeatureServer/0/query?f=json&amp;returnGeometry=true&amp;spatialRel=esriSpatialRelIntersects&amp;geometry={&#123;%22xmin%22:97161.8,%22ymin%22:6596631.56,%22xmax%22:203248.2,%22ymax%22:6635410.44,%22spatialReference%22:&#123;%22wkid%22:3010&#125;&#125;&amp;geometryType=esriGeometryEnvelope&amp;inSR=3010&amp;outFields=*&amp;returnIdsOnly=false&amp;returnCountOnly=false&amp;geometryPrecision=2&amp;outSR=3010" target="_blank">
+                Västerås Stad Park Database
+            </a>
+            
+        </p>
     </main>
 </body>
+
 </html>
