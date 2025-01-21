@@ -48,13 +48,19 @@
             topicReviewSize = 24;
         }
     }
+    
 </script>
+<!-- existing HTML code -->
 
 <div
     class="absolute h-full flex flex-col bg-background-foreground md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden"
     transition:fly={{opacity: 100, x: -1000, duration: 800}}
 >
-<div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"><button onclick={() => parkData = undefined}><X  class="drop-shadow-lg stroke-text-dark"></X></button></div>
+    <div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full">
+        <button onclick={() => parkData = undefined}>
+            <X class="drop-shadow-lg stroke-text-dark"></X>
+        </button>
+    </div>
     <img
         class="w-full h-52 lg:h-72 object-cover"
         src="./placeholders/playground.jpg"
@@ -128,6 +134,13 @@
             </TabItem>
             <TabItem title="Community">
                 <div class="w-full h-12"></div> <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
+            </TabItem>
+            <TabItem title="Instagram">
+                {#if parkData?.Embed}
+                    <div class="mt-4">
+                        <iframe srcdoc={parkData.Embed} class="w-full h-96" title="Instagram Embed"></iframe>
+                    </div>
+                {/if}
             </TabItem>
         </Tabs>
     </div>

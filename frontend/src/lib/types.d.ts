@@ -29,6 +29,7 @@ export type Park = {
         ToddlerPlay: boolean;
         WaterPlay: boolean;
     };
+    Embed : string;
 };
 export type DataParks = {
     parks: Park[];
