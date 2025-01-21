@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { browser } from '$app/environment';
     import ParkInfo from '$lib/components/parkInfo.svelte';
     import Map from '$lib/components/map.svelte';
     import type { Park, DataParks } from '$lib/types.js';
@@ -12,7 +11,6 @@
         selectedPark: Park | undefined;
     }
     let { data, selectedPark = $bindable()}: Props = $props();
-    $inspect(selectedPark);
     let parkInfo: Park | undefined = $state(undefined);
     function showInfo(toggle: boolean = true, park?: Park | undefined) {
         selectedPark = park;
@@ -20,6 +18,13 @@
 
     }
     let mapComponentRef: any = $state();
+
+    let goToParkNumber = $derived(parseInt(data.goToPark));
+    $effect(() => {
+        if (data.goToPark && goToParkNumber) {
+            mapComponentRef.flyToMarker(goToParkNumber)
+        }
+    })
 
     const xlMediaQuery = window.matchMedia('(min-width: 1280px)');
     const lgMediaQuery = window.matchMedia('(min-width: 1024px)');
