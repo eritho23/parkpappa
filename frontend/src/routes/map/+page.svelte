@@ -6,6 +6,7 @@
     import { RotateCcw } from 'lucide-svelte';
     import ParkRandomizer from '$lib/components/parkRandomizer.svelte';
     import { onDestroy, onMount } from 'svelte';
+    import chipsData from "$lib/infoChipsTranslations.json"
     interface Props {
         data: DataParks;
         selectedPark: Park | undefined;
@@ -59,7 +60,7 @@
     <Map parkData={data.parks} bind:selectedPark={selectedPark} bind:this={mapComponentRef}></Map>
     <ParkRandomizer parks={data.parks} api={data.api} flyToMarker={mapComponentRef.flyToMarker} ></ParkRandomizer>
     {#if selectedPark}
-        <ParkInfo bind:selectedPark={selectedPark} startScreenSize={startScreenSize}></ParkInfo>
+        <ParkInfo translations={data.translations} bind:selectedPark={selectedPark} startScreenSize={startScreenSize}></ParkInfo>
     {/if}
     {#if !data.parks}
         <Alert

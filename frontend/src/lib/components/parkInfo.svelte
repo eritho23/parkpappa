@@ -3,7 +3,7 @@
     import { Tabs, TabItem } from 'flowbite-svelte';
     import { onDestroy, onMount } from 'svelte';
     import { fly } from 'svelte/transition';
-    import type { Park } from '$lib/types';
+    import type { ChipTranslations, Park } from '$lib/types';
     import { X } from 'lucide-svelte';
     import InfoChips from './infoChips.svelte';
     interface Props {

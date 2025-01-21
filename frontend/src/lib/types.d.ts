@@ -35,3 +35,31 @@ export type DataParks = {
     api: String;
     goToPark: string
 };
+
+export type ChipTranslations = {
+    equipment: {
+      BBQArea: string;
+      ClimbingFrame: string;
+      RainShelter: string;
+      RunningTrack: string;
+      SandPlayArea: string;
+      SleddingHill: string;
+      SwingSet: string;
+      WaterAvailability: string;
+      WindShelter: string;
+    };
+    typesofplay: {
+      BalancingPlay: string;
+      CarPlay: string;
+      HopscotchArea: string;
+      PlayCircuit: string;
+      RockingPlay: string;
+      RolePlay: string;
+      SlidePlay: string;
+      SoundPlay: string;
+      SpinningPlay: string;
+      ToddlerPlay: string;
+      WaterPlay: string;
+    };
+  };
+  

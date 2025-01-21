@@ -43,7 +43,7 @@ const nonActiveClass = "text-text hover:text-primary";
   </main>
 
   <div class="block md:hidden">
-    <BottomNav classInner="grid-cols-4" {activeUrl} classActive="font-bold text-primary [&>*]:stroke-primary">
+    <BottomNav classInner="grid-cols-4 h-36 items-start mt-2" {activeUrl} classActive="font-bold text-primary [&>*]:stroke-primary">
       <BottomNavItem btnName="Home" href="/">
         <House class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
