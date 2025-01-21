@@ -33,4 +33,5 @@ export type Park = {
 export type DataParks = {
     parks: Park[];
     api: String;
+    goToPark: string
 };
