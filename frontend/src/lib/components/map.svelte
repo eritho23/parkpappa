@@ -48,8 +48,9 @@
                 try {
                     const controller = new AbortController(); // Create a controller for timeout handling
                     const timeoutId = setTimeout(() => controller.abort(), 5000); // 5-second timeout
+
                     const response: Response = await fetch(
-                        api + `/api/parks/${park.Id}/embed`,
+                        `https://parkpappa-api.cloud.spetsen.net/api/parks/${park.Id}/embed`,
                         { signal: controller.signal } // Pass the signal for timeout control
                     );
                     clearTimeout(timeoutId); // Clear the timeout once the request completes
