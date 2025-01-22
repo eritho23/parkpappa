@@ -106,15 +106,15 @@
 >
     <div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"><button onclick={() => parkData = undefined}><X  class="drop-shadow-lg stroke-text-dark"></X></button></div>
     {#if !parkData?.Embed}
-        <img
-            class="w-full h-52 lg:h-72 object-cover"
-            src="./placeholders/playground.jpg"
-            alt="Playground"
-        />
+    <img
+        class="w-full h-52 lg:h-72 object-cover"
+        src="./placeholders/playground.jpg"
+        alt="Playground"
+    />
     {:else}
         <div class="ml-2 pb-4"></div>
     {/if}
-
+    
     <div class="ml-2 pb-4">
         <div>
             <h1 class="md:text-xl lg:text-2xl">{parkData?.Name}</h1>
