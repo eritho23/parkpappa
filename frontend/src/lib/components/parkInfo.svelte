@@ -110,7 +110,10 @@
         src="./placeholders/playground.jpg"
         alt="Playground"
     />
+    {:else}
+    <div class="ml-2 pb-4"></div>
     {/if}
+    
     <div class="ml-2 pb-4">
         <div>
             <h1 class="md:text-xl lg:text-2xl">{parkData?.Name}</h1>
