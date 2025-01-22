@@ -5,6 +5,34 @@
     }
     let { park }: Props = $props()
 
+    const translations = {
+    "equipment": {
+        BBQArea: "BBQ Plats",
+        ClimbingFrame: "Klätterställning",
+        RainShelter: "regnskydd",
+        RunningTrack: "löpbana",
+        SandPlayArea: "Sandlåda",
+        SleddingHill: "pulkabacke",
+        SwingSet: "gungor",
+        WaterAvailability: "vattentillgänglighet",
+        WindShelter: "vindskydd"
+    },
+    "typesofplay": {
+      "BalancingPlay": "balansgång",
+      "CarPlay": "billek",
+      "HopscotchArea": "haghoppning",
+      "PlayCircuit": "hinderbana",
+      "RockingPlay": "vagglek",
+      "RolePlay": "rollspel",
+      "SlidePlay": "rutschkana",
+      "SoundPlay": "ljudlek",
+      "SpinningPlay": "snurrställning",
+      "ToddlerPlay": "småbarnsvänligt",
+      "WaterPlay": "vattenlek"
+    }
+}
+
+
     const playTypes = {
         BalancingPlay: true,
         CarPlay: true,
@@ -67,15 +95,19 @@
     function getColorFromName(name: string) {
         return Object.entries(colorMatch).find(([key, _]) => key === name)?.[1];
     }
+    
 
 </script>
+
 <p class="text-md text-text-dark mt-1">Lekredskap</p>
-<div class="flex flex-row gap-1 overflow-x-scroll overflow-y-clip mb-2 no-scrollbar">
+<div
+    class="flex flex-row gap-1 overflow-x-scroll overflow-y-clip mb-2 no-scrollbar"
+>
     {#each objectToTrueArray(park?.TypesOfPlay) as play}
         <div
             class={`px-2 py-1 rounded-md text-sm mt-2 mb-1 ${getColorFromName(play)}`}
         >
-            {play}
+            {translations.typesofplay[play]}
         </div>
     {/each}
 </div>
@@ -85,7 +117,7 @@
         <div
             class={`px-2 py-1 rounded-md text-sm mt-1 mb-1 ${getColorFromName(play)}`}
         >
-            {play}
+            {translations.equipment[play]}
         </div>
     {/each}
 </div>

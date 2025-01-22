@@ -296,3 +296,6 @@ cython_debug/
 
 # nix
 result*
+
+#images
+.webp

@@ -6,6 +6,8 @@
     import { Alert } from 'flowbite-svelte';
     import { RotateCcw } from 'lucide-svelte';
     import ParkRandomizer from '$lib/components/parkRandomizer.svelte';
+    import { onDestroy, onMount } from 'svelte';
+    import chipsData from "$lib/infoChipsTranslations.json"
     interface Props {
         data: DataParks;
         selectedPark: Park | undefined;
@@ -19,13 +21,41 @@
 
     }
     let mapComponentRef: any = $state();
+
+    const xlMediaQuery = window.matchMedia('(min-width: 1280px)');
+    const lgMediaQuery = window.matchMedia('(min-width: 1024px)');
+    const mdMediaQuery = window.matchMedia('(min-width: 768px)');
+    onMount(() => {
+        xlMediaQuery.addEventListener('change', changeStartScreenSize);
+        lgMediaQuery.addEventListener('change', changeStartScreenSize);
+        mdMediaQuery.addEventListener('change', changeStartScreenSize);
+        changeStartScreenSize();
+    });
+    onDestroy(() => {
+        xlMediaQuery.removeEventListener('change', changeStartScreenSize);
+        lgMediaQuery.removeEventListener('change', changeStartScreenSize);
+        mdMediaQuery.removeEventListener('change', changeStartScreenSize);
+    });
+    let startScreenSize: string = $state("");
+
+    function changeStartScreenSize() {
+        if (xlMediaQuery.matches) {
+            startScreenSize = "xl"
+        } else if (lgMediaQuery.matches) {
+            startScreenSize = "lg"
+        } else if (mdMediaQuery.matches) {
+            startScreenSize = "md"
+        } else {
+            startScreenSize = "sm"
+        }
+    }
 </script>
 
 <div class="h-full w-full flex-grow flex flex-col">
     <Map parkData={data.parks} api={String(data.api)} bind:selectedPark={selectedPark} bind:this={mapComponentRef}></Map>
     <ParkRandomizer parks={data.parks} api={data.api} flyToMarker={mapComponentRef.flyToMarker} ></ParkRandomizer>
     {#if selectedPark}
-        <ParkInfo bind:selectedPark={selectedPark} api={data.api}></ParkInfo>
+        <ParkInfo translations={data.translations} bind:selectedPark={selectedPark} api={data.api} startScreenSize={startScreenSize}></ParkInfo>
     {/if}
     {#if !data.parks}
         <Alert
