@@ -8,9 +8,10 @@
     let markerLayers: L.LayerGroup;
     interface Props {
         parkData: Park[];
+        api: string;
         selectedPark: Park | undefined;
     }
-    let { parkData, selectedPark = $bindable() }: Props = $props();
+    let {parkData, api, selectedPark = $bindable() }: Props = $props();
 
     const markerIcon = L.icon({
         iconUrl: '/marker/map-pin.svg',
@@ -24,8 +25,8 @@
     function getParkFromId(id: number) {
         // console.log(id);
         let park = parkData.find((park) => park.Id === id);
-        SetEmbed(park);
         console.log(park);
+
         return park as Park;
     }
     export function flyToMarker(markerID: number) {
@@ -37,6 +38,7 @@
                 // @ts-expect-error
                 map.flyTo(layer.getLatLng(), 17);
                 selectedPark = getParkFromId(markerID);
+                SetEmbed(selectedPark); //Inte smart att sätta embed här men det funkar
                 return;
             }
         });
@@ -47,9 +49,8 @@
                 try {
                     const controller = new AbortController(); // Create a controller for timeout handling
                     const timeoutId = setTimeout(() => controller.abort(), 5000); // 5-second timeout
-
                     const response: Response = await fetch(
-                        `https://parkpappa-api.cloud.spetsen.net/api/parks/${park.Id}/embed`,
+                        api + `/api/parks/${park.Id}/embed`,
                         { signal: controller.signal } // Pass the signal for timeout control
                     );
                     clearTimeout(timeoutId); // Clear the timeout once the request completes
