@@ -57,19 +57,10 @@
 </script>
 
 <div class="h-full w-full flex-grow flex flex-col">
-    <Map
-        parkData={data.parks}
-        api={String(data.api)}
-        bind:selectedPark
-        bind:this={mapComponentRef}
-    ></Map>
-    <ParkRandomizer
-        parks={data.parks}
-        api={data.api}
-        flyToMarker={mapComponentRef.flyToMarker}
-    ></ParkRandomizer>
+    <Map parkData={data.parks} api={String(data.api)} bind:selectedPark={selectedPark} bind:this={mapComponentRef}></Map>
+    <ParkRandomizer parks={data.parks} api={data.api} flyToMarker={mapComponentRef.flyToMarker} ></ParkRandomizer>
     {#if selectedPark}
-        <ParkInfo {isLoggedIn} bind:selectedPark={selectedPark} startScreenSize={startScreenSize}></ParkInfo>
+        <ParkInfo bind:selectedPark={selectedPark} {startScreenSize} {isLoggedIn}></ParkInfo>
     {/if}
     {#if !data.parks}
         <Alert
