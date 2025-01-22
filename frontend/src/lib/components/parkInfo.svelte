@@ -123,7 +123,6 @@
         }
     }
 </script>
-<!-- existing HTML code -->
 
 <div
     class="absolute top-[16.66666%] md:top-16 h-5/6 md:h-full flex flex-col bg-background-foreground w-full md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden no-scrollbar md:show-scrollbar rounded-xl md:rounded-none"
@@ -261,13 +260,8 @@
                     </div>
                 {/if}
             </TabItem>
-            <TabItem title="Instagram">
-                {#if parkData?.Embed}
-                    <div class="mt-4">
-                        <iframe srcdoc={parkData.Embed} class="w-full h-96" title="Instagram Embed"></iframe>
-                    </div>
-                {/if}
-            </TabItem>
+            
+
         </Tabs>
     </div>
 </div>
