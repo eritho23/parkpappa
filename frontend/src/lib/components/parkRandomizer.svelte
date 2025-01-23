@@ -21,7 +21,7 @@
             return (await response?.json()) ?? [];
         } catch (err) {
             if (err == 'Error: request timed out') {
-                  return error(503, "Request timed out, try again later")
+                return error(503, 'Request timed out, try again later');
             } else {
                 return error(500, 'Unexpected Error');
             }
@@ -35,7 +35,7 @@
         console.log(park[0]);
         flyToMarker(park[0].Id);
     }}
-    class=" absolute right-8 bottom-8 size-14 bg-background-foreground border border-text-light rounded-full flex items-center justify-center brightness-100 active:brightness-95 shadow-md shadow-text-light hover:shadow-text-dark/65"
+    class=" absolute right-8 bottom-12 size-14 bg-background-foreground border border-text-light rounded-full flex items-center justify-center brightness-100 active:brightness-95 shadow-md shadow-text-light hover:shadow-text-dark/65"
 >
     <Dices size={28} strokeWidth={2.25} class="stroke-primary"></Dices>
 </button>
