@@ -8,9 +8,10 @@
     let markerLayers: L.LayerGroup;
     interface Props {
         parkData: Park[];
+        api: string;
         selectedPark: Park | undefined;
     }
-    let { parkData, selectedPark = $bindable() }: Props = $props();
+    let {parkData, api, selectedPark = $bindable() }: Props = $props();
 
     const markerIcon = L.icon({
         iconUrl: '/marker/map-pin.svg',
@@ -36,11 +37,37 @@
                 // @ts-expect-error
                 map.flyTo(layer.getLatLng(), 17);
                 selectedPark = getParkFromId(markerID);
+                SetEmbed(selectedPark); //Inte smart att sätta embed här men det funkar
                 return;
             }
         });
     }
+    async function SetEmbed(park?: Park | undefined) {
+        if (park) {
+            if (!park.Embed) {
+                try {
+                    const controller = new AbortController(); // Create a controller for timeout handling
+                    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5-second timeout
+                    const response: Response = await fetch(
+                        api + `/api/parks/${park.Id}/embed`,
+                        { signal: controller.signal } // Pass the signal for timeout control
+                    );
+                    clearTimeout(timeoutId); // Clear the timeout once the request completes
 
+                    if (response.ok) {
+                        const embed = await response.text(); // Get the embed HTML as text
+                        park.Embed = embed; // Attach the embed to the park object
+                    } else {
+                        console.error(`ERROR: Failed to fetch embed for park ${park.Id}, status: ${response.status}`);
+                    }
+                } catch (err) {
+                    console.error('Unexpected error while fetching embed:', err);
+                }
+            }
+        }
+        
+        
+    }
     function createMap(container: HTMLDivElement) {
         let m = L.map(container)
             .setView([59.609796, 16.5464], 14)

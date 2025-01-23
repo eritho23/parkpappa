@@ -75,6 +75,7 @@
             }
         }
     }
+    
 </script>
 
 <div
@@ -86,6 +87,7 @@
         duration: 800,
     }}
 >
+
     <!-- {#if displayShowBar}
         <div
         class="h-2 w-20 top-1 absolute self-center"
@@ -102,11 +104,16 @@
             ><X class="drop-shadow-lg stroke-text-dark"></X></button
         >
     </div>
+    {#if !parkData?.Embed}
     <img
         class="w-full h-52 lg:h-72 object-cover"
         src="./placeholders/playground.jpg"
         alt="Playground"
     />
+    {:else}
+    <div class="ml-2 pb-4"></div>
+    {/if}
+    
     <div class="ml-2 pb-4">
         <div>
             <h1 class="md:text-xl lg:text-2xl">{parkData?.Name}</h1>
@@ -117,7 +124,16 @@
             <InfoChips park={parkData}></InfoChips>
         </div>
         <Tabs {activeClasses} {inactiveClasses}>
-            <TabItem title="Officiell" open>
+            {#if parkData?.Embed}
+                <TabItem title="Instagram" open>
+                    <div class="w-full" style="height: 1000px; overflow: hidden;">
+                        <iframe srcdoc={parkData.Embed} class="w-full h-full" title="Instagram Embed" scrolling="no"></iframe>
+                    </div>
+                    <div class="w-full h-12"></div> 
+                    
+                </TabItem>
+            {/if}
+            <TabItem title="Officiell" open={!parkData?.Embed ? true : false}>
                 <div class="bg-background-foreground -mt-4">
                     <p class="md:text-sm lg:text-md xl:text-lg">
                         Park Pappans Recension
@@ -183,6 +199,8 @@
                 <div class="w-full h-12"></div>
                 <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
             </TabItem>
+            
+
         </Tabs>
     </div>
 </div>
