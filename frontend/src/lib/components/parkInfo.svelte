@@ -33,7 +33,9 @@
     });
     let totalReviewSize = $state(16);
     let topicReviewSize = $state(24);
-    let flyDirection = $state([-1000, 0]);
+    let flyDirection = $state(
+        startScreenSize === 'sm' ? [0, 1000] : [-1000, 0]
+    );
     // let displayShowBar = $state(false);
     $inspect(parkData);
     function screenResize(startSize?: MediaQueryListEvent | String) {
