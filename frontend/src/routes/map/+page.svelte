@@ -11,7 +11,7 @@
         data: DataParks;
         selectedPark: Park | undefined;
     }
-    let { data, selectedPark = $bindable()}: Props = $props();
+    let { data, selectedPark = $bindable() }: Props = $props();
     let {isLoggedIn} = data;
     let parkInfo: Park | undefined = $state(undefined);
     function showInfo(toggle: boolean = true, park?: Park | undefined) {
