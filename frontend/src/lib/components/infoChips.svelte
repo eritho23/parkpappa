@@ -108,7 +108,9 @@
         <div
             class={`px-2 py-1 rounded-md text-sm mt-2 mb-1 ${getColorFromName(play)}`}
         >
-            {translations.typesofplay[play as keyof typeof translations.typesofplay]}
+            {translations.typesofplay[
+                play as keyof typeof translations.typesofplay
+            ]}
         </div>
     {/each}
 </div>
@@ -121,7 +123,9 @@
         <div
             class={`px-2 py-1 rounded-md text-sm mt-1 mb-1 ${getColorFromName(play)}`}
         >
-            {translations.equipment[play as keyof typeof translations.equipment]}
+            {translations.equipment[
+                play as keyof typeof translations.equipment
+            ]}
         </div>
     {/each}
 </div>
