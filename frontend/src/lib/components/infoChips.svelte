@@ -3,35 +3,34 @@
     interface Props {
         park: Park | undefined;
     }
-    let { park }: Props = $props()
+    let { park }: Props = $props();
 
     const translations = {
-    "equipment": {
-        BBQArea: "BBQ Plats",
-        ClimbingFrame: "Klätterställning",
-        RainShelter: "regnskydd",
-        RunningTrack: "löpbana",
-        SandPlayArea: "Sandlåda",
-        SleddingHill: "pulkabacke",
-        SwingSet: "gungor",
-        WaterAvailability: "vattentillgänglighet",
-        WindShelter: "vindskydd"
-    },
-    "typesofplay": {
-      "BalancingPlay": "balansgång",
-      "CarPlay": "billek",
-      "HopscotchArea": "haghoppning",
-      "PlayCircuit": "hinderbana",
-      "RockingPlay": "vagglek",
-      "RolePlay": "rollspel",
-      "SlidePlay": "rutschkana",
-      "SoundPlay": "ljudlek",
-      "SpinningPlay": "snurrställning",
-      "ToddlerPlay": "småbarnsvänligt",
-      "WaterPlay": "vattenlek"
-    }
-}
-
+        equipment: {
+            BBQArea: 'BBQ Plats',
+            ClimbingFrame: 'Klätterställning',
+            RainShelter: 'regnskydd',
+            RunningTrack: 'löpbana',
+            SandPlayArea: 'Sandlåda',
+            SleddingHill: 'pulkabacke',
+            SwingSet: 'gungor',
+            WaterAvailability: 'vattentillgänglighet',
+            WindShelter: 'vindskydd',
+        },
+        typesofplay: {
+            BalancingPlay: 'balansgång',
+            CarPlay: 'billek',
+            HopscotchArea: 'haghoppning',
+            PlayCircuit: 'hinderbana',
+            RockingPlay: 'vagglek',
+            RolePlay: 'rollspel',
+            SlidePlay: 'rutschkana',
+            SoundPlay: 'ljudlek',
+            SpinningPlay: 'snurrställning',
+            ToddlerPlay: 'småbarnsvänligt',
+            WaterPlay: 'vattenlek',
+        },
+    };
 
     const playTypes = {
         BalancingPlay: true,
@@ -83,9 +82,11 @@
         WindShelter: 'bg-slate-400/50',
     };
 
-    function objectToTrueArray(plays: Park['TypesOfPlay'] | Park["Equipment"] | undefined): string[] {
+    function objectToTrueArray(
+        plays: Park['TypesOfPlay'] | Park['Equipment'] | undefined
+    ): string[] {
         if (!plays) {
-            return[]
+            return [];
         }
         return Object.entries(plays)
             .filter(([_, value]) => value)
@@ -95,8 +96,6 @@
     function getColorFromName(name: string) {
         return Object.entries(colorMatch).find(([key, _]) => key === name)?.[1];
     }
-    
-
 </script>
 
 <p class="text-md text-text-dark mt-1">Lekredskap</p>
@@ -107,7 +106,9 @@
         <div
             class={`px-2 py-1 rounded-md text-sm mt-2 mb-1 ${getColorFromName(play)}`}
         >
-            {translations.typesofplay[play as keyof typeof translations.typesofplay]}
+            {translations.typesofplay[
+                play as keyof typeof translations.typesofplay
+            ]}
         </div>
     {/each}
 </div>
@@ -117,7 +118,9 @@
         <div
             class={`px-2 py-1 rounded-md text-sm mt-1 mb-1 ${getColorFromName(play)}`}
         >
-            {translations.equipment[play as keyof typeof translations.equipment]}
+            {translations.equipment[
+                play as keyof typeof translations.equipment
+            ]}
         </div>
     {/each}
 </div>
