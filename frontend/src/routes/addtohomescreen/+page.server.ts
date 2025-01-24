@@ -26,7 +26,7 @@ export const load: PageServerLoad = async ({ request }) => {
         isAndroid,
         isDesktop,
         isIOS,
-        isMac, 
+        isMac,
         isMobile,
         isWindows,
         userAgent,
