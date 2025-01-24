@@ -8,6 +8,8 @@
     import InfoChips from './infoChips.svelte';
     import ShareToMap from './shareToMap.svelte';
     import ParkReviewCard from './parkReviewCard.svelte';
+    import { loadGoogleMaps } from '../googleMapsLoader';
+    let mapElement: HTMLElement | null = null;
     interface Props {
         selectedPark: Park | undefined;
         startScreenSize: string;
@@ -27,7 +29,29 @@
         lgMediaQuery.addEventListener('change', screenResize);
         mdMediaQuery.addEventListener('change', screenResize);
         screenResize(startScreenSize);
+
+        if(parkData) {
+            loadStreetView();
+        }
     });
+    async function loadStreetView() {
+        try {
+            await loadGoogleMaps({ apiKey: 'YOUR_API_KEY', libraries: ['places'] });
+            initStreetView();
+        } catch (error) {
+            console.error('Failed to load Google Maps:', error);
+        }
+    }
+    function initStreetView(): void {
+        const google = window.google;
+        if (parkData && HTMLElement) {
+            const panorama = new google.maps.StreetViewPanorama(mapElement, {
+                position: { lat: parkData.Coordinates.x, lng: parkData.Coordinates.y },
+                pov: { pitch: 0 },
+                zoom: 1,
+            });
+        }
+    }
     onDestroy(() => {
         xlMediaQuery.removeEventListener('change', screenResize);
         lgMediaQuery.removeEventListener('change', screenResize);
@@ -107,11 +131,7 @@
 >
     <div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"><button onclick={() => parkData = undefined}><X  class="drop-shadow-lg stroke-text-dark"></X></button></div>
     {#if !parkData?.Embed}
-    <img
-        class="w-full h-52 lg:h-72 object-cover"
-        src="./placeholders/playground.jpg"
-        alt="Playground"
-    />
+    <div class="w-full h-52 lg:h-72" bind:this={mapElement}></div>
     {:else}
         <div class="ml-2 pb-4"></div>
     {/if}
