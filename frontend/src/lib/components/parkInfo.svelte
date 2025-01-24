@@ -9,8 +9,9 @@
     interface Props {
         selectedPark: Park | undefined;
         startScreenSize: string;
+        isLoggedIn: boolean;
     }
-    let { selectedPark: parkData = $bindable(), startScreenSize }: Props = $props();
+    let { selectedPark: parkData = $bindable(), startScreenSize, isLoggedIn }: Props = $props();
     const activeClasses =
         'text-primary p-2 lg:p-3 inline-block border-b-2 border-primary text-center text-xs lg:text-sm';
     const inactiveClasses =
@@ -212,6 +213,11 @@
                 </div>
             </TabItem>
             <TabItem title="Community">
+                {#if !isLoggedIn}
+                    <a class="" href="/auth">Logga in för att skriva en recension</a>
+                {:else}
+                    <a class="" href={"/createreview?park=" + String(parkData?.Id)}>Skapa recension</a>
+                {/if}
                 {#if reviews}
                     {#each reviews as review}
                         <div class="border-primary rounded flex flex-col space-y-2">
