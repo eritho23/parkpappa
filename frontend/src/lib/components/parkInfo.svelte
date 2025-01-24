@@ -196,18 +196,22 @@
             </TabItem>
             <TabItem title="Community">
                 {#if !isLoggedIn}
-                    <a class="" href="/auth">Logga in för att skriva en recension</a>
+                    <a class="p-2 rounded border-2 hover:bg-primary/10 border-primary" href={`/auth?redirectpark=${String(parkData?.Id)}`}>Logga in för att skriva en recension</a>
                 {:else}
-                    <a class="" href={"/createreview?park=" + String(parkData?.Id)}>Skapa recension</a>
+                    <a class="p-2 rounded border-2 hover:bg-primary/10 border-primary" href={"/createreview?park=" + String(parkData?.Id)}>Skapa recension</a>
                 {/if}
+                <div class="h-6"></div>
                 {#if reviews}
-                    {#each reviews as review}
-                        <div class="border-primary rounded flex flex-col space-y-2">
-                            <h1 class="font-bold text-xl">{review.title}</h1>
-                            <span>{review.expand.user.name} - {(new Date(review.created)).toLocaleDateString()}</span>
-                            <p class="text-sm">{review.body}</p>
-                        </div>
-                    {/each}
+                    <div class="flex flex-col space-y-4">
+                        {#each reviews as review}
+                            <div class="border-zinc-500 p-4 border rounded flex flex-col">
+                                <h1 class="font-bold text-xl">{review.title}</h1>
+                                <span>{review.expand.user.name} - {(new Date(review.created)).toLocaleDateString()}</span>
+                                <StarRating rating={review.stars} />
+                                <p class="text-sm">{review.body}</p>
+                            </div>
+                        {/each}
+                    </div>
                 {/if}
             </TabItem>
         </Tabs>
