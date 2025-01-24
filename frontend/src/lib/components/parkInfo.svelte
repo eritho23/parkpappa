@@ -7,6 +7,7 @@
     import { X } from 'lucide-svelte';
     import InfoChips from './infoChips.svelte';
     import { loadGoogleMaps } from '../googleMapsLoader';
+    let streetViewUrl = $state('');
     let mapElement: HTMLElement | null = null;
     interface Props {
         selectedPark: Park | undefined;
@@ -22,34 +23,20 @@
     const xlMediaQuery = window.matchMedia('(min-width: 1280px)');
     const lgMediaQuery = window.matchMedia('(min-width: 1024px)');
     const mdMediaQuery = window.matchMedia('(min-width: 768px)');
+    $effect(() => {
+        if (parkData) {
+            const lat = parkData.Coordinates.x;
+            const lng = parkData.Coordinates.y;
+            streetViewUrl = `https://www.google.com/maps/embed/v1/streetview?key=AIzaSyCr7YHUYqDJUxRs78Xdu3Wlr3SdSRctA1E&location=${lat},${lng}`;
+        }
+    });
     onMount(() => {
         xlMediaQuery.addEventListener('change', screenResize);
         lgMediaQuery.addEventListener('change', screenResize);
         mdMediaQuery.addEventListener('change', screenResize);
         screenResize(startScreenSize);
-
-        if(parkData) {
-            loadStreetView();
-        }
     });
-    async function loadStreetView() {
-        try {
-            await loadGoogleMaps({ apiKey: 'YOUR_API_KEY', libraries: ['places'] });
-            initStreetView();
-        } catch (error) {
-            console.error('Failed to load Google Maps:', error);
-        }
-    }
-    function initStreetView(): void {
-        const google = window.google;
-        if (parkData && HTMLElement) {
-            const panorama = new google.maps.StreetViewPanorama(mapElement, {
-                position: { lat: parkData.Coordinates.x, lng: parkData.Coordinates.y },
-                pov: { pitch: 0 },
-                zoom: 1,
-            });
-        }
-    }
+    
     onDestroy(() => {
         xlMediaQuery.removeEventListener('change', screenResize);
         lgMediaQuery.removeEventListener('change', screenResize);
@@ -130,10 +117,17 @@
             ><X class="drop-shadow-lg stroke-text-dark"></X></button
         >
     </div>
-    {#if !parkData?.Embed}
-    <div class="w-full h-52 lg:h-72" bind:this={mapElement}></div>
-    {:else}
-        <div class="ml-2 pb-4"></div>
+    {#if parkData}
+    <div class="w-full h-52 lg:h-72 min-h-52 lg:min-h-72">
+        <iframe title="Street View"
+            width="100%"
+            height="100%"
+            frameborder="0"
+            style="border:0"
+            src={streetViewUrl}
+            allowfullscreen
+        ></iframe>
+    </div>
     {/if}
     
     <div class="ml-2 pb-4">
