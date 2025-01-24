@@ -2,10 +2,14 @@
 import "../app.css"
 import { Navbar, NavBrand, NavHamburger, NavLi, NavUl, Dropdown, DropdownItem, DropdownDivider, BottomNav, BottomNavItem} from "flowbite-svelte"
 import { page } from "$app/stores"
-import { Menu, House, MapPinned, MessageSquareMore, Settings } from "lucide-svelte"
-$: activeUrl = $page.url.pathname;
+import { Menu, User, House, MapPinned, MessageSquareMore, Settings } from "lucide-svelte"
+let activeUrl = $derived($page.url.pathname);
 const activeClass = "text-primary bold underline stroke-primary";
 const nonActiveClass = "text-text hover:text-primary";
+
+let { data, children } = $props();
+let {isLoggedIn, email, avatarUrl} = data;
+
 </script>
 
 <svelte:head>
@@ -24,22 +28,27 @@ const nonActiveClass = "text-text hover:text-primary";
     <NavLi href="/">Hem</NavLi>
     <NavLi href="/map">Karta</NavLi>
     <NavLi href="/reviews">Recensioner</NavLi>
-    <NavLi class="cursor-pointer hidden md:block">
-      More
-      <Menu size=24 class="hidden md:inline"></Menu>
-    </NavLi>
-    <Dropdown class="w-40 z-20" containerClass="absolute">
-      <DropdownItem href="/settings">Inställningar</DropdownItem>
-      <DropdownItem href="/contact">Om oss</DropdownItem>
-      <DropdownItem href="/about">Kontakta oss</DropdownItem>
-      <DropdownDivider />
-      <DropdownItem href="/">Sign out</DropdownItem>
-    </Dropdown>
+    {#if isLoggedIn}
+      <NavLi class="flex flex-row space-x-4 hover:cursor-pointer" title="Logga ut" onclick={() => {
+        window.location.href = '/auth';
+      }}>
+        {#if avatarUrl}
+          <img alt="user avatar" class="rounded-full size-6" onerror={() => {
+            console.log('image error');
+          }} src={avatarUrl} />
+        {:else}
+          <User class="md:block hidden size-5" />
+        {/if}
+        <span>{email}</span>
+      </NavLi>
+    {:else}
+      <NavLi href="/auth" title="Logga in">Logga in</NavLi>
+    {/if}
   </NavUl>
   
 </Navbar>
   <main class="flex-grow flex flex-col">
-    <slot></slot>
+    {@render children?.()}
   </main>
 
   <div class="block md:hidden">
