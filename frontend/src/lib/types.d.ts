@@ -35,6 +35,7 @@ export type DataParks = {
     parks: Park[];
     api: String;
     goToPark: string;
+    isLoggedIn: boolean;
 };
 
 export enum mapTypes {
