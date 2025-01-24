@@ -8,15 +8,17 @@
     import InfoChips from './infoChips.svelte';
     import ShareToMap from './shareToMap.svelte';
     import ParkReviewCard from './parkReviewCard.svelte';
-    import { loadGoogleMaps } from '../googleMapsLoader';
+
+
     let streetViewUrl = $state('');
     let mapElement: HTMLElement | null = null;
     interface Props {
         selectedPark: Park | undefined;
         startScreenSize: string;
         isLoggedIn: boolean;
+        googleMapsApiKey: string;
     }
-    let { selectedPark: parkData = $bindable(), startScreenSize, isLoggedIn }: Props = $props();
+    let { selectedPark: parkData = $bindable(), startScreenSize, googleMapsApiKey = $bindable(), isLoggedIn }: Props = $props();
     const activeClasses =
         'text-primary p-2 lg:p-3 inline-block border-b-2 border-primary text-center text-xs lg:text-sm';
     const inactiveClasses =
@@ -25,11 +27,13 @@
     const xlMediaQuery = window.matchMedia('(min-width: 1280px)');
     const lgMediaQuery = window.matchMedia('(min-width: 1024px)');
     const mdMediaQuery = window.matchMedia('(min-width: 768px)');
+
+    // Reactive statement to update streetViewUrl whenever parkData changes
     $effect(() => {
-        if (parkData) {
+        if (parkData && googleMapsApiKey) {
             const lat = parkData.Coordinates.x;
             const lng = parkData.Coordinates.y;
-            streetViewUrl = `https://www.google.com/maps/embed/v1/streetview?key=AIzaSyCr7YHUYqDJUxRs78Xdu3Wlr3SdSRctA1E&location=${lat},${lng}`;
+            streetViewUrl = `https://www.google.com/maps/embed/v1/streetview?key=${googleMapsApiKey}&location=${lat},${lng}&heading=210&pitch=10&fov=35`;
         }
     });
     onMount(() => {
