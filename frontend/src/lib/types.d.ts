@@ -37,6 +37,7 @@ export type DataParks = {
     googleMapsApiKey: string;
     goToPark: string;
     isLoggedIn: boolean;
+    googleMapsApiKey: string;
 };
 
 export enum mapTypes {

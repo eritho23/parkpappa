@@ -14,8 +14,8 @@
     interface Props {
         selectedPark: Park | undefined;
         startScreenSize: string;
-        googleMapsApiKey: string;
         isLoggedIn: boolean;
+        googleMapsApiKey: string;
     }
     let { selectedPark: parkData = $bindable(), startScreenSize, googleMapsApiKey = $bindable(), isLoggedIn }: Props = $props();
     const activeClasses =
