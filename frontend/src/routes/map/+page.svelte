@@ -12,6 +12,7 @@
         selectedPark: Park | undefined;
     }
     let { data, selectedPark = $bindable()}: Props = $props();
+    let {isLoggedIn} = data;
     let parkInfo: Park | undefined = $state(undefined);
     function showInfo(toggle: boolean = true, park?: Park | undefined) {
         selectedPark = park;
@@ -60,7 +61,7 @@
     <Map parkData={data.parks} bind:selectedPark={selectedPark} bind:this={mapComponentRef}></Map>
     <ParkRandomizer parks={data.parks} api={data.api} flyToMarker={mapComponentRef.flyToMarker} ></ParkRandomizer>
     {#if selectedPark}
-        <ParkInfo translations={data.translations} bind:selectedPark={selectedPark} startScreenSize={startScreenSize}></ParkInfo>
+        <ParkInfo {isLoggedIn} translations={data.translations} bind:selectedPark={selectedPark} startScreenSize={startScreenSize}></ParkInfo>
     {/if}
     {#if !data.parks}
         <Alert
