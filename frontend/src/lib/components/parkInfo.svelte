@@ -11,7 +11,6 @@
     let mapElement: HTMLElement | null = null;
     import ParkReviewCard from './parkReviewCard.svelte';
     import ShareToMap from './shareToMap.svelte';
-    import ParkReviewCard from './parkReviewCard.svelte';
     interface Props {
         selectedPark: Park | undefined;
         startScreenSize: string;
@@ -55,6 +54,10 @@
         lgMediaQuery.addEventListener('change', screenResize);
         mdMediaQuery.addEventListener('change', screenResize);
         screenResize(startScreenSize);
+
+        if(parkData) {
+            loadStreetView();
+        }
     });
     
     onDestroy(() => {
