@@ -36,6 +36,9 @@ export default {
                 medium: '500',
                 semibold: '600',
             },
+            borderWidth: {
+                
+            }
         },
         fontFamily: {
             primary: ['Lexend'],
