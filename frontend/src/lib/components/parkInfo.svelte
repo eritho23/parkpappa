@@ -6,11 +6,11 @@
     import type { Park } from '$lib/types';
     import { X } from 'lucide-svelte';
     import InfoChips from './infoChips.svelte';
+    import ShareToMap from './shareToMap.svelte';
+    import ParkReviewCard from './parkReviewCard.svelte';
 
     let streetViewUrl = $state('');
     let mapElement: HTMLElement | null = null;
-    import ParkReviewCard from './parkReviewCard.svelte';
-    import ShareToMap from './shareToMap.svelte';
     interface Props {
         selectedPark: Park | undefined;
         startScreenSize: string;
@@ -54,10 +54,6 @@
         lgMediaQuery.addEventListener('change', screenResize);
         mdMediaQuery.addEventListener('change', screenResize);
         screenResize(startScreenSize);
-
-        if(parkData) {
-            loadStreetView();
-        }
     });
     
     onDestroy(() => {
