@@ -1,9 +1,9 @@
 <script lang="ts">
     import PocketBase from 'pocketbase';
     
-    // import { PB_PATH } from '$env/static/public';
-
     const pb = new PocketBase('https://parkpappa-pb.superdator.spetsen.net');
+
+    let {data} = $props();
 
     let errorMsg: string = $state('');
 
@@ -11,6 +11,7 @@
         try {
             await pb.collection('users').authWithOAuth2({provider: 'google'})
             form.token.value = pb.authStore.token;
+            form.redirectpark.value = data.returnPark;
             form.submit();
         } catch (err) {
             errorMsg = String(err);
@@ -28,6 +29,7 @@
     {/if}
     <form class="" method="post" onsubmit={(e) => {e.preventDefault(); login(e.currentTarget)}}>
         <input name="token" type="hidden" />
+        <input name="redirectpark" type="hidden" />
         <button class="p-4 border-2 border-primary rounded font-bold bg-primary/10">
             Logga in med Google
         </button>

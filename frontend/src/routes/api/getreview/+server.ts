@@ -6,7 +6,7 @@ export const GET = async ({locals, url}) => {
         return error(400, JSON.stringify({message: 'You must have a search param.'}));
     }
 
-    const reviews = await locals.pb.collection('reviews').getFullList({filter: `parkid=${parkId}`, expand: "user"});
+    const reviews = await locals.pb.collection('reviews').getFullList({filter: `parkid=${parkId}`, expand: "user", sort: "-created"});
 
     return json(reviews)
 }

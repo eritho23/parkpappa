@@ -3,10 +3,9 @@
     import { Star, StarHalf } from 'lucide-svelte';
     let { rating = 0, class: className = '', size = 24 } = $props();
 
-    let fullStars =
-        rating <= 10 && rating > 0 ? Math.floor(rating / 2) : undefined;
-    let displayHalfStar =
-        rating <= 10 && rating > 0 ? rating % 2 === 1 : undefined;
+
+    let fullStars = $derived(rating <= 10 && rating > 0 ? Math.floor(rating / 2) : undefined);
+    let displayHalfStar = $derived(rating <= 10 && rating > 0 ? rating % 2 === 1 : undefined);
 
     function range(length: number) {
         return Array.from({ length });
