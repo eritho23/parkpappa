@@ -10,8 +10,7 @@
         selectedPark: Park | undefined;
         startScreenSize: string;
     }
-    let { selectedPark: parkData = $bindable(), startScreenSize }: Props =
-        $props();
+    let { selectedPark: parkData = $bindable(), startScreenSize }: Props = $props();
     const activeClasses =
         'text-primary p-2 lg:p-3 inline-block border-b-2 border-primary text-center text-xs lg:text-sm';
     const inactiveClasses =
@@ -35,7 +34,22 @@
     let topicReviewSize = $state(24);
     let flyDirection = $state([-1000, 0]);
     // let displayShowBar = $state(false);
-    $inspect(parkData);
+    // $inspect(parkData?.Id);
+
+    let reviews = $state(null)
+    onMount(async () => {
+        const res = await fetch(`/api/getreview?id=${parkData?.Id}`);
+        if (res.ok) {
+            try {
+                reviews = await res.json();
+            } catch (_) {
+                reviews = null
+            }
+        }
+    });
+
+    $inspect(reviews);
+
     function screenResize(startSize?: MediaQueryListEvent | String) {
         console.log(startSize);
         if (typeof startSize !== 'string') {
@@ -120,7 +134,7 @@
             <TabItem title="Officiell" open>
                 <div class="bg-background-foreground -mt-4">
                     <p class="md:text-sm lg:text-md xl:text-lg">
-                        Park Pappans Recension
+                        Parkpappans Recension
                     </p>
                     <div class="flex w-full">
                         <div class="flex flex-col w-max">
@@ -180,8 +194,15 @@
                 </div>
             </TabItem>
             <TabItem title="Community">
-                <div class="w-full h-12"></div>
-                <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
+                {#if reviews}
+                    {#each reviews as review}
+                        <div class="border-primary rounded flex flex-col space-y-2">
+                            <h1 class="font-bold text-xl">{review.title}</h1>
+                            <span>{review.expand.user.name} - {(new Date(review.created)).toLocaleDateString()}</span>
+                            <p class="text-sm">{review.body}</p>
+                        </div>
+                    {/each}
+                {/if}
             </TabItem>
         </Tabs>
     </div>
