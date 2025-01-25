@@ -66,7 +66,7 @@
           inherit version;
           src = pkgs.lib.cleanSource ./frontend/.;
 
-          npmDepsHash = "sha256-Q/4A9NUkTdqICtLgW4v64u72PpcQhJAOwn62H1vG7Ro=";
+          npmDepsHash = "sha256-WEWnAYyMXL8fN65kisUnzU+CVGeLrg0Vy1RR9BxhISA=";
           # npmDepsHash = pkgs.lib.fakeHash;
 
           API_PATH = "https://parkpappa-api.cloud.spetsen.net";
