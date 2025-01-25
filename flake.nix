@@ -69,8 +69,6 @@
 
           nodejs = pkgs.nodejs_22;
 
-          nodejs = pkgs.nodejs_22;
-
           npmDepsHash = "sha256-WEWnAYyMXL8fN65kisUnzU+CVGeLrg0Vy1RR9BxhISA=";
           # npmDepsHash = pkgs.lib.fakeHash;
 
