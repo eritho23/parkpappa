@@ -30,7 +30,7 @@
         return park as Park;
     }
     export function flyToMarker(markerID: number) {
-        console.log('funcion called');
+        //console.log('funcion called');
         map.eachLayer((layer) => {
             // @ts-expect-error
             if (layer.options.id === markerID) {
