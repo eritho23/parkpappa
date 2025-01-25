@@ -9,7 +9,6 @@
     import ShareToMap from './shareToMap.svelte';
     import ParkReviewCard from './parkReviewCard.svelte';
 
-
     let streetViewUrl = $state('');
     let mapElement: HTMLElement | null = null;
     interface Props {
@@ -27,6 +26,19 @@
     const xlMediaQuery = window.matchMedia('(min-width: 1280px)');
     const lgMediaQuery = window.matchMedia('(min-width: 1024px)');
     const mdMediaQuery = window.matchMedia('(min-width: 768px)');
+    let isBlacklisted = $state(false);
+
+    // Fetch the blacklist and check if the parkData.Id is in the blacklist
+    async function checkBlacklist() {
+        const response = await fetch('/blacklist/streetviewblacklist.json');
+        const data = await response.json();
+        const blacklist = data.blacklisted_park_ids;
+        if (parkData && blacklist.includes(parkData.Id.toString())) {
+            isBlacklisted = true;
+        } else {
+            isBlacklisted = false;
+        }
+    }
 
     // Reactive statement to update streetViewUrl whenever parkData changes
     $effect(() => {
@@ -34,6 +46,7 @@
             const lat = parkData.Coordinates.x;
             const lng = parkData.Coordinates.y;
             streetViewUrl = `https://www.google.com/maps/embed/v1/streetview?key=${googleMapsApiKey}&location=${lat},${lng}&heading=210&pitch=10&fov=35`;
+            checkBlacklist();
         }
     });
     onMount(() => {
@@ -138,16 +151,20 @@
         >
     </div>
     {#if parkData}
-    <div class="w-full h-52 lg:h-72 min-h-52 lg:min-h-72">
-        <iframe title="Street View"
-            width="100%"
-            height="100%"
-            frameborder="0"
-            style="border:0"
-            src={streetViewUrl}
-            allowfullscreen
-        ></iframe>
-    </div>
+        {#if !isBlacklisted}
+            <div class="w-full h-52 lg:h-72 min-h-52 lg:min-h-72">
+                <iframe title="Street View"
+                    width="100%"
+                    height="100%"
+                    frameborder="0"
+                    style="border:0"
+                    src={streetViewUrl}
+                    allowfullscreen
+                ></iframe>
+            </div>
+        {:else}
+            <div class="ml-2 pb-4"></div>
+        {/if}
     {/if}
     
     <div class="ml-2 pb-4">
