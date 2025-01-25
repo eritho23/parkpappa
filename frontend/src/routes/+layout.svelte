@@ -28,7 +28,7 @@ const nonActiveClass = "text-text hover:text-primary";
       More
       <Menu size=24 class="hidden md:inline"></Menu>
     </NavLi>
-    <Dropdown class="w-40 z-20" containerClass="absolute">
+    <Dropdown class="w-36 z-20" containerClass="absolute">
       <DropdownItem href="/settings">Inställningar</DropdownItem>
       <DropdownItem href="/contact">Om oss</DropdownItem>
       <DropdownItem href="/about">Kontakta oss</DropdownItem>
@@ -50,10 +50,10 @@ const nonActiveClass = "text-text hover:text-primary";
       <BottomNavItem btnName="Map" href="/map">
         <MapPinned class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
-      <BottomNavItem btnName="Review" href="/error">
+      <BottomNavItem btnName="Review" href="/reviews">
         <MessageSquareMore class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
-      <BottomNavItem btnName="Settings" href="/error">
+      <BottomNavItem btnName="Settings" href="/settings">
         <Settings class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
     </BottomNav>
