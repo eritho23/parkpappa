@@ -3,19 +3,20 @@
     import { Tabs, TabItem } from 'flowbite-svelte';
     import { onDestroy, onMount } from 'svelte';
     import { fly } from 'svelte/transition';
-    import type { ChipTranslations, Park } from '$lib/types';
+    import type { Park } from '$lib/types';
     import { X } from 'lucide-svelte';
     import InfoChips from './infoChips.svelte';
-    import { page } from '$app/stores';
 
     let streetViewUrl = $state('');
     let mapElement: HTMLElement | null = null;
+    import ParkReviewCard from './parkReviewCard.svelte';
     interface Props {
         selectedPark: Park | undefined;
         startScreenSize: string;
         googleMapsApiKey: string;
+        isLoggedIn: boolean;
     }
-    let { selectedPark: parkData = $bindable(), startScreenSize, googleMapsApiKey = $bindable() }: Props = $props();
+    let { selectedPark: parkData = $bindable(), startScreenSize, googleMapsApiKey = $bindable(), isLoggedIn }: Props = $props();
     const activeClasses =
         'text-primary p-2 lg:p-3 inline-block border-b-2 border-primary text-center text-xs lg:text-sm';
     const inactiveClasses =
@@ -65,7 +66,22 @@
         startScreenSize === 'sm' ? [0, 1000] : [-1000, 0]
     );
     // let displayShowBar = $state(false);
-    $inspect(parkData);
+    $inspect(parkData?.Id);
+
+    let reviews = $state(null)
+    onMount(async () => {
+        const res = await fetch(`/api/getreview?id=${parkData?.Id}`);
+        if (res.ok) {
+            try {
+                reviews = await res.json();
+            } catch (_) {
+                reviews = null
+            }
+        }
+    });
+
+    $inspect(reviews);
+
     function screenResize(startSize?: MediaQueryListEvent | String) {
         console.log(startSize);
         if (typeof startSize !== 'string') {
@@ -149,6 +165,7 @@
         {:else}
             <div class="ml-2 pb-4"></div>
         {/if}
+
     {/if}
     
     <div class="ml-2 pb-4">
@@ -173,7 +190,7 @@
             <TabItem title="Officiell" open={!parkData?.Embed ? true : false}>
                 <div class="bg-background-foreground -mt-4">
                     <p class="md:text-sm lg:text-md xl:text-lg">
-                        Park Pappans Recension
+                        Parkpappans Recension
                     </p>
                     <div class="flex w-full">
                         <div class="flex flex-col w-max">
@@ -233,11 +250,20 @@
                 </div>
             </TabItem>
             <TabItem title="Community">
-                <div class="w-full h-12"></div>
-                <!--Ända anledningen för denhära diven är för att få overlfow scroll att funka-->
+                {#if !isLoggedIn}
+                    <a class="p-2 rounded border-2 hover:bg-primary/10 border-primary" href={`/auth?redirectpark=${String(parkData?.Id)}`}>Logga in för att skriva en recension</a>
+                {:else}
+                    <a class="p-2 rounded border-2 hover:bg-primary/10 border-primary" href={"/createreview?park=" + String(parkData?.Id)}>Skapa recension</a>
+                {/if}
+                <div class="h-6"></div>
+                {#if reviews}
+                    <div class="flex flex-col space-y-4">
+                        {#each reviews as review}
+                            <ParkReviewCard {review} />
+                        {/each}
+                    </div>
+                {/if}
             </TabItem>
-            
-
         </Tabs>
     </div>
 </div>

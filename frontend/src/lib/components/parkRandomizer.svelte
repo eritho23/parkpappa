@@ -15,7 +15,7 @@
             const response: Response = await fetch(api + '/api/parks/random/1');
 
             if (!response.ok) {
-                console.log('ERROR: ', response.status, response);
+                console.error('ERROR: ', response.status, response);
                 //return json({message: response?.json()}, {status: 400})
             }
             return (await response?.json()) ?? [];
@@ -32,7 +32,7 @@
 <button
     onclick={async () => {
         const park = await getRandomPark();
-        console.log(park[0]);
+        $inspect(park[0]);
         flyToMarker(park[0].Id);
     }}
     class=" absolute right-8 bottom-12 size-14 bg-background-foreground border border-text-light rounded-full flex items-center justify-center brightness-100 active:brightness-95 shadow-md shadow-text-light hover:shadow-text-dark/65"

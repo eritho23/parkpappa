@@ -35,33 +35,33 @@ export type DataParks = {
     parks: Park[];
     api: String;
     googleMapsApiKey: string;
-    goToPark: string
+    goToPark: string;
+    isLoggedIn: boolean;
 };
 
 export type ChipTranslations = {
     equipment: {
-      BBQArea: string;
-      ClimbingFrame: string;
-      RainShelter: string;
-      RunningTrack: string;
-      SandPlayArea: string;
-      SleddingHill: string;
-      SwingSet: string;
-      WaterAvailability: string;
-      WindShelter: string;
+        BBQArea: string;
+        ClimbingFrame: string;
+        RainShelter: string;
+        RunningTrack: string;
+        SandPlayArea: string;
+        SleddingHill: string;
+        SwingSet: string;
+        WaterAvailability: string;
+        WindShelter: string;
     };
     typesofplay: {
-      BalancingPlay: string;
-      CarPlay: string;
-      HopscotchArea: string;
-      PlayCircuit: string;
-      RockingPlay: string;
-      RolePlay: string;
-      SlidePlay: string;
-      SoundPlay: string;
-      SpinningPlay: string;
-      ToddlerPlay: string;
-      WaterPlay: string;
+        BalancingPlay: string;
+        CarPlay: string;
+        HopscotchArea: string;
+        PlayCircuit: string;
+        RockingPlay: string;
+        RolePlay: string;
+        SlidePlay: string;
+        SoundPlay: string;
+        SpinningPlay: string;
+        ToddlerPlay: string;
+        WaterPlay: string;
     };
-  };
-  
+};

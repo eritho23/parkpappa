@@ -11,16 +11,16 @@
         "WindShelter": "vindskydd"
     },
     "typesofplay": {
-      "BalancingPlay": "balansgång",
-      "CarPlay": "billek",
-      "HopscotchArea": "haghoppning",
-      "PlayCircuit": "hinderbana",
-      "RockingPlay": "vagglek",
-      "RolePlay": "rollspel",
-      "SlidePlay": "rutschkana",
-      "SoundPlay": "ljudlek",
-      "SpinningPlay": "snurrställning",
-      "ToddlerPlay": "småbarnsvänligt",
-      "WaterPlay": "vattenlek"
+        "BalancingPlay": "balansgång",
+        "CarPlay": "billek",
+        "HopscotchArea": "haghoppning",
+        "PlayCircuit": "hinderbana",
+        "RockingPlay": "vagglek",
+        "RolePlay": "rollspel",
+        "SlidePlay": "rutschkana",
+        "SoundPlay": "ljudlek",
+        "SpinningPlay": "snurrställning",
+        "ToddlerPlay": "småbarnsvänligt",
+        "WaterPlay": "vattenlek"
     }
 }

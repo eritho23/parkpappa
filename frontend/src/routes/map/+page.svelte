@@ -12,17 +12,20 @@
         selectedPark: Park | undefined;
     }
     let { data, selectedPark = $bindable() }: Props = $props();
+    let {isLoggedIn} = data;
     let parkInfo: Park | undefined = $state(undefined);
     function showInfo(toggle: boolean = true, park?: Park | undefined) {
         selectedPark = park;
-        console.log('visible? ', parkInfo);
+        // console.log('visible? ', parkInfo);
     }
     let mapComponentRef: any = $state();
 
     let goToParkNumber = $derived(parseInt(data.goToPark));
+    let hasGoneToPark = $state(false);
     $effect(() => {
-        if (data.goToPark && goToParkNumber) {
+        if (data.goToPark && goToParkNumber && !hasGoneToPark) {
             mapComponentRef.flyToMarker(goToParkNumber);
+            hasGoneToPark = true;
         }
     });
 
@@ -56,10 +59,10 @@
 </script>
 
 <div class="h-full w-full flex-grow flex flex-col">
-    <Map parkData={data.parks} api={String(data.api)} bind:selectedPark bind:this={mapComponentRef}></Map>
+    <Map parkData={data.parks} api={String(data.api)} bind:selectedPark={selectedPark} bind:this={mapComponentRef}></Map>
     <ParkRandomizer parks={data.parks} api={data.api} flyToMarker={mapComponentRef.flyToMarker} ></ParkRandomizer>
     {#if selectedPark}
-        <ParkInfo bind:selectedPark api={data.api} startScreenSize={startScreenSize} googleMapsApiKey={data.googleMapsApiKey}></ParkInfo>
+        <ParkInfo bind:selectedPark={selectedPark} {startScreenSize} {isLoggedIn}></ParkInfo>
     {/if}
     {#if !data.parks}
         <Alert

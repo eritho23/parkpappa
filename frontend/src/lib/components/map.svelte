@@ -25,13 +25,14 @@
     function getParkFromId(id: number) {
         // console.log(id);
         let park = parkData.find((park) => park.Id === id);
-        // console.log(park);
+        $inspect(park);
+
         return park as Park;
     }
     export function flyToMarker(markerID: number) {
-        console.log('funcion called');
+        //console.log('funcion called');
         map.eachLayer((layer) => {
-            console.log(layer);
+            //console.log(layer);
             // @ts-expect-error
             if (layer.options.id === markerID) {
                 // @ts-expect-error
