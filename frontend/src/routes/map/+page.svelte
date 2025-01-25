@@ -16,7 +16,7 @@
     let parkInfo: Park | undefined = $state(undefined);
     function showInfo(toggle: boolean = true, park?: Park | undefined) {
         selectedPark = park;
-        console.log('visible? ', parkInfo);
+        // console.log('visible? ', parkInfo);
     }
     let mapComponentRef: any = $state();
 
