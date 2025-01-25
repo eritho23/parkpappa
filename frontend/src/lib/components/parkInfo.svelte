@@ -6,13 +6,17 @@
     import type { Park } from '$lib/types';
     import { X } from 'lucide-svelte';
     import InfoChips from './infoChips.svelte';
+
+    let streetViewUrl = $state('');
+    let mapElement: HTMLElement | null = null;
     import ParkReviewCard from './parkReviewCard.svelte';
     interface Props {
         selectedPark: Park | undefined;
         startScreenSize: string;
+        googleMapsApiKey: string;
         isLoggedIn: boolean;
     }
-    let { selectedPark: parkData = $bindable(), startScreenSize, isLoggedIn }: Props = $props();
+    let { selectedPark: parkData = $bindable(), startScreenSize, googleMapsApiKey = $bindable(), isLoggedIn }: Props = $props();
     const activeClasses =
         'text-primary p-2 lg:p-3 inline-block border-b-2 border-primary text-center text-xs lg:text-sm';
     const inactiveClasses =
@@ -21,12 +25,36 @@
     const xlMediaQuery = window.matchMedia('(min-width: 1280px)');
     const lgMediaQuery = window.matchMedia('(min-width: 1024px)');
     const mdMediaQuery = window.matchMedia('(min-width: 768px)');
+    let isBlacklisted = $state(false);
+
+    // Fetch the blacklist and check if the parkData.Id is in the blacklist
+    async function checkBlacklist() {
+        const response = await fetch('/blacklist/streetviewblacklist.json');
+        const data = await response.json();
+        const blacklist = data.blacklisted_park_ids;
+        if (parkData && blacklist.includes(parkData.Id.toString())) {
+            isBlacklisted = true;
+        } else {
+            isBlacklisted = false;
+        }
+    }
+
+    // Reactive statement to update streetViewUrl whenever parkData changes
+    $effect(() => {
+        if (parkData && googleMapsApiKey) {
+            const lat = parkData.Coordinates.x;
+            const lng = parkData.Coordinates.y;
+            streetViewUrl = `https://www.google.com/maps/embed/v1/streetview?key=${googleMapsApiKey}&location=${lat},${lng}&heading=210&pitch=10&fov=35`;
+            checkBlacklist();
+        }
+    });
     onMount(() => {
         xlMediaQuery.addEventListener('change', screenResize);
         lgMediaQuery.addEventListener('change', screenResize);
         mdMediaQuery.addEventListener('change', screenResize);
         screenResize(startScreenSize);
     });
+    
     onDestroy(() => {
         xlMediaQuery.removeEventListener('change', screenResize);
         lgMediaQuery.removeEventListener('change', screenResize);
@@ -105,15 +133,39 @@
         duration: 800,
     }}
 >
-    <div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"><button onclick={() => parkData = undefined}><X  class="drop-shadow-lg stroke-text-dark"></X></button></div>
-    {#if !parkData?.Embed}
-    <img
-        class="w-full h-52 lg:h-72 object-cover"
-        src="./placeholders/playground.jpg"
-        alt="Playground"
-    />
-    {:else}
-    <div class="ml-2 pb-4"></div>
+
+    <!-- {#if displayShowBar}
+        <div
+        class="h-2 w-20 top-1 absolute self-center"
+        >
+            <div
+                class="h-1 w-16 bg-primary/50 rounded-full"
+            ></div>
+        </div>
+    {/if} -->
+    <div
+        class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"
+    >
+        <button onclick={() => (parkData = undefined)}
+            ><X class="drop-shadow-lg stroke-text-dark"></X></button
+        >
+    </div>
+    {#if parkData}
+        {#if !isBlacklisted}
+            <div class="w-full h-52 lg:h-72 min-h-52 lg:min-h-72">
+                <iframe title="Street View"
+                    width="100%"
+                    height="100%"
+                    frameborder="0"
+                    style="border:0"
+                    src={streetViewUrl}
+                    allowfullscreen
+                ></iframe>
+            </div>
+        {:else}
+            <div class="ml-2 pb-4"></div>
+        {/if}
+
     {/if}
     
     <div class="ml-2 pb-4">

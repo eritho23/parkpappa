@@ -98,6 +98,8 @@
     }
 </script>
 
+
+{#if objectToTrueArray(park?.TypesOfPlay).length > 0}
 <p class="text-md text-text-dark mt-1">Lekredskap</p>
 <div
     class="flex flex-row gap-1 overflow-x-scroll overflow-y-clip mb-2 no-scrollbar"
@@ -112,7 +114,10 @@
         </div>
     {/each}
 </div>
-<p class="text-md text-text-dark">Utrustning</p>
+{/if}
+
+{#if objectToTrueArray(park?.Equipment).length > 0}
+<p class="text-md text-text-dark">utrustning</p>
 <div class="flex flex-row gap-1 overflow-x-scroll overflow-y-clip no-scrollbar">
     {#each objectToTrueArray(park?.Equipment) as play}
         <div
@@ -124,3 +129,4 @@
         </div>
     {/each}
 </div>
+{/if}
