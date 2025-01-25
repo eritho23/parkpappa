@@ -144,11 +144,11 @@
         </div>
     {/if} -->
     <div
-        class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"
+        class="absolute flex right-3 top-3 size-10 items-center justify-center rounded-full"
     >
-        <button onclick={() => (parkData = undefined)}
-            ><X class="drop-shadow-lg stroke-text-dark"></X></button
-        >
+        <button onclick={() => (parkData = undefined)} class="bg-white p-2 rounded-full">
+            <X class="drop-shadow-lg stroke-text-dark"></X>
+        </button>
     </div>
     {#if parkData}
         {#if !isBlacklisted}

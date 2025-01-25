@@ -32,7 +32,7 @@
 <button
     onclick={async () => {
         const park = await getRandomPark();
-        $inspect(park[0]);
+        //$inspect(park[0]); Denna throwade error ta tillbaka om jag hade fel
         flyToMarker(park[0].Id);
     }}
     class=" absolute right-8 bottom-12 size-14 bg-background-foreground border border-text-light rounded-full flex items-center justify-center brightness-100 active:brightness-95 shadow-md shadow-text-light hover:shadow-text-dark/65"

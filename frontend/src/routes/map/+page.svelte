@@ -62,7 +62,7 @@
     <Map parkData={data.parks} api={String(data.api)} bind:selectedPark={selectedPark} bind:this={mapComponentRef}></Map>
     <ParkRandomizer parks={data.parks} api={data.api} flyToMarker={mapComponentRef.flyToMarker} ></ParkRandomizer>
     {#if selectedPark}
-        <ParkInfo bind:selectedPark startScreenSize={startScreenSize} googleMapsApiKey={data.googleMapsApiKey} {isLoggedIn}></ParkInfo>
+        <ParkInfo bind:selectedPark={selectedPark} {startScreenSize} {isLoggedIn} googleMapsApiKey={data.googleMapsApiKey}></ParkInfo>
     {/if}
     {#if !data.parks}
         <Alert
