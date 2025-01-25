@@ -3,9 +3,10 @@
     import { Tabs, TabItem } from 'flowbite-svelte';
     import { onDestroy, onMount } from 'svelte';
     import { fly } from 'svelte/transition';
-    import type { ChipTranslations, Park } from '$lib/types';
+    import type { Park } from '$lib/types';
     import { X } from 'lucide-svelte';
     import InfoChips from './infoChips.svelte';
+    import ParkReviewCard from './parkReviewCard.svelte';
     interface Props {
         selectedPark: Park | undefined;
         startScreenSize: string;
@@ -37,7 +38,7 @@
         startScreenSize === 'sm' ? [0, 1000] : [-1000, 0]
     );
     // let displayShowBar = $state(false);
-    // $inspect(parkData?.Id);
+    $inspect(parkData?.Id);
 
     let reviews = $state(null)
     onMount(async () => {
@@ -206,18 +207,11 @@
                 {#if reviews}
                     <div class="flex flex-col space-y-4">
                         {#each reviews as review}
-                            <div class="border-zinc-500 p-4 border rounded flex flex-col">
-                                <h1 class="font-bold text-xl">{review.title}</h1>
-                                <span>{review.expand.user.name} - {(new Date(review.created)).toLocaleDateString()}</span>
-                                <StarRating rating={review.stars} />
-                                <p class="text-sm">{review.body}</p>
-                            </div>
+                            <ParkReviewCard {review} />
                         {/each}
                     </div>
                 {/if}
             </TabItem>
-            
-
         </Tabs>
     </div>
 </div>

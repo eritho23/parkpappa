@@ -14,7 +14,7 @@ export const actions = {
         const form = await request.formData();
         const token = form.get('token');
         const redirectPark = form.get('redirectpark') ?? '';
-        console.log(redirectPark);
+        // console.log(redirectPark);
         if (!token || typeof token !== 'string') {
             redirect(303, '/auth');
         }

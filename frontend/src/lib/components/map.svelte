@@ -25,7 +25,7 @@
     function getParkFromId(id: number) {
         // console.log(id);
         let park = parkData.find((park) => park.Id === id);
-        console.log(park);
+        $inspect(park);
 
         return park as Park;
     }

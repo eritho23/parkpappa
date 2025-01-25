@@ -13,7 +13,7 @@ export const load: PageLoad = async ({ fetch, data }) => {
 
         return Promise.race([
             timeoutPromise,
-            fetch(API_PATH + '/api/parks').catch((err) => console.log(err)),
+            fetch(API_PATH + '/api/parks').catch((err) => console.error(err)),
         ]) as Promise<Response>;
     }
 
@@ -21,13 +21,14 @@ export const load: PageLoad = async ({ fetch, data }) => {
         const response = await raceFetch();
 
         if (!response.ok) {
-            console.log('ERROR: ', response.status, response);
+            console.error('ERROR: ', response.status, response);
             //return json({message: response?.json()}, {status: 400})
         }
         return {
             parks: (await response?.json()) ?? [],
             api: API_PATH,
             goToPark: data.goToPark,
+            isLoggedIn: data.isLoggedIn
         } as DataParks;
     } catch (err) {
         if (err == 'Error: request timed out') {

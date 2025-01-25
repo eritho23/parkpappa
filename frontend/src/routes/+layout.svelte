@@ -33,7 +33,7 @@ let {isLoggedIn, email, avatarUrl} = data;
       }}>
         {#if avatarUrl}
           <img alt="user avatar" class="rounded-full size-6" onerror={() => {
-            console.log('image error');
+            console.error('image error');
           }} src={avatarUrl} />
         {:else}
           <User class="md:block hidden size-5" />
