@@ -21,9 +21,11 @@
     let mapComponentRef: any = $state();
 
     let goToParkNumber = $derived(parseInt(data.goToPark));
+    let hasGoneToPark = $state(false);
     $effect(() => {
-        if (data.goToPark && goToParkNumber) {
+        if (data.goToPark && goToParkNumber && !hasGoneToPark) {
             mapComponentRef.flyToMarker(goToParkNumber);
+            hasGoneToPark = true;
         }
     });
 
