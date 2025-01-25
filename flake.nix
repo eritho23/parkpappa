@@ -42,6 +42,7 @@
           nodejs_22
           nodePackages.npm
           nodePackages.prettier
+          prefetch-npm-deps
           python3WithPkgs
           ripgrep
         ];
@@ -65,6 +66,8 @@
           pname = "parkpappa-frontend";
           inherit version;
           src = pkgs.lib.cleanSource ./frontend/.;
+
+          nodejs = pkgs.nodejs_22;
 
           npmDepsHash = "sha256-WEWnAYyMXL8fN65kisUnzU+CVGeLrg0Vy1RR9BxhISA=";
           # npmDepsHash = pkgs.lib.fakeHash;
