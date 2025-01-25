@@ -58,10 +58,10 @@ let {isLoggedIn, email, avatarUrl} = data;
       <BottomNavItem btnName="Map" href="/map">
         <MapPinned class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
-      <BottomNavItem btnName="Review" href="/error">
+      <BottomNavItem btnName="Review" href="/reviews">
         <MessageSquareMore class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
-      <BottomNavItem btnName="Settings" href="/error">
+      <BottomNavItem btnName="Settings" href="/settings">
         <Settings class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
     </BottomNav>
