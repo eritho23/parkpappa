@@ -38,7 +38,7 @@
                 // @ts-expect-error
                 map.flyTo(layer.getLatLng(), 17);
                 selectedPark = getParkFromId(markerID);
-                SetEmbed(selectedPark); //Inte smart att sätta embed här men det funkar
+                SetEmbed(selectedPark);
                 return;
             }
         });
@@ -146,6 +146,7 @@
                     ).on('click', (e) => {
                         getParkFromId(e.target.options.id);
                         selectedPark = getParkFromId(e.target.options.id);
+                        SetEmbed(selectedPark); //Inte smart att sätta embed här men det funkar
                         //flyToMarker(e.target.options.id);
                     });
                     markerLayers.addLayer(marker);
