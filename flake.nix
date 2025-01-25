@@ -52,7 +52,7 @@
         frontend-src = pkgs.stdenvNoCC.mkDerivation {
           pname = "parkpappa-src-for-ci";
           inherit version;
-          src = pkgs.lib.cleanSource ./frontend;
+          src = ./frontend/.;
 
           installPhase = ''
             runHook preInstall
@@ -65,7 +65,7 @@
         frontend = pkgs.buildNpmPackage {
           pname = "parkpappa-frontend";
           inherit version;
-          src = pkgs.lib.cleanSource ./frontend/.;
+          src = ./frontend/.;
 
           nodejs = pkgs.nodejs_22;
 
@@ -76,7 +76,7 @@
 
           buildPhase = ''
             runHook preBuild
-            npm --loglevel=verbose run build --offline
+            NODE_ENV=production npm --loglevel=verbose run build --offline
             runHook postBuild
           '';
 
