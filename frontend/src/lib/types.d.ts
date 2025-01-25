@@ -29,38 +29,43 @@ export type Park = {
         ToddlerPlay: boolean;
         WaterPlay: boolean;
     };
-    Embed : string;
+    Embed: string;
 };
 export type DataParks = {
     parks: Park[];
     api: String;
-    goToPark: string
+    goToPark: string;
 };
+
+export enum mapTypes {
+    google,
+    apple,
+    waze,
+}
 
 export type ChipTranslations = {
     equipment: {
-      BBQArea: string;
-      ClimbingFrame: string;
-      RainShelter: string;
-      RunningTrack: string;
-      SandPlayArea: string;
-      SleddingHill: string;
-      SwingSet: string;
-      WaterAvailability: string;
-      WindShelter: string;
+        BBQArea: string;
+        ClimbingFrame: string;
+        RainShelter: string;
+        RunningTrack: string;
+        SandPlayArea: string;
+        SleddingHill: string;
+        SwingSet: string;
+        WaterAvailability: string;
+        WindShelter: string;
     };
     typesofplay: {
-      BalancingPlay: string;
-      CarPlay: string;
-      HopscotchArea: string;
-      PlayCircuit: string;
-      RockingPlay: string;
-      RolePlay: string;
-      SlidePlay: string;
-      SoundPlay: string;
-      SpinningPlay: string;
-      ToddlerPlay: string;
-      WaterPlay: string;
+        BalancingPlay: string;
+        CarPlay: string;
+        HopscotchArea: string;
+        PlayCircuit: string;
+        RockingPlay: string;
+        RolePlay: string;
+        SlidePlay: string;
+        SoundPlay: string;
+        SpinningPlay: string;
+        ToddlerPlay: string;
+        WaterPlay: string;
     };
-  };
-  
+};
