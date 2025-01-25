@@ -32,7 +32,6 @@
     export function flyToMarker(markerID: number) {
         //console.log('funcion called');
         map.eachLayer((layer) => {
-            //console.log(layer);
             // @ts-expect-error
             if (layer.options.id === markerID) {
                 // @ts-expect-error

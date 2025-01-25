@@ -10,6 +10,7 @@
     let streetViewUrl = $state('');
     let mapElement: HTMLElement | null = null;
     import ParkReviewCard from './parkReviewCard.svelte';
+    import ShareToMap from './shareToMap.svelte';
     interface Props {
         selectedPark: Park | undefined;
         startScreenSize: string;
@@ -121,7 +122,6 @@
             }
         }
     }
-    
 </script>
 
 <div
@@ -133,7 +133,6 @@
         duration: 800,
     }}
 >
-
     <!-- {#if displayShowBar}
         <div
         class="h-2 w-20 top-1 absolute self-center"
@@ -167,24 +166,32 @@
         {/if}
 
     {/if}
-    
+
     <div class="ml-2 pb-4">
         <div>
             <h1 class="md:text-xl lg:text-2xl">{parkData?.Name}</h1>
             <div class="flex items-center">
                 <p class="md:text-sm lg:text-lg">3.9</p>
                 <StarRating rating={7} size={topicReviewSize}></StarRating>
+                <ShareToMap class="ml-4" park={parkData}></ShareToMap>
             </div>
             <InfoChips park={parkData}></InfoChips>
         </div>
         <Tabs {activeClasses} {inactiveClasses}>
             {#if parkData?.Embed}
                 <TabItem title="Instagram" open>
-                    <div class="w-full" style="height: 1000px; overflow: hidden;">
-                        <iframe srcdoc={parkData.Embed} class="w-full h-full" title="Instagram Embed" scrolling="no"></iframe>
+                    <div
+                        class="w-full"
+                        style="height: 1000px; overflow: hidden;"
+                    >
+                        <iframe
+                            srcdoc={parkData.Embed}
+                            class="w-full h-full"
+                            title="Instagram Embed"
+                            scrolling="no"
+                        ></iframe>
                     </div>
-                    <div class="w-full h-12"></div> 
-                    
+                    <div class="w-full h-12"></div>
                 </TabItem>
             {/if}
             <TabItem title="Officiell" open={!parkData?.Embed ? true : false}>

@@ -29,7 +29,7 @@ export type Park = {
         ToddlerPlay: boolean;
         WaterPlay: boolean;
     };
-    Embed : string;
+    Embed: string;
 };
 export type DataParks = {
     parks: Park[];
@@ -38,6 +38,12 @@ export type DataParks = {
     goToPark: string;
     isLoggedIn: boolean;
 };
+
+export enum mapTypes {
+    google,
+    apple,
+    waze,
+}
 
 export type ChipTranslations = {
     equipment: {

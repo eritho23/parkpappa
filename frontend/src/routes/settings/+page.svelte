@@ -1,9 +1,5 @@
 <script lang="ts">
-    import {
-        Tabs,
-        TabItem,
-        Radio
-    } from 'flowbite-svelte';
+    import { Tabs, TabItem, Radio } from 'flowbite-svelte';
 </script>
 
 <div class="h-full w-full flex-grow flex flex-col">
