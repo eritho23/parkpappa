@@ -117,7 +117,7 @@
 {/if}
 
 {#if objectToTrueArray(park?.Equipment).length > 0}
-<p class="text-md text-text-dark">utrustning</p>
+<p class="text-md text-text-dark">Utrustning</p>
 <div class="flex flex-row gap-1 overflow-x-scroll overflow-y-clip no-scrollbar">
     {#each objectToTrueArray(park?.Equipment) as play}
         <div
