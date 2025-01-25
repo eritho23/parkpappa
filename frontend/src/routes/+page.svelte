@@ -54,6 +54,11 @@
             möjlighet att filtrera parkerna för minnesvärda och varierade besök.
         </p>
     </div>
+    <div class="h-24 text-center justify-center w-full">
+        <h1 class="font-bold text-xl">
+            Skapad av Adrian, David och Eric på spetsen
+        </h1>
+    </div>
     <div
         class="flex lg:flex-row flex-col px-4 md:px-0 md:w-2/3 pt-3 pb-12 mb-16 justify-center mx-auto mt-12"
     >
