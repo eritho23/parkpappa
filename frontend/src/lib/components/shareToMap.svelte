@@ -21,7 +21,7 @@
 
     const selectedMapType = 'waze';
 
-    function getFullPath(app, Lng, Lat) {
+    function getFullPath(app: string, Lng: number, Lat: number) {
         if (app === 'google') {
             return mapDestination[app] + `?q=${Lng},${Lat}`;
         } else if (app === 'apple') {
