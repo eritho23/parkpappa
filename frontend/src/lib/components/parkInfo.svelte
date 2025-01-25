@@ -153,7 +153,6 @@
         {:else}
             <div class="ml-2 pb-4"></div>
         {/if}
-
     {/if}
     
     <div class="ml-2 pb-4">
