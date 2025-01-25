@@ -25,7 +25,7 @@
     function getParkFromId(id: number) {
         // console.log(id);
         let park = parkData.find((park) => park.Id === id);
-        //$inspect(park); Denna throwade error ta tillbaka om jag hade fel
+        // $inspect(park);
 
         return park as Park;
     }
