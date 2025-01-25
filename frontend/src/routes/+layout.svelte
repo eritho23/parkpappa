@@ -27,7 +27,6 @@ let {isLoggedIn, email, avatarUrl} = data;
   <NavUl {activeUrl} {activeClass} {nonActiveClass}>
     <NavLi href="/">Hem</NavLi>
     <NavLi href="/map">Karta</NavLi>
-    <NavLi href="/reviews">Recensioner</NavLi>
     {#if isLoggedIn}
       <NavLi class="flex flex-row space-x-4 hover:cursor-pointer" title="Logga ut" onclick={() => {
         window.location.href = '/auth';
