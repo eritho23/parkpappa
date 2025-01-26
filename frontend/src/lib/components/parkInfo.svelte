@@ -198,7 +198,7 @@
                     <div class="w-full h-12"></div>
                 </TabItem>
             {/if}
-            <TabItem title="Community">
+            <TabItem title="Community" open={!parkData?.Embed}>
                 {#if !isLoggedIn}
                     <a class="p-2 rounded border-2 hover:bg-primary/10 border-primary" href={`/auth?redirectpark=${String(parkData?.Id)}`}>Logga in för att skriva en recension</a>
                 {:else}

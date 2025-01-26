@@ -10,6 +10,8 @@ const nonActiveClass = "text-text hover:text-primary";
 let { data, children } = $props();
 let {isLoggedIn, email, avatarUrl} = data;
 
+let showLogout = $state(false); // Reactive variable for hover effect
+
 </script>
 
 <svelte:head>
@@ -28,9 +30,14 @@ let {isLoggedIn, email, avatarUrl} = data;
     <NavLi href="/">Hem</NavLi>
     <NavLi href="/map">Karta</NavLi>
     {#if isLoggedIn}
-      <NavLi class="flex flex-row space-x-4 hover:cursor-pointer" title="Logga ut" onclick={() => {
+      <NavLi class="flex flex-row space-x-4 hover:cursor-pointer" title="Logga ut" 
+      on:mouseenter={() => (showLogout = true)}
+      on:mouseleave={() => (showLogout = false)}
+      onclick={() => {
         window.location.href = '/auth';
+        
       }}>
+      
         {#if avatarUrl}
           <img alt="user avatar" class="rounded-full size-6" onerror={() => {
             console.error('image error');
@@ -38,7 +45,7 @@ let {isLoggedIn, email, avatarUrl} = data;
         {:else}
           <User class="md:block hidden size-5" />
         {/if}
-        <span>Logga ut</span>
+        <span>{showLogout ? 'Logga ut' : email}</span>
       </NavLi>
       <NavLi class="flex flex-row space-x-4" href="/settings"><Settings class="size-5"></Settings>Inställningar</NavLi>
     {:else}
