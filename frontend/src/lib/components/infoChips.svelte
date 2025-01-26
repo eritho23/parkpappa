@@ -7,28 +7,28 @@
 
     const translations = {
         equipment: {
-            BBQArea: 'BBQ Plats',
+            BBQArea: 'Grillplats',
             ClimbingFrame: 'Klätterställning',
-            RainShelter: 'regnskydd',
-            RunningTrack: 'löpbana',
+            RainShelter: 'Regnskydd',
+            RunningTrack: 'Löpbana',
             SandPlayArea: 'Sandlåda',
-            SleddingHill: 'pulkabacke',
-            SwingSet: 'gungor',
-            WaterAvailability: 'vattentillgänglighet',
-            WindShelter: 'vindskydd',
+            SleddingHill: 'Pulkabacke',
+            SwingSet: 'Gungor',
+            WaterAvailability: 'Vattentillgänglighet',
+            WindShelter: 'Vindskydd',
         },
         typesofplay: {
-            BalancingPlay: 'balansgång',
-            CarPlay: 'billek',
-            HopscotchArea: 'haghoppning',
-            PlayCircuit: 'hinderbana',
-            RockingPlay: 'vagglek',
-            RolePlay: 'rollspel',
-            SlidePlay: 'rutschkana',
-            SoundPlay: 'ljudlek',
-            SpinningPlay: 'snurrställning',
-            ToddlerPlay: 'småbarnsvänligt',
-            WaterPlay: 'vattenlek',
+            BalancingPlay: 'Balansgång',
+            CarPlay: 'Billek',
+            HopscotchArea: 'Haghoppning',
+            PlayCircuit: 'Hinderbana',
+            RockingPlay: 'Vagglek',
+            RolePlay: 'Rollspel',
+            SlidePlay: 'Rutschkana',
+            SoundPlay: 'Ljudlek',
+            SpinningPlay: 'Snurrställning',
+            ToddlerPlay: 'Småbarnsvänligt',
+            WaterPlay: 'Vattenlek',
         },
     };
 
@@ -98,6 +98,8 @@
     }
 </script>
 
+
+{#if objectToTrueArray(park?.TypesOfPlay).length > 0}
 <p class="text-md text-text-dark mt-1">Lekredskap</p>
 <div
     class="flex flex-row gap-1 overflow-x-scroll overflow-y-clip mb-2 no-scrollbar"
@@ -112,7 +114,10 @@
         </div>
     {/each}
 </div>
-<p class="text-md text-text-dark">utrustning</p>
+{/if}
+
+{#if objectToTrueArray(park?.Equipment).length > 0}
+<p class="text-md text-text-dark">Utrustning</p>
 <div class="flex flex-row gap-1 overflow-x-scroll overflow-y-clip no-scrollbar">
     {#each objectToTrueArray(park?.Equipment) as play}
         <div
@@ -124,3 +129,4 @@
         </div>
     {/each}
 </div>
+{/if}

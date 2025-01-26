@@ -1,0 +1,31 @@
+Dockerfile
+.dockerignore
+
+node_modules
+
+# Output
+.output
+.vercel
+/.svelte-kit
+.svelte-kit
+/build
+build
+package
+
+# OS
+.DS_Store
+Thumbs.db
+
+.git
+.gitignore
+.gitattributes
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

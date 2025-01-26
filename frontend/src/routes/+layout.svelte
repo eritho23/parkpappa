@@ -2,10 +2,16 @@
 import "../app.css"
 import { Navbar, NavBrand, NavHamburger, NavLi, NavUl, Dropdown, DropdownItem, DropdownDivider, BottomNav, BottomNavItem} from "flowbite-svelte"
 import { page } from "$app/stores"
-import { Menu, House, MapPinned, MessageSquareMore, Settings } from "lucide-svelte"
-$: activeUrl = $page.url.pathname;
+import { Menu, User, House, MapPinned, MessageSquareMore, Settings } from "lucide-svelte"
+let activeUrl = $derived($page.url.pathname);
 const activeClass = "text-primary bold underline stroke-primary";
 const nonActiveClass = "text-text hover:text-primary";
+
+let { data, children } = $props();
+let {isLoggedIn, email, avatarUrl} = data;
+
+let showLogout = $state(false); // Reactive variable for hover effect
+
 </script>
 
 <svelte:head>
@@ -23,37 +29,54 @@ const nonActiveClass = "text-text hover:text-primary";
   <NavUl {activeUrl} {activeClass} {nonActiveClass}>
     <NavLi href="/">Hem</NavLi>
     <NavLi href="/map">Karta</NavLi>
-    <NavLi href="/reviews">Recensioner</NavLi>
-    <NavLi class="cursor-pointer hidden md:block">
-      More
-      <Menu size=24 class="hidden md:inline"></Menu>
-    </NavLi>
-    <Dropdown class="w-40 z-20" containerClass="absolute">
-      <DropdownItem href="/settings">Inställningar</DropdownItem>
-      <DropdownItem href="/contact">Om oss</DropdownItem>
-      <DropdownItem href="/about">Kontakta oss</DropdownItem>
-      <DropdownDivider />
-      <DropdownItem href="/">Sign out</DropdownItem>
-    </Dropdown>
+    {#if isLoggedIn}
+      <NavLi class="flex flex-row space-x-4 hover:cursor-pointer" title="Logga ut" 
+      on:mouseenter={() => (showLogout = true)}
+      on:mouseleave={() => (showLogout = false)}
+      onclick={() => {
+        window.location.href = '/auth';
+        
+      }}>
+        {#if avatarUrl}
+          <img alt="user avatar" class="rounded-full size-6" onerror={() => {
+            console.error('image error');
+          }} src={avatarUrl} />
+        {:else}
+          <User class="md:block hidden size-5" />
+        {/if}
+        <span>{showLogout ? 'Logga ut' : email}</span>
+      </NavLi>
+      <NavLi class="flex flex-row space-x-4 items-center mt-0.5" href="/settings"><Settings class="size-5"></Settings></NavLi>
+    {:else}
+      <NavLi href="/auth" title="Logga in">Logga in</NavLi>
+    {/if}
   </NavUl>
   
 </Navbar>
   <main class="flex-grow flex flex-col">
-    <slot></slot>
+    {@render children?.()}
   </main>
 
   <div class="block md:hidden">
     <BottomNav classInner="grid-cols-4 h-36 items-start mt-2" {activeUrl} classActive="font-bold text-primary [&>*]:stroke-primary">
-      <BottomNavItem btnName="Home" href="/">
+      <BottomNavItem btnName="Hem" href="/">
         <House class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
-      <BottomNavItem btnName="Map" href="/map">
+      <BottomNavItem btnName="Karta" href="/map">
         <MapPinned class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
-      <BottomNavItem btnName="Review" href="/error">
-        <MessageSquareMore class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
+      <BottomNavItem class="" btnName={isLoggedIn ? 'Logout' : 'Login'} onclick={() => {
+        window.location.href = '/auth'
+      }}>
+        {#if isLoggedIn}
+          <img alt="user avatar" class="rounded-full size-6 mb-1" onerror={() => {
+            console.error('image error');
+          }} src={avatarUrl} />
+        {:else}
+          <User class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
+        {/if}
       </BottomNavItem>
-      <BottomNavItem btnName="Settings" href="/error">
+      <BottomNavItem btnName="Inställningar" href="/settings">
         <Settings class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
     </BottomNav>

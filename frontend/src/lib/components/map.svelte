@@ -25,19 +25,19 @@
     function getParkFromId(id: number) {
         // console.log(id);
         let park = parkData.find((park) => park.Id === id);
-        // console.log(park);
+        //$inspect(park); Denna throwade error ta tillbaka om jag hade fel
+
         return park as Park;
     }
     export function flyToMarker(markerID: number) {
-        console.log('funcion called');
+        //console.log('funcion called');
         map.eachLayer((layer) => {
-            console.log(layer);
             // @ts-expect-error
             if (layer.options.id === markerID) {
                 // @ts-expect-error
                 map.flyTo(layer.getLatLng(), 17);
                 selectedPark = getParkFromId(markerID);
-                SetEmbed(selectedPark); //Inte smart att sätta embed här men det funkar
+                SetEmbed(selectedPark);
                 return;
             }
         });
@@ -145,6 +145,7 @@
                     ).on('click', (e) => {
                         getParkFromId(e.target.options.id);
                         selectedPark = getParkFromId(e.target.options.id);
+                        SetEmbed(selectedPark); //Inte smart att sätta embed här men det funkar
                         //flyToMarker(e.target.options.id);
                     });
                     markerLayers.addLayer(marker);

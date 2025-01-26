@@ -54,6 +54,11 @@
             möjlighet att filtrera parkerna för minnesvärda och varierade besök.
         </p>
     </div>
+    <div class="h-24 text-center justify-center w-full">
+        <h1 class="font-bold text-xl">
+            Skapad av Adrian, David och Eric på spetsen
+        </h1>
+    </div>
     <div
         class="flex lg:flex-row flex-col px-4 md:px-0 md:w-2/3 pt-3 pb-12 mb-16 justify-center mx-auto mt-12"
     >
@@ -70,7 +75,7 @@
                     href="https://www.instagram.com/park_pappa"
                     class="text-primary hover:underline">@park_pappa</a
                 >. Under sin föräldraledighet besökte han alla lekparker i
-                Västerås och recenserade dem på instagramkontot. År 2024
+                Västerås och recenserade dem på instagramkontot. År 2025
                 lanseras denna webbsida med målet att göra varierade, givande
                 parkbesök tillgängliga för småbarnsföräldrar. Joakim tycker inte
                 att Västerås stad har någon bra lösning för att visa upp parker.
