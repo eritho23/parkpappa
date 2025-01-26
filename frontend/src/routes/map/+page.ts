@@ -26,12 +26,13 @@ export const load: PageLoad = async ({ fetch, data }) => {
             //return json({message: response?.json()}, {status: 400})
         }
         return {
-            parks: (await response?.json()) ?? [],
             api: API_PATH,
             googleMapsApiKey: GOOGLE_MAPS_API_KEY,
             goToPark: data.goToPark,
             isLoggedIn: data.isLoggedIn,
-            userId: data.userId
+            mapSelect: data.mapSelect,
+            parks: (await response?.json()) ?? [],
+            userId: data.userId,
         } as DataParks;
     } catch (err) {
         if (err == 'Error: request timed out') {

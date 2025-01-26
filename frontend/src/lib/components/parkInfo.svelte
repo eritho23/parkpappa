@@ -17,8 +17,9 @@
         selectedPark: Park | undefined;
         startScreenSize: string;
         userId: string;
+        mapSelect: string;
     }
-    let { selectedPark: parkData = $bindable(), startScreenSize, googleMapsApiKey = $bindable(), isLoggedIn, userId }: Props = $props();
+    let { selectedPark: parkData = $bindable(), startScreenSize, googleMapsApiKey = $bindable(), isLoggedIn, userId, mapSelect }: Props = $props();
     const activeClasses =
         'text-primary p-2 lg:p-3 inline-block border-b-2 border-primary text-center text-xs lg:text-sm';
     const inactiveClasses =
@@ -172,7 +173,7 @@
             <div class="flex items-center">
                 <p class="md:text-sm lg:text-lg">3.9</p>
                 <StarRating rating={7} size={topicReviewSize}></StarRating>
-                <ShareToMap class="ml-4" park={parkData}></ShareToMap>
+                <ShareToMap class="ml-4" park={parkData} {mapSelect}></ShareToMap>
             </div>
             <InfoChips park={parkData}></InfoChips>
         </div>

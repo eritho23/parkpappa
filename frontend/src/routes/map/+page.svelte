@@ -11,7 +11,7 @@
         selectedPark: Park | undefined;
     }
     let { data, selectedPark = $bindable() }: Props = $props();
-    let {isLoggedIn, userId} = data;
+    let {isLoggedIn, userId, mapSelect} = data;
 
     let parkInfo: Park | undefined = $state(undefined);
     function showInfo(toggle: boolean = true, park?: Park | undefined) {
@@ -62,7 +62,7 @@
     <Map parkData={data.parks} api={String(data.api)} bind:selectedPark={selectedPark} bind:this={mapComponentRef}></Map>
     <ParkRandomizer parks={data.parks} api={data.api} flyToMarker={mapComponentRef.flyToMarker} ></ParkRandomizer>
     {#if selectedPark}
-        <ParkInfo bind:selectedPark={selectedPark} {startScreenSize} {isLoggedIn} googleMapsApiKey={data.googleMapsApiKey} userId={userId}></ParkInfo>
+        <ParkInfo bind:selectedPark={selectedPark} {startScreenSize} {isLoggedIn} googleMapsApiKey={data.googleMapsApiKey} userId={userId} mapSelect={mapSelect}></ParkInfo>
     {/if}
     {#if !data.parks}
         <Alert

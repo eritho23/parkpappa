@@ -9,9 +9,22 @@
     interface Props {
         park: Park | undefined;
         class?: String;
+        mapSelect: string;
     }
 
-    let { park, class: className = '' }: Props = $props();
+    let { park, class: className = '', mapSelect = 'google' }: Props = $props();
+
+    let displayMapProvider: string = $derived.by(() => {
+        if (mapSelect === 'google') {
+            return 'Google Maps';
+        } else if (mapSelect === 'apple') {
+            return 'Apple Kartor';
+        } else if (mapSelect === 'waze') {
+            return 'Waze';
+        } else {
+            return '???';
+        }
+    })
 
     const mapDestination = {
         google: 'https://www.google.com/maps/place/',
@@ -19,7 +32,7 @@
         waze: 'https://www.waze.com/sv/live-map/directions/',
     };
 
-    const selectedMapType = 'waze';
+    const selectedMapType = mapSelect;
 
     function getFullPath(app: string, Lng: number, Lat: number) {
         if (app === 'google') {
@@ -44,9 +57,8 @@
             park.Coordinates.y
         )}
         target="_blank"
-        class={`${className} w-28 h-8 bg-primary/100 ring-primary/60 active:brightness-90 ring-1 text-white whitespace-nowrap py-2 px-2 rounded text-xs`}
+        class={`${className} h-8 bg-primary/100 ring-primary/60 active:brightness-90 ring-1 text-white whitespace-nowrap py-2 px-2 rounded text-xs`}
     >
-        <MapPinned strokeWidth="2" size="18" class="inline"></MapPinned> Open in
-        map
+        <MapPinned strokeWidth="2" size="18" class="inline"></MapPinned>Öppna i {displayMapProvider}
     </a>
 {/if}

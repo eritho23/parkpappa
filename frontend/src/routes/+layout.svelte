@@ -38,7 +38,7 @@ let {isLoggedIn, email, avatarUrl} = data;
         {:else}
           <User class="md:block hidden size-5" />
         {/if}
-        <span>{email}</span>
+        <span>Logga ut</span>
       </NavLi>
       <NavLi class="flex flex-row space-x-4" href="/settings"><Settings class="size-5"></Settings>Inställningar</NavLi>
     {:else}

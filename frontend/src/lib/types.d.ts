@@ -37,6 +37,7 @@ export type DataParks = {
     googleMapsApiKey: string;
     goToPark: string;
     isLoggedIn: boolean;
+    mapSelect: string;
     parks: Park[];
     userId: string;
 };
