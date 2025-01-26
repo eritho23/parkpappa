@@ -60,15 +60,15 @@ let showLogout = $state(false); // Reactive variable for hover effect
 
   <div class="block md:hidden">
     <BottomNav classInner="grid-cols-4 h-36 items-start mt-2" {activeUrl} classActive="font-bold text-primary [&>*]:stroke-primary">
-      <BottomNavItem btnName="Home" href="/">
+      <BottomNavItem btnName="Hem" href="/">
         <House class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
-      <BottomNavItem btnName="Map" href="/map">
+      <BottomNavItem btnName="Karta" href="/map">
         <MapPinned class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
-      <BottomNavItem btnName={isLoggedIn ? 'Logga ut' : 'Logga in'} href="/auth">
+      <BottomNavItem class="" btnName={isLoggedIn ? 'Logout' : 'Login'} href="/auth">
         {#if isLoggedIn}
-          <img alt="user avatar" class="rounded-full size-6" onerror={() => {
+          <img alt="user avatar" class="rounded-full size-6 mb-1" onerror={() => {
             console.error('image error');
           }} src={avatarUrl} />
         {:else}
