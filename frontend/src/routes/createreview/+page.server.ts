@@ -2,7 +2,7 @@ import { error, redirect } from '@sveltejs/kit'
 
 export const load = async ({locals, url}) => {
     if (!locals.pb.authStore.isValid) {
-        throw redirect(303, '/auth');
+        throw redirect(307, '/auth');
     }
 
     const parkId = url.searchParams.get('park') ?? '';
