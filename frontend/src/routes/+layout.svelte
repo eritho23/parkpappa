@@ -37,7 +37,6 @@ let showLogout = $state(false); // Reactive variable for hover effect
         window.location.href = '/auth';
         
       }}>
-      
         {#if avatarUrl}
           <img alt="user avatar" class="rounded-full size-6" onerror={() => {
             console.error('image error');
@@ -47,7 +46,7 @@ let showLogout = $state(false); // Reactive variable for hover effect
         {/if}
         <span>{showLogout ? 'Logga ut' : email}</span>
       </NavLi>
-      <NavLi class="flex flex-row space-x-4" href="/settings"><Settings class="size-5"></Settings>Inställningar</NavLi>
+      <NavLi class="flex flex-row space-x-4 items-center mt-0.5" href="/settings"><Settings class="size-5"></Settings></NavLi>
     {:else}
       <NavLi href="/auth" title="Logga in">Logga in</NavLi>
     {/if}
