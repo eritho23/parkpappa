@@ -68,7 +68,7 @@ let {isLoggedIn, email, avatarUrl} = data;
           <User class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
         {/if}
       </BottomNavItem>
-      <BottomNavItem btnName="Settings" href="/settings">
+      <BottomNavItem btnName="Inställningar" href="/settings">
         <Settings class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
     </BottomNav>
