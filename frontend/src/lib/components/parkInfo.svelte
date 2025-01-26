@@ -71,8 +71,24 @@
     // let displayShowBar = $state(false);
     $inspect(parkData?.Id);
 
-    let reviews = $state(null)
-    onMount(async () => {
+    let reviews: [] | null = $state(null)
+    $inspect(reviews);
+
+    $effect(() => {
+        if (!parkData) {
+            clearParks();
+        } else {
+            if (parkData.Id) {
+                refetchReviews()
+            }
+        }
+    })
+
+    function clearParks() {
+        reviews = null;
+    }
+
+    async function refetchReviews() {
         const res = await fetch(`/api/getreview?id=${parkData?.Id}`);
         if (res.ok) {
             try {
@@ -81,9 +97,32 @@
                 reviews = null
             }
         }
+    }
+
+    onMount(async () => {
+        await refetchReviews();
     });
 
     $inspect(reviews);
+
+    let reviewAvg = $derived.by(() => {
+        if (reviews) {
+            console.log(reviews)
+            let res = 0;
+            let total = 0;
+            for (let i = 0; i < reviews.length; i++) {
+                console.log(reviews[i]);
+                res += reviews[i].stars;
+                total += 1;
+            }
+            console.log(res, total)
+            return Math.floor(res / total)
+        } else {
+            return null;
+        }
+    });
+
+    $inspect(reviewAvg);
 
     function screenResize(startSize?: MediaQueryListEvent | String) {
         console.log(startSize);
@@ -171,8 +210,10 @@
         <div>
             <h1 class="md:text-xl lg:text-2xl">{parkData?.Name}</h1>
             <div class="flex items-center">
-                <p class="md:text-sm lg:text-lg">3.9</p>
-                <StarRating rating={7} size={topicReviewSize}></StarRating>
+                {#if reviewAvg}
+                    <p class="md:text-sm lg:text-lg">{Math.round(reviewAvg) / 2}</p>
+                    <StarRating rating={reviewAvg} size={topicReviewSize}></StarRating>
+                {/if}
                 <ShareToMap class="ml-4" park={parkData} {mapSelect}></ShareToMap>
             </div>
             <InfoChips park={parkData}></InfoChips>

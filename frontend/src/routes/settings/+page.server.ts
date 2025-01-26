@@ -7,17 +7,37 @@ export const load = async ({locals}) => {
 
     const mapSelect = locals.pb.authStore.record?.preferedMapShare ?? '';
 
+    const email = locals.email;
+
     return {
-        mapSelect
+        email,
+        mapSelect,
     };
 }
 
 export const actions = {
-    default: async ({locals, request}) => {
+    deleteAccount: async ({locals, request, cookies }) => {
+        const form = await request.formData();
+        const email = form.get('email');
+
+        if (email !== locals.email) {
+            return { success: false, msg: 'E-mail does not match', action: 'deleteAccount' }
+        } else {
+            await locals.pb.collection('users').delete(locals.id);
+            cookies.delete('pb_data', {path: '/'});
+            return redirect(303, '/auth');
+        }
+    },
+    mapProvider: async ({locals, request}) => {
         const form = await request.formData();
         const mapSelect = form.get('mapSelect');
         if (mapSelect === 'apple' || mapSelect === 'google' || mapSelect === 'waze') {
-            await locals.pb.collection('users').update(locals.id, { preferedMapShare: mapSelect })
+            try {
+                await locals.pb.collection('users').update(locals.id, { preferedMapShare: mapSelect })
+            } catch {
+                return {success: false, action: 'mapProvider'}
+            }
         }
+        
     },
 }

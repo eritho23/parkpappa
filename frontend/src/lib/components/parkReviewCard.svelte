@@ -1,12 +1,11 @@
 <script lang="ts">
-    import { goto, invalidate } from "$app/navigation";
     import StarRating from "./starRating.svelte";
     import { Trash } from "lucide-svelte";
 
     let {review, userId} = $props();
     let {stars, body, title, id, parkid} = review;
-    let name = review.expand.user.name;
-    let reviewUserId = review.expand.user.id;
+    let name = review.expand.user.name ?? '[Raderad]';
+    let reviewUserId = review.expand.user.id ?? '';
 
 
     let userOwnsReview = $derived(userId === reviewUserId);
