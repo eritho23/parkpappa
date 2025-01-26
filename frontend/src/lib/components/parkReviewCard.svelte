@@ -25,12 +25,11 @@
 <div class="border-zinc-500 p-4 border rounded flex flex-col space-y-1">
     <h1 class="font-bold text-xl">{title}</h1>
     <span>{name}</span>
-    <StarRating rating={stars * 2} ></StarRating>
+    <StarRating rating={stars} ></StarRating>
     <p class="text-sm">{shownText}</p>
     <div class="flex flex-row space-x-4">
         {#if longText}
             <button class="hover:underline" type="button" onclick={() => {showMore = !showMore}}>{showMore ? 'Visa mindre' : 'Visa mer'}</button>
         {/if}
-        <a href="/map?park={playgroundId}" class="text-primary underline">Gå till park</a>
     </div>
 </div>
