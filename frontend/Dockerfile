@@ -13,7 +13,7 @@ COPY . .
 
 RUN npx vite build
 
-FROM node:22-alpine as production
+FROM node:22-alpine AS production
 
 ENV NODE_ENV=production
 ENV APP_DIR=/app
