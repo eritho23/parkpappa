@@ -15,7 +15,7 @@
   }:
     utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
-      version = "0.1.0";
+      version = if (self ? rev) then self.rev else "dirty";
       sweref-lib = pkgs.python312Packages.buildPythonPackage rec {
         pname = "sweref99";
         version = "0.2";
@@ -42,6 +42,7 @@
           nodejs_22
           nodePackages.npm
           nodePackages.prettier
+          prefetch-npm-deps
           python3WithPkgs
           ripgrep
         ];
@@ -51,7 +52,7 @@
         frontend-src = pkgs.stdenvNoCC.mkDerivation {
           pname = "parkpappa-src-for-ci";
           inherit version;
-          src = pkgs.lib.cleanSource ./frontend;
+          src = ./frontend/.;
 
           installPhase = ''
             runHook preInstall
@@ -64,14 +65,18 @@
         frontend = pkgs.buildNpmPackage {
           pname = "parkpappa-frontend";
           inherit version;
-          src = pkgs.lib.cleanSource ./frontend/.;
+          src = ./frontend/.;
 
-          npmDepsHash = "sha256-ZEIr3Z0Jo2E+S1UQWNTWXWn9HBifWpb+lKRcpVC3m5s=";
+          nodejs = pkgs.nodejs_22;
+
+          npmDepsHash = "sha256-WEWnAYyMXL8fN65kisUnzU+CVGeLrg0Vy1RR9BxhISA=";
           # npmDepsHash = pkgs.lib.fakeHash;
+
+          API_PATH = "https://parkpappa-api.cloud.spetsen.net";
 
           buildPhase = ''
             runHook preBuild
-            npm --loglevel=verbose run build --offline
+            NODE_ENV=production npm --loglevel=verbose run build --offline
             runHook postBuild
           '';
 

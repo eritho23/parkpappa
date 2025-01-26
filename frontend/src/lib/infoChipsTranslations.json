@@ -1,0 +1,26 @@
+{
+    "equipment": {
+        "BBQArea": "BBQ Plats",
+        "ClimbingFrame": "Klätterställning",
+        "RainShelter": "regnskydd",
+        "RunningTrack": "löpbana",
+        "SandPlayArea": "Sandlåda",
+        "SleddingHill": "pulkabacke",
+        "SwingSet": "gungor",
+        "WaterAvailability": "vattentillgänglighet",
+        "WindShelter": "vindskydd"
+    },
+    "typesofplay": {
+        "BalancingPlay": "balansgång",
+        "CarPlay": "billek",
+        "HopscotchArea": "haghoppning",
+        "PlayCircuit": "hinderbana",
+        "RockingPlay": "vagglek",
+        "RolePlay": "rollspel",
+        "SlidePlay": "rutschkana",
+        "SoundPlay": "ljudlek",
+        "SpinningPlay": "snurrställning",
+        "ToddlerPlay": "småbarnsvänligt",
+        "WaterPlay": "vattenlek"
+    }
+}

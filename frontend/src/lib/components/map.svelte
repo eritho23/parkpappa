@@ -8,8 +8,10 @@
     let markerLayers: L.LayerGroup;
     interface Props {
         parkData: Park[];
+        api: string;
+        selectedPark: Park | undefined;
     }
-    let { parkData }: Props = $props();
+    let {parkData, api, selectedPark = $bindable() }: Props = $props();
 
     const markerIcon = L.icon({
         iconUrl: '/marker/map-pin.svg',
@@ -21,14 +23,58 @@
     });
 
     function getParkFromId(id: number) {
-        console.log(id);
+        // console.log(id);
         let park = parkData.find((park) => park.Id === id);
-        console.log(park);
-        return park as Park
-    }
+        //$inspect(park); Denna throwade error ta tillbaka om jag hade fel
 
+        return park as Park;
+    }
+    export function flyToMarker(markerID: number) {
+        //console.log('funcion called');
+        map.eachLayer((layer) => {
+            // @ts-expect-error
+            if (layer.options.id === markerID) {
+                // @ts-expect-error
+                map.flyTo(layer.getLatLng(), 17);
+                selectedPark = getParkFromId(markerID);
+                SetEmbed(selectedPark);
+                return;
+            }
+        });
+    }
+    async function SetEmbed(park?: Park | undefined) {
+        if (park) {
+            if (!park.Embed) {
+                try {
+                    const controller = new AbortController(); // Create a controller for timeout handling
+                    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5-second timeout
+                    const response: Response = await fetch(
+                        api + `/api/parks/${park.Id}/embed`,
+                        { signal: controller.signal } // Pass the signal for timeout control
+                    );
+                    clearTimeout(timeoutId); // Clear the timeout once the request completes
+
+                    if (response.ok) {
+                        const embed = await response.text(); // Get the embed HTML as text
+                        park.Embed = embed; // Attach the embed to the park object
+                    } else {
+                        console.error(`ERROR: Failed to fetch embed for park ${park.Id}, status: ${response.status}`);
+                    }
+                } catch (err) {
+                    console.error('Unexpected error while fetching embed:', err);
+                }
+            }
+        }
+        
+        
+    }
     function createMap(container: HTMLDivElement) {
-        let m = L.map(container).setView([59.609796, 16.5464], 14);
+        let m = L.map(container)
+            .setView([59.609796, 16.5464], 14)
+            .on('click', () => {
+                console.log('Map Clicked');
+                selectedPark = undefined;
+            });
         L.tileLayer(
             'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
             {
@@ -79,33 +125,36 @@
     }
 
     $effect(() => {
-      if (map && markerLayers && parkData) {
-        try {
-            // const marker = createMarker(L.latLng(59.6330795581567, 16.5470303778179));
-            console.log(parkData, parkData[0]);
-            for (let i = 0; i < parkData.length; i++) {
-                const currentPark = parkData[i];
-                console.log(currentPark);
-                console.log(
-                    currentPark.Coordinates.x,
-                    currentPark.Coordinates.y
-                );
-                const marker = createMarker(
-                    L.latLng(
-                        currentPark.Coordinates.x,
-                        currentPark.Coordinates.y
-                    ),
-                    currentPark.Id
-                ).on('click', (e) => {
-                    getParkFromId(e.target.options.id);
-                });
-                markerLayers.addLayer(marker);
+        if (map && markerLayers && parkData) {
+            try {
+                // const marker = createMarker(L.latLng(59.6330795581567, 16.5470303778179));
+                // console.log(parkData, parkData[0]);
+                for (let i = 0; i < parkData.length; i++) {
+                    const currentPark = parkData[i];
+                    // console.log(currentPark);
+                    // console.log(
+                    //     currentPark.Coordinates.x,
+                    //     currentPark.Coordinates.y
+                    // );
+                    const marker = createMarker(
+                        L.latLng(
+                            currentPark.Coordinates.x,
+                            currentPark.Coordinates.y
+                        ),
+                        currentPark.Id
+                    ).on('click', (e) => {
+                        getParkFromId(e.target.options.id);
+                        selectedPark = getParkFromId(e.target.options.id);
+                        SetEmbed(selectedPark); //Inte smart att sätta embed här men det funkar
+                        //flyToMarker(e.target.options.id);
+                    });
+                    markerLayers.addLayer(marker);
+                }
+            } catch (error) {
+                console.error(error);
             }
-        } catch (error) {
-            console.error(error);
         }
-    }
-    })
+    });
     setTimeout(() => map.invalidateSize(), 0);
 </script>
 
