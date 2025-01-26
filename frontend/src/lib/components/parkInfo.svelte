@@ -125,7 +125,7 @@
 </script>
 
 <div
-    class="absolute top-[16.66666%] md:top-16 h-5/6 md:h-full flex flex-col bg-background-foreground w-full md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden no-scrollbar md:show-scrollbar rounded-xl md:rounded-none"
+    class="absolute top-[16.66666%] md:top-16 h-[83.33333vh] md:h-[calc(100vh-4rem)] flex flex-col bg-background-foreground w-full md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden no-scrollbar md:show-scrollbar rounded-xl md:rounded-none"
     transition:fly={{
         opacity: 100,
         x: flyDirection[0],
