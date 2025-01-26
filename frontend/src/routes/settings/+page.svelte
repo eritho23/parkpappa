@@ -1,5 +1,8 @@
 <script lang="ts">
-    import { Tabs, TabItem, Radio } from 'flowbite-svelte';
+    import { Tabs, TabItem, Radio, Button } from 'flowbite-svelte';
+
+    let {data} = $props();
+    let {mapSelect} = data;
 </script>
 
 <div class="h-full w-full flex-grow flex flex-col">
@@ -12,12 +15,14 @@
             divClass="flex-grow flex flex-col h-full w-full"
             open
         >
-            <div>
-                <p>Vald kartapplikation</p>
-                <Radio color="red" name="mapSelect" checked>Google Maps</Radio>
-                <Radio color="red" name="mapSelect">Apple Maps</Radio>
-                <Radio color="red" name="mapSelect">Waze</Radio>
-            </div>
+            <form method="post">
+                <label>Vald kartapplikation
+                    <Radio color="red" name="mapSelect" value="google" checked={mapSelect === 'google'}>Google Maps</Radio>
+                    <Radio color="red" name="mapSelect" value="apple" checked={mapSelect === 'apple'}>Apple Maps</Radio>
+                    <Radio color="red" name="mapSelect" value="waze" checked={mapSelect === 'waze'}>Waze</Radio>
+                </label>
+                <button class="border-zinc-600 rounded border-2 px-2 py-1 mt-4 hover:bg-zinc-100" type="submit">Spara</button>
+            </form>
         </TabItem>
     </Tabs>
 </div>

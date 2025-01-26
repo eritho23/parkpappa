@@ -40,6 +40,7 @@ let {isLoggedIn, email, avatarUrl} = data;
         {/if}
         <span>{email}</span>
       </NavLi>
+      <NavLi class="flex flex-row space-x-4" href="/settings"><Settings class="size-5"></Settings>Inställningar</NavLi>
     {:else}
       <NavLi href="/auth" title="Logga in">Logga in</NavLi>
     {/if}
@@ -58,8 +59,14 @@ let {isLoggedIn, email, avatarUrl} = data;
       <BottomNavItem btnName="Map" href="/map">
         <MapPinned class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
-      <BottomNavItem btnName="Review" href="/reviews">
-        <MessageSquareMore class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
+      <BottomNavItem btnName={isLoggedIn ? 'Logga ut' : 'Logga in'} href="/auth">
+        {#if isLoggedIn}
+          <img alt="user avatar" class="rounded-full size-6" onerror={() => {
+            console.error('image error');
+          }} src={avatarUrl} />
+        {:else}
+          <User class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
+        {/if}
       </BottomNavItem>
       <BottomNavItem btnName="Settings" href="/settings">
         <Settings class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
