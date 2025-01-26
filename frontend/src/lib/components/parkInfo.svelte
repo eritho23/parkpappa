@@ -132,12 +132,13 @@
         y: flyDirection[1],
         duration: 800,
     }}
->
+>   {#if isBlacklisted}
     <div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full">
         <button onclick={() => parkData = undefined}>
             <X class="drop-shadow-lg stroke-text-dark"></X>
         </button>
-    </div>
+    </div>    
+    {/if}
     {#if parkData}
         {#if !isBlacklisted}
             <div class="w-full h-52 lg:h-72 min-h-52 lg:min-h-72">
@@ -156,6 +157,15 @@
     {/if}
     
     <div class="ml-2 pb-4">
+        {#if !isBlacklisted}
+        <div class="relative">
+            <div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full">
+            <button onclick={() => parkData = undefined}>
+                <X class="drop-shadow-lg stroke-text-dark"></X>
+            </button>
+            </div>
+        </div>
+        {/if}
         <div>
             <h1 class="md:text-xl lg:text-2xl">{parkData?.Name}</h1>
             <div class="flex items-center">
@@ -168,15 +178,19 @@
         <Tabs {activeClasses} {inactiveClasses}>
             {#if parkData?.Embed}
                 <TabItem title="Instagram" open>
-                    <div
-                        class="w-full"
-                        style="height: 1000px; overflow: hidden;"
-                    >
+                    <div class="w-full" style="overflow: hidden;">
                         <iframe
                             srcdoc={parkData.Embed}
-                            class="w-full h-full"
+                            class="w-full"
                             title="Instagram Embed"
                             scrolling="no"
+                            style="width: 100%; height: 1000px; transform: scale(0.9); transform-origin: 0 0;"
+                            onload="{(event) => {
+                                const iframe = event.target as HTMLIFrameElement;
+                                if (iframe && iframe.contentWindow) {
+                                    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+                                }
+                            }}"
                         ></iframe>
                     </div>
                     <div class="w-full h-12"></div>
