@@ -9,7 +9,7 @@
 
     async function login(form: HTMLFormElement) {
         try {
-            await pb.collection('users').authWithOAuth2({provider: 'google'})
+            await pb.collection('users').authWithOAuth2({provider: 'google', createData: {preferedMapShare: 'google'}})
             form.token.value = pb.authStore.token;
             form.redirectpark.value = data.returnPark;
             form.submit();
