@@ -8,19 +8,22 @@ export const DELETE = async ({locals, request}) => {
     const body = await request.json()
     const reviewId = body.reviewId ?? null;
 
+    let reviewUser = null;
+
     if (reviewId) {
         try {
-            const reviewUser = await locals.pb.collection('reviews').getOne(reviewId, {expand:'user'});
+            reviewUser = await locals.pb.collection('reviews').getOne(reviewId, {expand:'user'});
 
-            if (reviewUser.expand?.user.id !== locals.id) {
-                return error(401, JSON.stringify({msg:'Unauthorized'}));
-            }
         } catch (err) {
             if (err instanceof ClientResponseError) {
                 if (err.status === 404) {
                     return error(400, err.response.message);
                 }
             }
+        }
+
+        if (reviewUser && reviewUser.expand?.user.id !== locals.id) {
+            return error(401, JSON.stringify({msg:'Unauthorized'}));
         }
 
         try {
