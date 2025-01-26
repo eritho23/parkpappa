@@ -31,7 +31,7 @@ export const handle: Handle = async ({ event, resolve }) => {
         event.locals.id = auth.record.id;
         event.locals.email = auth.record.email;
     } catch (_) {
-        throw redirect(303, '/');
+        throw redirect(307, '/');
     }
 
     const response = await resolve(event);

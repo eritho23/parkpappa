@@ -32,11 +32,14 @@ export type Park = {
     Embed: string;
 };
 export type DataParks = {
-    parks: Park[];
     api: String;
+    googleMapsApiKey: string;
+    googleMapsApiKey: string;
     goToPark: string;
     isLoggedIn: boolean;
-    googleMapsApiKey: string;
+    mapSelect: string;
+    parks: Park[];
+    userId: string;
 };
 
 export enum mapTypes {

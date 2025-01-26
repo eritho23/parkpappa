@@ -10,6 +10,8 @@ const nonActiveClass = "text-text hover:text-primary";
 let { data, children } = $props();
 let {isLoggedIn, email, avatarUrl} = data;
 
+let showLogout = $state(false); // Reactive variable for hover effect
+
 </script>
 
 <svelte:head>
@@ -28,8 +30,12 @@ let {isLoggedIn, email, avatarUrl} = data;
     <NavLi href="/">Hem</NavLi>
     <NavLi href="/map">Karta</NavLi>
     {#if isLoggedIn}
-      <NavLi class="flex flex-row space-x-4 hover:cursor-pointer" title="Logga ut" onclick={() => {
+      <NavLi class="flex flex-row space-x-4 hover:cursor-pointer" title="Logga ut" 
+      on:mouseenter={() => (showLogout = true)}
+      on:mouseleave={() => (showLogout = false)}
+      onclick={() => {
         window.location.href = '/auth';
+        
       }}>
         {#if avatarUrl}
           <img alt="user avatar" class="rounded-full size-6" onerror={() => {
@@ -38,8 +44,9 @@ let {isLoggedIn, email, avatarUrl} = data;
         {:else}
           <User class="md:block hidden size-5" />
         {/if}
-        <span>{email}</span>
+        <span>{showLogout ? 'Logga ut' : email}</span>
       </NavLi>
+      <NavLi class="flex flex-row space-x-4 items-center mt-0.5" href="/settings"><Settings class="size-5"></Settings></NavLi>
     {:else}
       <NavLi href="/auth" title="Logga in">Logga in</NavLi>
     {/if}
@@ -52,16 +59,24 @@ let {isLoggedIn, email, avatarUrl} = data;
 
   <div class="block md:hidden">
     <BottomNav classInner="grid-cols-4 h-36 items-start mt-2" {activeUrl} classActive="font-bold text-primary [&>*]:stroke-primary">
-      <BottomNavItem btnName="Home" href="/">
+      <BottomNavItem btnName="Hem" href="/">
         <House class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
-      <BottomNavItem btnName="Map" href="/map">
+      <BottomNavItem btnName="Karta" href="/map">
         <MapPinned class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
-      <BottomNavItem btnName="Review" href="/reviews">
-        <MessageSquareMore class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
+      <BottomNavItem class="" btnName={isLoggedIn ? 'Logout' : 'Login'} onclick={() => {
+        window.location.href = '/auth'
+      }}>
+        {#if isLoggedIn}
+          <img alt="user avatar" class="rounded-full size-6 mb-1" onerror={() => {
+            console.error('image error');
+          }} src={avatarUrl} />
+        {:else}
+          <User class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
+        {/if}
       </BottomNavItem>
-      <BottomNavItem btnName="Settings" href="/settings">
+      <BottomNavItem btnName="Inställningar" href="/settings">
         <Settings class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
     </BottomNav>

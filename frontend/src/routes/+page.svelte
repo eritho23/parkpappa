@@ -75,7 +75,7 @@
                     href="https://www.instagram.com/park_pappa"
                     class="text-primary hover:underline">@park_pappa</a
                 >. Under sin föräldraledighet besökte han alla lekparker i
-                Västerås och recenserade dem på instagramkontot. År 2024
+                Västerås och recenserade dem på instagramkontot. År 2025
                 lanseras denna webbsida med målet att göra varierade, givande
                 parkbesök tillgängliga för småbarnsföräldrar. Joakim tycker inte
                 att Västerås stad har någon bra lösning för att visa upp parker.
