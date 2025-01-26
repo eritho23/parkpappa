@@ -166,6 +166,38 @@ def search_parks():
     # Return the filtered parks or an empty list if no matches are found
     return jsonify(filtered_parks), 200
 
+@app.route('/api/parks/random_filtered', methods=['POST'])
+def get_random_parks_filtered():
+    data = request.json
+    include = data.get("include", {})
+    exclude = data.get("exclude", {})
+    amount = data.get("amount", 1)
+
+    parks = load_parks()
+    filtered_parks = []
+
+    for park in parks:
+        matches = True
+
+        # Check include filters
+        for key, value in include.items():
+            if not (key in park.get("Equipment", {}) and park["Equipment"][key] == value) and not (key in park.get("TypesOfPlay", {}) and park["TypesOfPlay"][key] == value):
+                matches = False
+                break
+
+        # Check exclude filters
+        if matches:
+            for key, value in exclude.items():
+                if (key in park.get("Equipment", {}) and park["Equipment"][key] == value) or (key in park.get("TypesOfPlay", {}) and park["TypesOfPlay"][key] == value):
+                    matches = False
+                    break
+
+        if matches:
+            filtered_parks.append(park)
+
+    random_parks = random.sample(filtered_parks, min(len(filtered_parks), amount))
+    return jsonify(random_parks), 200
+
 
 def run_gunicorn():
     import os
