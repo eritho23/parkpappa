@@ -30,7 +30,8 @@ export const load: PageLoad = async ({ fetch, data }) => {
             api: API_PATH,
             googleMapsApiKey: GOOGLE_MAPS_API_KEY,
             goToPark: data.goToPark,
-            isLoggedIn: data.isLoggedIn
+            isLoggedIn: data.isLoggedIn,
+            userId: data.userId
         } as DataParks;
     } catch (err) {
         if (err == 'Error: request timed out') {

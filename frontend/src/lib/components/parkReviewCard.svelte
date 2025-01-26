@@ -1,9 +1,16 @@
 <script lang="ts">
+    import { goto, invalidate } from "$app/navigation";
     import StarRating from "./starRating.svelte";
+    import { Trash } from "lucide-svelte";
 
-    let {review} = $props();
-    let {stars, body, playgroundId, title} = review;
+    let {review, userId} = $props();
+    let {stars, body, title, id, parkid} = review;
     let name = review.expand.user.name;
+    let reviewUserId = review.expand.user.id;
+
+
+    let userOwnsReview = $derived(userId === reviewUserId);
+    $inspect('user owns rev:', userOwnsReview);
 
     const THRESHOLD = 300;
 
@@ -20,9 +27,30 @@
             }
         }
     })
+
+    async function deleteReview() {
+        const res = await fetch('/api/deletereview', {
+            method: 'DELETE',
+            body: JSON.stringify({
+                reviewId: id,
+            }),
+        });
+
+        if (!res.ok) {
+            console.error("req failed");
+        } else {
+            window.location.href = `/map?park=${parkid}`;
+        }
+    }
 </script>
 
 <div class="border-zinc-500 p-4 border rounded flex flex-col space-y-1">
+    {#if userOwnsReview}
+        <button class="flex flex-row space-x-2 text-sm hover:underline" onclick={() => deleteReview()}>
+            <Trash class="size-4 "/>
+            <span>Ta bort recension</span>
+        </button>
+    {/if}
     <h1 class="font-bold text-xl">{title}</h1>
     <span>{name}</span>
     <StarRating rating={stars} ></StarRating>
