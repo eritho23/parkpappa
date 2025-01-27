@@ -1,6 +1,6 @@
 <script lang="ts">
     import PocketBase from 'pocketbase';
-    
+    import GoogleButton from '$lib/components/GoogleButton.svelte';
     const pb = new PocketBase('https://parkpappa-pb.superdator.spetsen.net');
 
     let {data} = $props();
@@ -20,18 +20,25 @@
 </script>
 
 
-<div class="bg-white size-72 md:size-96 m-auto border-primary/40 rounded border-2 flex flex-col justify-center text-center space-y-5">
-    <h1 class="text-3xl font-bold">Logga in</h1>
-    {#if errorMsg}
-        <div class="">
-            <span class="text-primary">Fel: {errorMsg}, försök igen senare</span>
-        </div>
-    {/if}
-    <form class="" method="post" onsubmit={(e) => {e.preventDefault(); login(e.currentTarget)}}>
-        <input name="token" type="hidden" />
-        <input name="redirectpark" type="hidden" />
-        <button class="p-4 border-2 border-primary rounded font-bold bg-primary/10">
-            Logga in med Google
-        </button>
-    </form>
+<div class="bg-white size-72 md:size-96 m-auto border-primary/40 rounded border-2 flex flex-col text-center space-y-5 p-6 h-96">
+    <div class="spacer h-5"></div>
+    <!-- Centered content -->
+    <div class="flex flex-col justify-center items-center flex-grow">
+        <h1 class="text-3xl font-bold">Logga in</h1>
+        <div class="spacer h-5"></div>
+        <form class="" method="post" onsubmit={(e) => {e.preventDefault(); login(e.currentTarget)}}>
+            <input name="token" type="hidden" />
+            <input name="redirectpark" type="hidden" />
+            <GoogleButton />
+        </form>
+    </div>
+    
+    <!-- Separate content not affecting centering -->
+    <div class="text-left mt-10 text-xs mx-10 pb-4">
+        <ul class="list-disc list-inside text-gray-500">
+            <li>Synkronisera dina inställningar på alla dina enheter</li>
+            <li>Lämna recensioner på parker du besöker</li>
+        </ul>
+    </div>
 </div>
+
