@@ -53,12 +53,12 @@ let showLogout = $state(false); // Reactive variable for hover effect
   </NavUl>
   
 </Navbar>
-  <main class="flex-grow flex flex-col">
+  <main class="flex-grow flex flex-col h-">
     {@render children?.()}
   </main>
 
   <div class="block md:hidden">
-    <BottomNav classInner="grid-cols-4 h-36 items-start mt-2" {activeUrl} classActive="font-bold text-primary [&>*]:stroke-primary">
+    <BottomNav classOuter="h-20" classInner="grid-cols-4 items-start mt-2" {activeUrl} classActive="font-bold text-primary [&>*]:stroke-primary">
       <BottomNavItem btnName="Hem" href="/">
         <House class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>

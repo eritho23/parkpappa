@@ -1,7 +1,8 @@
 <script lang="ts">
     import type { DataParks, Park } from '$lib/types';
-    import { error } from '@sveltejs/kit';
+    import { error, json } from '@sveltejs/kit';
     import { Dices } from 'lucide-svelte';
+    import { userFilterPrefrences } from './filterSettings.svelte';
 
     interface Props {
         parks: Park[];
@@ -10,9 +11,34 @@
     }
     let { parks, api, flyToMarker }: Props = $props();
 
+    const mapArrayToObject = (array: string[]): Record<string, boolean> => {
+        return array.reduce((acc: Record<string, boolean>, str: string) => {
+            acc[str] = true;
+            return acc;
+        }, {});
+    };
+
     async function getRandomPark() {
         try {
-            const response: Response = await fetch(api + '/api/parks/random/1');
+            const body = JSON.stringify({
+                include: mapArrayToObject(userFilterPrefrences.include),
+                exclude: mapArrayToObject(userFilterPrefrences.exclude),
+            });
+            let response: Response;
+            if (
+                userFilterPrefrences.exclude.length > 0 &&
+                userFilterPrefrences.include.length > 0
+            ) {
+                response = await fetch(api + '/api/parks/random_filtered', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: body,
+                });
+            } else {
+                response = await fetch(api + '/api/parks/random/1');
+            }
 
             if (!response.ok) {
                 console.error('ERROR: ', response.status, response);
@@ -32,10 +58,11 @@
 <button
     onclick={async () => {
         const park = await getRandomPark();
+        // console.log(park);
         //$inspect(park[0]); Denna throwade error ta tillbaka om jag hade fel
         flyToMarker(park[0].Id);
     }}
-    class=" absolute right-8 bottom-20 md:bottom-12 size-14 bg-background-foreground border border-text-light rounded-full flex items-center justify-center brightness-100 active:brightness-95 shadow-md shadow-text-light hover:shadow-text-dark/65"
+    class=" absolute right-4 bottom-24 md:bottom-12 size-14 bg-background-foreground border border-text-light rounded-full flex items-center justify-center brightness-100 active:brightness-95 shadow-md shadow-text-light hover:shadow-text-dark/65"
 >
     <Dices size={28} strokeWidth={2.25} class="stroke-primary"></Dices>
 </button>

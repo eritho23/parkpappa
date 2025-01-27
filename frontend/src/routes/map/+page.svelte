@@ -6,12 +6,13 @@
     import { RotateCcw } from 'lucide-svelte';
     import ParkRandomizer from '$lib/components/parkRandomizer.svelte';
     import { onDestroy, onMount } from 'svelte';
+    import RandomFilterButton from '$lib/components/randomFilterButton.svelte';
     interface Props {
         data: DataParks;
         selectedPark: Park | undefined;
     }
     let { data, selectedPark = $bindable() }: Props = $props();
-    let {isLoggedIn, userId, mapSelect} = data;
+    let { isLoggedIn, userId, mapSelect } = data;
 
     let parkInfo: Park | undefined = $state(undefined);
     function showInfo(toggle: boolean = true, park?: Park | undefined) {
@@ -59,10 +60,27 @@
 </script>
 
 <div class="h-full w-full flex-grow flex flex-col">
-    <Map parkData={data.parks} api={String(data.api)} bind:selectedPark={selectedPark} bind:this={mapComponentRef}></Map>
-    <ParkRandomizer parks={data.parks} api={data.api} flyToMarker={mapComponentRef.flyToMarker} ></ParkRandomizer>
+    <Map
+        parkData={data.parks}
+        api={String(data.api)}
+        bind:selectedPark
+        bind:this={mapComponentRef}
+    ></Map>
+    <ParkRandomizer
+        parks={data.parks}
+        api={data.api}
+        flyToMarker={mapComponentRef.flyToMarker}
+    ></ParkRandomizer>
+    <RandomFilterButton></RandomFilterButton>
     {#if selectedPark}
-        <ParkInfo bind:selectedPark={selectedPark} {startScreenSize} {isLoggedIn} googleMapsApiKey={data.googleMapsApiKey} userId={userId} mapSelect={mapSelect}></ParkInfo>
+        <ParkInfo
+            bind:selectedPark
+            {startScreenSize}
+            {isLoggedIn}
+            googleMapsApiKey={data.googleMapsApiKey}
+            {userId}
+            {mapSelect}
+        ></ParkInfo>
     {/if}
     {#if !data.parks}
         <Alert

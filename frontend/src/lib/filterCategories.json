@@ -1,0 +1,22 @@
+[
+    { "value": "BBQArea", "name": "Grillplats" },
+    { "value": "ClimbingFrame", "name": "Klätterställning" },
+    { "value": "RainShelter", "name": "Regnskydd" },
+    { "value": "RunningTrack", "name": "Löpbana" },
+    { "value": "SandPlayArea", "name": "Sandlåda" },
+    { "value": "SleddingHill", "name": "Pulkabacke" },
+    { "value": "SwingSet", "name": "Gungor" },
+    { "value": "WaterAvailability", "name": "Vattentillgänglighet" },
+    { "value": "WindShelter", "name": "Vindskydd" },
+    { "value": "BalancingPlay", "name": "Balansgång" },
+    { "value": "CarPlay", "name": "Billek" },
+    { "value": "HopscotchArea", "name": "Haghoppning" },
+    { "value": "PlayCircuit", "name": "Hinderbana" },
+    { "value": "RockingPlay", "name": "Vagglek" },
+    { "value": "RolePlay", "name": "Rollspel" },
+    { "value": "SlidePlay", "name": "Rutschkana" },
+    { "value": "SoundPlay", "name": "Ljudlek" },
+    { "value": "SpinningPlay", "name": "Snurrställning" },
+    { "value": "ToddlerPlay", "name": "Småbarnsvänligt" },
+    { "value": "WaterPlay", "name": "Vattenlek" }
+]
