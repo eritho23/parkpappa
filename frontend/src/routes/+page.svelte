@@ -56,7 +56,7 @@
     </div>
     <div class="h-24 text-center justify-center w-full">
         <h1 class="font-bold text-xl">
-            Skapad av Adrian, David och Eric på spetsen
+            Skapad av Adrian, David och Eric på <a href="https://vasteras.hitachigymnasiet.se/utbildning-teknikprogrammet/teknikspets" class="text-primary hover:underline">spetsen</a>
         </h1>
     </div>
     <div
