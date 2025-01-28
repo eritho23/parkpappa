@@ -9,17 +9,28 @@
     import { Modal, MultiSelect } from 'flowbite-svelte';
     import categories from '$lib/filterCategories.json';
     import { userFilterPrefrences } from './filterSettings.svelte';
-    let modalOpen = $state(false);
+    import { fade } from 'svelte/transition';
 
+    let modalOpen = $state(false);
+    let ErrorText = $state(false);
     let include = $state([]);
     let exclude = $state([]);
     $inspect(include);
 
+
+    function showError() {
+        ErrorText = true;
+        setTimeout(() => {
+            ErrorText = false;
+        }, 3000); // Adjust the time (3000ms = 3 seconds) as needed
+    }
+    
     function onSubmit() {
         let includeSet = new Set(include);
         let excludeSet = new Set(exclude);
         if (includeSet.intersection(excludeSet).size > 0) {
             console.log('Cannot include and exclude same property!');
+            showError();
         } else {
             // console.log("Worked");
             userFilterPrefrences.include = include;
@@ -45,6 +56,7 @@
     bind:open={modalOpen}
     outsideclose
     autoclose={false}
+    class="h-[70vh]"
 >
     <p>Inkludera taggar</p>
     <MultiSelect items={categories} bind:value={include}></MultiSelect>
@@ -63,5 +75,8 @@
             class="h-8 ring-primary/100 active:brightness-90 ring-2 text-primary/100 whitespace-nowrap py-2 px-2 rounded text-xs"
             >Avbryt</button
         >
+        {#if ErrorText}
+            <span class="ml-4 text-red-500 text-xs" transition:fade={{ duration: 100 }}>Samma tag kan inte användas för både include och exclude</span>
+        {/if}
     </div>
 </Modal>
