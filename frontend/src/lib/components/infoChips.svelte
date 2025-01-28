@@ -1,3 +1,9 @@
+<!--
+    Component for displaying park attributes.
+    This component is part of ParkInfo.
+
+    Author: Adrian Damianovici
+-->
 <script lang="ts">
     import type { Park } from '$lib/types';
     interface Props {

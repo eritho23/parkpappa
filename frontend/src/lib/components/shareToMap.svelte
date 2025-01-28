@@ -1,3 +1,9 @@
+<!--
+    Component to display a button containing a map share link.
+    Contains logic for three providers.
+
+    Author: Adrian Damianovici
+-->
 <script lang="ts">
     import type { Park } from '$lib/types';
     import { MapPinned } from 'lucide-svelte';

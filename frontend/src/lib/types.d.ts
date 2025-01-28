@@ -1,3 +1,11 @@
+/*
+    Type definitions for the whole project. Crucial when integrating since they
+    ensure compatibility between parts of the frontend. The backend is
+    unfortunately not included.
+
+    Authors: Eric Thorburn, Adrian Damianovici, David Lockley
+*/
+
 export type Park = {
     Coordinates: {
         x: number;

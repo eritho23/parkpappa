@@ -1,3 +1,8 @@
+<!--
+    Map page component, encapsulates the <Map> component in the route tree.
+
+    Author: Adrian Damianovici
+-->
 <script lang="ts">
     import ParkInfo from '$lib/components/parkInfo.svelte';
     import Map from '$lib/components/map.svelte';

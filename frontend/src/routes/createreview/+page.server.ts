@@ -1,3 +1,9 @@
+/*
+    Defines the form action and page load action.
+
+    Author: Eric Thorburn
+*/ 
+
 import { error, redirect } from '@sveltejs/kit'
 
 export const load = async ({locals, url}) => {

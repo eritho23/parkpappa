@@ -1,3 +1,8 @@
+<!--
+    Page with a form to create a review. Uses a form action.
+    
+    Author: Eric Thorburn
+-->
 <script lang="ts">
     import StarRating from "$lib/components/starRating.svelte";
 

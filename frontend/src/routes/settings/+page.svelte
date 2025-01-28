@@ -1,3 +1,8 @@
+<!--
+    Settings page. Contains both map app options and an option for deleting one's account.
+
+    Authors: Adrian Damianovici and Eric Thorburn
+-->
 <script lang="ts">
     import { Tabs, TabItem, Radio } from 'flowbite-svelte';
 

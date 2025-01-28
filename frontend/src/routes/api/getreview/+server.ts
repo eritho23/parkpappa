@@ -1,3 +1,9 @@
+/*
+    API Server for getting reviews.
+    Defines a GET HTTP verb which returns reviews. Uses a search parameter.
+
+    Author: Eric Thorburn
+*/ 
 import { error, json } from '@sveltejs/kit';
 
 export const GET = async ({locals, url}) => {

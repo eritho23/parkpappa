@@ -1,3 +1,9 @@
+/*
+    Authentication logic for the authentication page. Form handling and
+    redirecting to the correct park.
+
+    Author: Eric Thorburn
+*/
 import { type Actions } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 
@@ -20,10 +26,10 @@ export const actions = {
         }
         cookies.set('pb_auth', JSON.stringify({ token: token }), {
             path: '/',
-            maxAge: 60 * 60 * 24 * 7,
+            maxAge: 60 * 60 * 24 * 7, // one week in seconds
         });
         if (redirectPark) {
-            redirect(303, `/map?park=${redirectPark}`)
+            redirect(303, `/map?park=${redirectPark}`); // redirect to the park the user was at
         } else {
             redirect(303, '/');
         }

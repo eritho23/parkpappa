@@ -1,3 +1,8 @@
+<!--
+  Menu bar visible across the app.
+
+  Author: Adrian Damianovici
+-->
 <script lang="ts">
 import "../app.css"
 import { Navbar, NavBrand, NavHamburger, NavLi, NavUl, Dropdown, DropdownItem, DropdownDivider, BottomNav, BottomNavItem} from "flowbite-svelte"

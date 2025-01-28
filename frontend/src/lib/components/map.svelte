@@ -1,3 +1,10 @@
+<!--
+    Component for the map.
+    This file contains a Svelte component for the interactive map. It contains
+    most of the logic required for Leaflet, the JS map library.
+
+    Author: Adrian Damianovici
+-->
 <script lang="ts">
     import { json } from '@sveltejs/kit';
     import type { LatLng } from 'leaflet';

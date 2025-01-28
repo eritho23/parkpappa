@@ -1,3 +1,10 @@
+<!--
+    A component related to getting a random park.
+    This component handles user preferences and fetching of the random park.
+
+    Author: Adrian Damianovici
+-->
+
 <script lang="ts">
     import type { DataParks, Park } from '$lib/types';
     import { error, json } from '@sveltejs/kit';

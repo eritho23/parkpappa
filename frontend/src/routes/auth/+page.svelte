@@ -1,3 +1,6 @@
+<!--
+    Authentication page with 'Sign in with Google' flow
+-->
 <script lang="ts">
     import PocketBase from 'pocketbase';
     import GoogleButton from '$lib/components/GoogleButton.svelte';

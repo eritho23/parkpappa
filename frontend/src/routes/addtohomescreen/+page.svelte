@@ -1,3 +1,8 @@
+<!--
+    Page with device-specific instrucions for adding the site as a Progressive Web App (PWA).
+
+    Author: Eric Thorburn
+-->
 <script lang="ts">
     import {EllipsisVertical, Smartphone, Share, SquarePlus} from 'lucide-svelte';
 

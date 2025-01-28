@@ -1,3 +1,10 @@
+/*
+    Load file with logic for determining user device type from the User-Agent
+    HTTP header.
+
+    Author: Eric Thorburn
+*/ 
+
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ request }) => {

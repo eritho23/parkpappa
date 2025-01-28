@@ -1,3 +1,8 @@
+<!--
+    Basic error page
+
+    Author: Eric Thorburn
+-->
 <script>
     import {page} from "$app/stores"
 </script>

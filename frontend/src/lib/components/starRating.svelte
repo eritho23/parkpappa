@@ -1,3 +1,9 @@
+<!--
+    Component displaying stars for the rating system.
+    Contains logic for transforming a number into the correct number of stars / half stars
+
+    Author: Adrian Damianovici
+-->
 <script lang="ts">
     import { error } from '@sveltejs/kit';
     import { Star, StarHalf } from 'lucide-svelte';

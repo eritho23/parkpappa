@@ -1,3 +1,10 @@
+<!--
+    Component for a park review.
+    Contains logic for displaying and deleting a review.
+
+    Author: Eric Thorburn
+-->
+
 <script lang="ts">
     import StarRating from "./starRating.svelte";
     import { Trash } from "lucide-svelte";

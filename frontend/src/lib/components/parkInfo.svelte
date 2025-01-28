@@ -1,3 +1,10 @@
+<!--
+    Component for the park information sidebar.
+    This component is the side bar with park information which is shown when the
+    user presses a pin on the map.
+
+    Author: Adrian Damianovici
+-->
 <script lang="ts">
     import StarRating from './starRating.svelte';
     import { Tabs, TabItem } from 'flowbite-svelte';

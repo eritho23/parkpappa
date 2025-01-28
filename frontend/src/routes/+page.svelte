@@ -1,3 +1,8 @@
+<!--
+    Home page
+
+    Author: Eric Thorburn
+-->
 <script>
     import {
         Check,

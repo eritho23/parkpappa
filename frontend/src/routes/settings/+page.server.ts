@@ -1,3 +1,10 @@
+/*
+    Provide form actions for the settings page as well as information regarding
+    the current settings.
+
+    Author: Eric Thorburn
+*/
+
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({locals}) => {

@@ -1,8 +1,15 @@
+/*
+    Page script file for fetching the park data. +page.ts files are ran on both
+    the server and client, but in this case only on the client since ssr =
+    false.
+
+    Author: Adrian Damianovici
+*/
 import type { PageLoad } from './$types';
 import { error, json } from '@sveltejs/kit';
 import type { Park, DataParks } from '$lib/types';
 
-export const ssr = false;
+export const ssr = false; // Disable server side rendering
 
 export const load: PageLoad = async ({ fetch, data }) => {
     const { API_PATH, GOOGLE_MAPS_API_KEY } = data;

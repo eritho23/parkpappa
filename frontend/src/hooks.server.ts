@@ -1,3 +1,11 @@
+/*
+    The SvelteKit hooks file.
+    This file handles authentication and runs on every request. It handles
+    authentication state and auth cookies for the client.
+
+    Author: Eric Thorburn
+*/
+
 import { redirect } from '@sveltejs/kit';
 import { type Handle } from '@sveltejs/kit';
 import PocketBase from 'pocketbase';

@@ -1,9 +1,17 @@
+/*
+    API Server for getting reviews.
+    Defines a DELETE HTTP verb which deletes reviews. Uses the request body.
+
+    Author: Eric Thorburn
+*/
+
 import { error, json } from '@sveltejs/kit';
-import Client, { ClientResponseError } from 'pocketbase';
+import { ClientResponseError } from 'pocketbase';
 
 export const DELETE = async ({locals, request}) => {
+    // Checks auth
     if (!locals.pb.authStore.isValid) {
-        return error(401);
+        return error(401); // 401 Unauthorized
     }
     const body = await request.json()
     const reviewId = body.reviewId ?? null;

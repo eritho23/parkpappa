@@ -1,3 +1,8 @@
+/*
+    Run some logic on the server regarding the user.
+
+    Author: Eric Thorburn
+*/
 import { API_PATH } from '$env/static/private';
 import { env } from '$env/dynamic/private';
 const {GOOGLE_MAPS_API_KEY} = env;

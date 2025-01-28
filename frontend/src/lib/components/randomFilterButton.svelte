@@ -1,3 +1,9 @@
+<!--
+    The random filter menu logic and component.
+    Ensures the filters are valid when applied.
+
+    Author: Adrian Damianovici
+-->
 <script lang="ts">
     import { SlidersHorizontal } from 'lucide-svelte';
     import { Modal, MultiSelect } from 'flowbite-svelte';

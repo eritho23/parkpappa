@@ -1,3 +1,11 @@
+/*
+    Service worker definition file.
+    This file defines and runs the service worker which caches assets locally,
+    primarily for the progressive web app.
+    
+    Author: Eric Thorburn
+*/
+
 /// <reference types="@sveltejs/kit" />
 import { build, files, version } from '$service-worker';
 
