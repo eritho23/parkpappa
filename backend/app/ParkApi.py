@@ -179,13 +179,14 @@ def get_random_parks_filtered():
     for park in parks:
         matches = True
 
-        # Check include filters
-        for key, value in include.items():
-            if not (key in park.get("Equipment", {}) and park["Equipment"][key] == value) and not (key in park.get("TypesOfPlay", {}) and park["TypesOfPlay"][key] == value):
-                matches = False
-                break
+        # If include is not empty, apply the include filters
+        if include:
+            for key, value in include.items():
+                if not (key in park.get("Equipment", {}) and park["Equipment"][key] == value) and not (key in park.get("TypesOfPlay", {}) and park["TypesOfPlay"][key] == value):
+                    matches = False
+                    break
 
-        # Check exclude filters
+        # Always apply the exclude filters
         if matches:
             for key, value in exclude.items():
                 if (key in park.get("Equipment", {}) and park["Equipment"][key] == value) or (key in park.get("TypesOfPlay", {}) and park["TypesOfPlay"][key] == value):

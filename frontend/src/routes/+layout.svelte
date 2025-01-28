@@ -58,13 +58,18 @@ let showLogout = $state(false); // Reactive variable for hover effect
   </main>
 
   <div class="block md:hidden">
-    <BottomNav classOuter="h-20" classInner="grid-cols-4 items-start mt-2" {activeUrl} classActive="font-bold text-primary [&>*]:stroke-primary">
+    <BottomNav classInner={`grid-cols-${isLoggedIn ? '4' : '3'} h-36 items-start mt-2`} {activeUrl} classActive="font-bold text-primary [&>*]:stroke-primary">
       <BottomNavItem btnName="Hem" href="/">
         <House class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
       <BottomNavItem btnName="Karta" href="/map">
         <MapPinned class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
+      {#if isLoggedIn}
+        <BottomNavItem btnName="Inställningar" href="/settings">
+          <Settings class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
+        </BottomNavItem>
+      {/if}
       <BottomNavItem class="" btnName={isLoggedIn ? 'Logout' : 'Login'} onclick={() => {
         window.location.href = '/auth'
       }}>
@@ -75,9 +80,6 @@ let showLogout = $state(false); // Reactive variable for hover effect
         {:else}
           <User class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
         {/if}
-      </BottomNavItem>
-      <BottomNavItem btnName="Inställningar" href="/settings">
-        <Settings class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       </BottomNavItem>
     </BottomNav>
   </div>
