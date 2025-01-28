@@ -174,7 +174,7 @@
 </script>
 
 <div
-    class="absolute top-[16.66666%] md:top-16 h-[70vh] md:h-[calc(100vh-4rem)] flex flex-col bg-background-foreground w-full md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden no-scrollbar md:show-scrollbar rounded-xl md:rounded-none"
+    class="absolute top-[16.66666%] md:top-16 h-[83.33333vh] md:h-[calc(100vh-4rem)] flex flex-col bg-background-foreground w-full md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden no-scrollbar md:show-scrollbar rounded-xl md:rounded-none"
     transition:fly={{
         opacity: 100,
         x: flyDirection[0],
@@ -263,10 +263,11 @@
             <TabItem title="Community" open={!parkData?.Embed}>
                 {#if !isLoggedIn}
                     <a
-                        class="p-2 rounded border-2 hover:bg-primary/10 border-primary"
+                        class="p-2 rounded border-2 hover:bg-primary/10 border-primary whitespace-nowrap"
                         href={`/auth?redirectpark=${String(parkData?.Id)}`}
                         >Logga in för att skriva en recension</a
                     >
+                    <div class="h-6"></div>
                 {:else}
                     <a
                         class="p-2 rounded border-2 hover:bg-primary/10 border-primary"
