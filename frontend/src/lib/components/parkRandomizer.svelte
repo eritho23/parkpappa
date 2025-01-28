@@ -26,7 +26,7 @@
             });
             let response: Response;
             if (
-                userFilterPrefrences.exclude.length > 0 &&
+                userFilterPrefrences.exclude.length > 0 ||
                 userFilterPrefrences.include.length > 0
             ) {
                 response = await fetch(api + '/api/parks/random_filtered', {
