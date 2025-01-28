@@ -1,6 +1,7 @@
 FROM node:22-alpine AS builder
 ENV APP_DIR=/app
 ENV API_PATH="https://parkpappa-api.cloud.spetsen.net"
+ENV PUBLIC_PB_PATH="https://parkpappa-pb.superdator.spetsen.net"
 
 WORKDIR $APP_DIR
 COPY package*.json ./

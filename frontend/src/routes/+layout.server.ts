@@ -3,7 +3,7 @@
 
     Author: Eric Thorburn
 */
-import {PB_PATH} from '$env/static/private';
+import {PUBLIC_PB_PATH} from '$env/static/public';
 
 export const load = async ({ locals }) => {
     const isLoggedIn = locals.id !== '';
@@ -15,7 +15,7 @@ export const load = async ({ locals }) => {
             .collection('users')
             .getOne(locals.id, { fields: 'avatar' });
         // builds the avatar image src url
-        avatarUrl = `${PB_PATH}/api/files/${locals.pb.authStore.record?.collectionId}/${locals.pb.authStore.record?.id}/${avatar.avatar}`;
+        avatarUrl = `${PUBLIC_PB_PATH}/api/files/${locals.pb.authStore.record?.collectionId}/${locals.pb.authStore.record?.id}/${avatar.avatar}`;
     }
 
     return {

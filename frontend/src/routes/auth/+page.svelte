@@ -4,8 +4,8 @@
 <script lang="ts">
     import PocketBase from 'pocketbase';
     import GoogleButton from '$lib/components/GoogleButton.svelte';
-    import {PB_PATH} from '$env/static/private';
-    const pb = new PocketBase(PB_PATH);
+    import {PUBLIC_PB_PATH} from '$env/static/public';
+    const pb = new PocketBase(PUBLIC_PB_PATH);
 
     let {data} = $props();
 
