@@ -1,6 +1,9 @@
 # Parkpappa
 
-Parkpappa is a project to visualise the plethora of playgrounds in Västerås, in order to gild families with small children.
+Parkpappa is a project to visualise the plethora of playgrounds in Västerås, in order to benefit families with small children.
+
+## Modules
+![bild](assets/diagram.png)
 
 ## Tech stack
 
