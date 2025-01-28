@@ -1,7 +1,8 @@
 <script lang="ts">
     import PocketBase from 'pocketbase';
     import GoogleButton from '$lib/components/GoogleButton.svelte';
-    const pb = new PocketBase('https://parkpappa-pb.superdator.spetsen.net');
+    import {PB_PATH} from '$env/static/private';
+    const pb = new PocketBase(PB_PATH);
 
     let {data} = $props();
 

@@ -2,13 +2,12 @@ import { redirect } from '@sveltejs/kit';
 import { type Handle } from '@sveltejs/kit';
 import PocketBase from 'pocketbase';
 import { building } from '$app/environment';
+import {PB_PATH} from '$env/static/private';
 
 export const handle: Handle = async ({ event, resolve }) => {
     event.locals.id = '';
     event.locals.email = '';
-    event.locals.pb = new PocketBase(
-        'https://parkpappa-pb.superdator.spetsen.net'
-    );
+    event.locals.pb = new PocketBase(PB_PATH);
 
     const isAuth: boolean = event.url.pathname === '/auth';
     if (isAuth || building) {
