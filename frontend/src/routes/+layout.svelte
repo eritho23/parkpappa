@@ -53,7 +53,7 @@ let showLogout = $state(false); // Reactive variable for hover effect
   </NavUl>
   
 </Navbar>
-  <main class="flex-grow flex flex-col">
+  <main class="flex-grow flex flex-col h-">
     {@render children?.()}
   </main>
 

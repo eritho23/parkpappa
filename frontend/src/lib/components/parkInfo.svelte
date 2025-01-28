@@ -19,7 +19,14 @@
         userId: string;
         mapSelect: string;
     }
-    let { selectedPark: parkData = $bindable(), startScreenSize, googleMapsApiKey = $bindable(), isLoggedIn, userId, mapSelect }: Props = $props();
+    let {
+        selectedPark: parkData = $bindable(),
+        startScreenSize,
+        googleMapsApiKey = $bindable(),
+        isLoggedIn,
+        userId,
+        mapSelect,
+    }: Props = $props();
     const activeClasses =
         'text-primary p-2 lg:p-3 inline-block border-b-2 border-primary text-center text-xs lg:text-sm';
     const inactiveClasses =
@@ -57,7 +64,7 @@
         mdMediaQuery.addEventListener('change', screenResize);
         screenResize(startScreenSize);
     });
-    
+
     onDestroy(() => {
         xlMediaQuery.removeEventListener('change', screenResize);
         lgMediaQuery.removeEventListener('change', screenResize);
@@ -71,7 +78,7 @@
     // let displayShowBar = $state(false);
     $inspect(parkData?.Id);
 
-    let reviews: [] | null = $state(null)
+    let reviews: [] | null = $state(null);
     $inspect(reviews);
 
     $effect(() => {
@@ -79,10 +86,10 @@
             clearParks();
         } else {
             if (parkData.Id) {
-                refetchReviews()
+                refetchReviews();
             }
         }
-    })
+    });
 
     function clearParks() {
         reviews = null;
@@ -94,7 +101,7 @@
             try {
                 reviews = await res.json();
             } catch (_) {
-                reviews = null
+                reviews = null;
             }
         }
     }
@@ -107,16 +114,17 @@
 
     let reviewAvg = $derived.by(() => {
         if (reviews) {
-            console.log(reviews)
+            console.log(reviews);
             let res = 0;
             let total = 0;
             for (let i = 0; i < reviews.length; i++) {
                 console.log(reviews[i]);
+                //@ts-expect-error
                 res += reviews[i].stars;
                 total += 1;
             }
-            console.log(res, total)
-            return Math.floor(res / total)
+            console.log(res, total);
+            return Math.floor(res / total);
         } else {
             return null;
         }
@@ -150,7 +158,7 @@
                 totalReviewSize = 14;
                 topicReviewSize = 24;
                 flyDirection = [0, 1000];
-                console.log(flyDirection);
+                // console.log(flyDirection);
                 // displayShowBar = true;
             }
         } else {
@@ -166,24 +174,28 @@
 </script>
 
 <div
-    class="absolute top-[16.66666%] md:top-16 h-[83.33333vh] md:h-[calc(100vh-4rem)] flex flex-col bg-background-foreground w-full md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden no-scrollbar md:show-scrollbar rounded-xl md:rounded-none"
+    class="absolute top-[16.66666%] md:top-16 h-[70vh] md:h-[calc(100vh-4rem)] flex flex-col bg-background-foreground w-full md:w-2/5 lg:w-[35%] overflow-y-scroll overflow-x-hidden no-scrollbar md:show-scrollbar rounded-xl md:rounded-none"
     transition:fly={{
         opacity: 100,
         x: flyDirection[0],
         y: flyDirection[1],
         duration: 800,
     }}
->   {#if isBlacklisted}
-    <div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full">
-        <button onclick={() => parkData = undefined}>
-            <X class="drop-shadow-lg stroke-text-dark"></X>
-        </button>
-    </div>    
+>
+    {#if isBlacklisted}
+        <div
+            class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"
+        >
+            <button onclick={() => (parkData = undefined)}>
+                <X class="drop-shadow-lg stroke-text-dark"></X>
+            </button>
+        </div>
     {/if}
     {#if parkData}
         {#if !isBlacklisted}
             <div class="w-full h-52 lg:h-72 min-h-52 lg:min-h-72">
-                <iframe title="Street View"
+                <iframe
+                    title="Street View"
                     width="100%"
                     height="100%"
                     frameborder="0"
@@ -196,25 +208,31 @@
             <div class="ml-2 pb-4"></div>
         {/if}
     {/if}
-    
+
     <div class="ml-2 pb-4">
         {#if !isBlacklisted}
-        <div class="relative">
-            <div class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full">
-            <button onclick={() => parkData = undefined}>
-                <X class="drop-shadow-lg stroke-text-dark"></X>
-            </button>
+            <div class="relative">
+                <div
+                    class="absolute flex right-3 top-2 size-8 items-center justify-center rounded-full"
+                >
+                    <button onclick={() => (parkData = undefined)}>
+                        <X class="drop-shadow-lg stroke-text-dark"></X>
+                    </button>
+                </div>
             </div>
-        </div>
         {/if}
         <div>
             <h1 class="md:text-xl lg:text-2xl">{parkData?.Name}</h1>
             <div class="flex items-center">
                 {#if reviewAvg}
-                    <p class="md:text-sm lg:text-lg">{Math.round(reviewAvg) / 2}</p>
-                    <StarRating rating={reviewAvg} size={topicReviewSize}></StarRating>
+                    <p class="md:text-sm lg:text-lg">
+                        {Math.round(reviewAvg) / 2}
+                    </p>
+                    <StarRating rating={reviewAvg} size={topicReviewSize}
+                    ></StarRating>
                 {/if}
-                <ShareToMap class="ml-4" park={parkData} {mapSelect}></ShareToMap>
+                <ShareToMap class="ml-4" park={parkData} {mapSelect}
+                ></ShareToMap>
             </div>
             <InfoChips park={parkData}></InfoChips>
         </div>
@@ -228,12 +246,15 @@
                             title="Instagram Embed"
                             scrolling="no"
                             style="width: 100%; height: 1000px; transform: scale(0.9); transform-origin: 0 0;"
-                            onload="{(event) => {
-                                const iframe = event.target as HTMLIFrameElement;
+                            onload={(event) => {
+                                const iframe =
+                                    event.target as HTMLIFrameElement;
                                 if (iframe && iframe.contentWindow) {
-                                    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+                                    iframe.style.height =
+                                        iframe.contentWindow.document.body
+                                            .scrollHeight + 'px';
                                 }
-                            }}"
+                            }}
                         ></iframe>
                     </div>
                     <div class="w-full h-12"></div>
@@ -241,9 +262,17 @@
             {/if}
             <TabItem title="Community" open={!parkData?.Embed}>
                 {#if !isLoggedIn}
-                    <a class="p-2 rounded border-2 hover:bg-primary/10 border-primary" href={`/auth?redirectpark=${String(parkData?.Id)}`}>Logga in för att skriva en recension</a>
+                    <a
+                        class="p-2 rounded border-2 hover:bg-primary/10 border-primary"
+                        href={`/auth?redirectpark=${String(parkData?.Id)}`}
+                        >Logga in för att skriva en recension</a
+                    >
                 {:else}
-                    <a class="p-2 rounded border-2 hover:bg-primary/10 border-primary" href={"/createreview?park=" + String(parkData?.Id)}>Skapa recension</a>
+                    <a
+                        class="p-2 rounded border-2 hover:bg-primary/10 border-primary"
+                        href={'/createreview?park=' + String(parkData?.Id)}
+                        >Skapa recension</a
+                    >
                 {/if}
                 <div class="h-6"></div>
                 {#if reviews}
