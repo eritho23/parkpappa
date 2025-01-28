@@ -1,3 +1,9 @@
+"""
+    Script used as a tool to extract images from the park_pappa account (not
+    used in favor of embeds).
+
+    Author: David Lockley
+"""
 import instaloader
 import os
 import json

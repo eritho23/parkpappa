@@ -1,3 +1,8 @@
+"""
+    Small module to convert Sweref 99 to wgs84 (GPS coordinates).
+
+    Author: David Lockley
+"""
 from pyproj import Proj, transform
 
 # SWEREF 99 16 30 to WGS84

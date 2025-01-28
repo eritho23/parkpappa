@@ -1,3 +1,8 @@
+"""
+    Another tool used to scrape images.
+
+    Author: David Lockley
+"""
 import instaloader
 import os
 

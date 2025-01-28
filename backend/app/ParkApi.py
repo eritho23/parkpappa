@@ -1,3 +1,9 @@
+"""
+    Main Flask app for the Park API. Contains the Flask logic regarding routes,
+    methods, headers etc. It also handles caching.
+
+    Author: David Lockley
+"""
 from flask import Flask, jsonify, render_template, request
 import requests
 import json
