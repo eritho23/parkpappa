@@ -5,6 +5,12 @@ Parkpappa is a project to visualise the plethora of playgrounds in Västerås, i
 ## Modules
 ![bild](assets/diagram.png)
 
+### Main focus areas and modules
+- **Adrian** - SvelteKit Map, including fetching, filtering and displaying park data. Design of the application including icons, CSS and general layout.
+- **David** - Python Park data API, including fetching data from Västerås Stad and presenting it in a better way, filtering of the data and caching it to avoid excess calls to the external API.
+- **Eric** - Database operations, authentication/authorization and deployment of the app, including Sign in with Google integration, server configuration, Dockerization and configuring the app for production.
+
+
 ## Tech stack
 
 ### Frontend
