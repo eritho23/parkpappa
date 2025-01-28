@@ -76,7 +76,7 @@
             >Avbryt</button
         >
         {#if ErrorText}
-            <span class="ml-4 text-red-500 text-xs" transition:fade={{ duration: 100 }}>Samma tag kan inte användas för både include och exclude</span>
+            <span class="ml-4 text-red-500 text-xs" transition:fade={{ duration: 100 }}>Samma tagg kan inte användas för både inkludera och exkludera</span>
         {/if}
     </div>
 </Modal>

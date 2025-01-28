@@ -10,6 +10,7 @@
     import { error, json } from '@sveltejs/kit';
     import { Dices } from 'lucide-svelte';
     import { userFilterPrefrences } from './filterSettings.svelte';
+    import { fade } from 'svelte/transition';
 
     interface Props {
         parks: Park[];
@@ -60,16 +61,33 @@
             }
         }
     }
+
+    let noParksError = $state(false);
+
+    function displayErrorMessage() {
+        noParksError = true;
+        setTimeout(() => {
+            noParksError = false;
+        }, 3000); // Adjust the time as needed
+    }
 </script>
 
 <button
     onclick={async () => {
         const park = await getRandomPark();
-        // console.log(park);
-        //$inspect(park[0]); Denna throwade error ta tillbaka om jag hade fel
-        flyToMarker(park[0].Id);
+        if (park.length === 0) {
+            displayErrorMessage();
+        } else {
+            flyToMarker(park[0].Id);
+        }
     }}
     class=" absolute right-4 bottom-24 md:bottom-12 size-14 bg-background-foreground border border-text-light rounded-full flex items-center justify-center brightness-100 active:brightness-95 shadow-md shadow-text-light hover:shadow-text-dark/65"
 >
     <Dices size={28} strokeWidth={2.25} class="stroke-primary"></Dices>
 </button>
+
+{#if noParksError}
+    <div class="absolute right-20 bottom-36 md:bottom-24 bg-primary text-white p-2 rounded w-3/4 md:w-1/2 lg:w-1/3" transition:fade={{ duration: 100 }}>
+        Inga parker hittades, uppdatera filter
+    </div>
+{/if}
