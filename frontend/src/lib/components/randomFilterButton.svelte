@@ -39,6 +39,16 @@
             modalOpen = false;
         }
     }
+    $effect(() => {
+        if (!modalOpen) {
+            handleModalClose();
+        }
+    });
+    function handleModalClose() {
+        // Revert UI if modal closed without submit
+        include = userFilterPrefrences.include;
+        exclude = userFilterPrefrences.exclude;
+    }
 </script>
 
 <button
